@@ -1,0 +1,1495 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Workstation de IA · IACO 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: bandas oscuras tipo "datasheet" (hero, diagrama, premium, infografía) y secciones de lectura claras.
+   Una columna de 1120px; grillas que colapsan a 1 columna. Imágenes reales en assets/img (WebP con fondo transparente). */
+:root{
+  --paper:#F2F4F3; --surface:#FFFFFF; --ink:#151A21; --ink-2:#4A5361; --line:#D5DAE0;
+  --data:#0A84C6; --data-soft:#E1F1FA; --power:#C77A12; --power-soft:#FBEFDD;
+  --warn:#B4541A; --ok:#2F7D4F;
+  --band:#0F1318; --band-2:#171C23; --band-3:#1D242D; --band-ink:#E9EDF1; --band-ink-2:#9AA6B4; --band-line:#2A323C; --band-data:#38B6F0; --band-power:#F0A93B;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#12161B; --surface:#1A2027; --ink:#E7EBEF; --ink-2:#A3AEBB; --line:#2E3742;
+  --data:#43B8EE; --data-soft:#14303F; --power:#F0A93B; --power-soft:#3A2A12; --warn:#F08A4B; --ok:#5FC48A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#12161B; --surface:#1A2027; --ink:#E7EBEF; --ink-2:#A3AEBB; --line:#2E3742;
+  --data:#43B8EE; --data-soft:#14303F; --power:#F0A93B; --power-soft:#3A2A12; --warn:#F08A4B; --ok:#5FC48A; color-scheme:dark}
+
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--band)}
+img{max-width:100%;display:block}
+a{color:var(--data)}
+button{font:inherit;color:inherit}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:2px solid var(--data);outline-offset:3px;border-radius:3px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:88%;line-height:1.12;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:750}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:72px}
+.eyebrow{font:500 .78rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--data);margin-bottom:14px}
+.lead{font-size:1.12rem;color:var(--ink-2);max-width:66ch;margin-top:14px}
+.prose{max-width:68ch;display:grid;gap:12px;color:var(--ink-2)}
+.prose b,.prose strong{color:var(--ink)}
+.mono{font-family:var(--f-mono)}
+.num{font-variant-numeric:tabular-nums}
+.cite{font:500 .8em var(--f-mono);white-space:nowrap;text-decoration:none;border-bottom:1px dotted currentColor}
+.sec-head{display:grid;gap:4px;margin-bottom:36px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[id]{scroll-margin-top:72px}
+
+/* botones y segmentados */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:4px;font:600 .95rem var(--f-body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s,background .15s,border-color .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-main,.band .btn-main{background:var(--band-data);color:#06131C}
+.btn-main:hover{background:#6BCBF5}
+.btn-ghost{border-color:var(--band-line);color:var(--band-ink)!important;background:rgba(255,255,255,.02)}
+.btn-ghost:hover{border-color:var(--band-data)}
+.btn-sm{padding:8px 12px;font-size:.85rem}
+.btn-line{border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn-line:hover{border-color:var(--data)}
+.seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border-radius:6px;background:var(--paper);border:1px solid var(--line)}
+.seg button{border:0;background:none;padding:7px 12px;border-radius:4px;font:500 .85rem var(--f-body);color:var(--ink-2);cursor:pointer}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.band .seg,.premium .seg{background:var(--band-2);border-color:var(--band-line)}
+.band .seg button,.premium .seg button{color:var(--band-ink-2)}
+.band .seg button:hover{color:var(--band-ink)}
+.band .seg button[aria-pressed="true"]{background:var(--band-data);color:#06131C}
+.pill{display:inline-block;font:500 .72rem var(--f-mono);letter-spacing:.04em;padding:3px 8px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.pill.ref{color:var(--ok)}
+.pill.est{color:var(--warn);border-style:dashed}
+.pill.free{color:var(--ink-2)}
+.pill.rep{color:var(--band-power);border-style:dashed}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(15,19,24,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--band-line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px}
+.brand{font:700 .95rem var(--f-display);font-stretch:100%;color:var(--band-ink);text-decoration:none;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.brand i{width:10px;height:10px;border-radius:2px;background:var(--band-data);box-shadow:0 0 12px var(--band-data)}
+.brand span{color:var(--band-data);font-family:var(--f-mono);font-weight:500;font-size:.74rem}
+.nav{display:flex;gap:2px;flex-wrap:nowrap}
+.nav a{color:var(--band-ink-2);text-decoration:none;font:500 .84rem var(--f-body);padding:8px 9px;border-radius:4px;white-space:nowrap;position:relative}
+.nav a:hover{color:var(--band-ink);background:var(--band-2)}
+.nav a[aria-current="true"]{color:var(--band-ink)}
+.nav a[aria-current="true"]::after{content:"";position:absolute;left:9px;right:9px;bottom:2px;height:2px;background:var(--band-data);border-radius:1px}
+.tools{display:flex;gap:6px;align-items:center}
+.icon-btn{background:none;border:1px solid var(--band-line);color:var(--band-ink);font:500 .82rem var(--f-body);padding:7px 10px;border-radius:4px;cursor:pointer;white-space:nowrap}
+.icon-btn:hover{border-color:var(--band-data)}
+.menu-btn{display:none}
+@media (max-width:1180px){
+  .menu-btn{display:block}
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--band);border-bottom:1px solid var(--band-line);flex-direction:column;padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+  .nav.open{display:flex}
+  .nav a[aria-current="true"]::after{left:0;right:auto;top:8px;bottom:8px;width:2px;height:auto}
+}
+@media (max-width:560px){.brand span{display:none}}
+
+/* bands */
+.band{background:var(--band);color:var(--band-ink)}
+.band .lead,.band .prose{color:var(--band-ink-2)}
+.band .eyebrow{color:var(--band-data)}
+.band a{color:var(--band-data)}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding-block:56px 28px;background:
+  radial-gradient(60% 70% at 78% 40%,rgba(56,182,240,.16),transparent 70%),
+  radial-gradient(40% 50% at 10% 100%,rgba(240,169,59,.08),transparent 70%),var(--band)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#1A2129 1px,transparent 1px),linear-gradient(90deg,#1A2129 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(80% 80% at 70% 40%,#000 20%,transparent 80%);-webkit-mask-image:radial-gradient(80% 80% at 70% 40%,#000 20%,transparent 80%);pointer-events:none}
+.hero .wrap{position:relative}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:center}
+.hero h1{font-size:clamp(2.3rem,4.8vw,3.8rem);font-weight:800;font-stretch:80%;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--band-data)}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px;gap:1px;margin-top:30px;background:var(--band-line);border:1px solid var(--band-line);border-radius:var(--r);overflow:hidden}
+.stat{background:rgba(23,28,35,.92);padding:12px 14px;display:grid;gap:2px;min-width:0}
+.stat b{font:750 1.6rem/1.15 var(--f-display);font-stretch:85%;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat b.c{color:var(--band-data)}
+.stat small{font:400 .72rem var(--f-mono);color:var(--band-ink-2);letter-spacing:.04em}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chips span{font:400 .76rem var(--f-mono);color:var(--band-ink-2);border:1px solid var(--band-line);border-radius:20px;padding:4px 10px}
+.stage{position:relative;aspect-ratio:1/0.92;width:100%;max-width:580px;margin-left:auto;--px:0;--py:0}
+.stage::before{content:"";position:absolute;inset:12% 8% 6%;border-radius:50%;background:radial-gradient(closest-side,rgba(56,182,240,.28),transparent);filter:blur(10px)}
+.stage::after{content:"";position:absolute;left:10%;right:10%;bottom:4%;height:10%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent)}
+.st{position:absolute;height:auto;filter:drop-shadow(0 18px 28px rgba(0,0,0,.55));transition:translate .25s ease-out}
+.st-gpu{left:6%;top:14%;width:80%;z-index:3;translate:calc(var(--px)*14px) calc(var(--py)*10px)}
+.st-cpu{right:0;top:0;width:30%;z-index:2;rotate:6deg;translate:calc(var(--px)*-8px) calc(var(--py)*-6px)}
+.st-ram{left:-2%;bottom:6%;width:46%;z-index:4;rotate:-9deg;translate:calc(var(--px)*20px) calc(var(--py)*14px)}
+.st-ssd{right:2%;bottom:5%;width:40%;z-index:4;rotate:7deg;translate:calc(var(--px)*24px) calc(var(--py)*16px)}
+.hot{position:absolute;z-index:6;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--band-line);background:rgba(15,19,24,.86);color:var(--band-ink);font:500 .76rem var(--f-mono);padding:5px 10px 5px 6px;border-radius:20px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);white-space:nowrap}
+.hot::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--band-data);box-shadow:0 0 0 4px rgba(56,182,240,.22)}
+.hot:hover{border-color:var(--band-data)}
+.hot.h-gpu{left:16%;top:30%}
+.hot.h-cpu{right:2%;top:31%}
+.hot.h-ram{left:2%;bottom:3%}
+.hot.h-ssd{right:4%;bottom:0}
+.hero-note{font:400 .74rem var(--f-mono);color:var(--band-ink-2);margin-top:10px}
+.scroll-cue{display:flex;flex-direction:column;align-items:center;gap:4px;margin:28px auto 0;width:max-content;color:var(--band-ink-2)!important;text-decoration:none;font:500 .72rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase}
+.scroll-cue svg{width:22px;height:22px}
+.two-builds{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--band-line);border:1px solid var(--band-line);border-radius:var(--r);overflow:hidden;margin-top:36px}
+.two-builds a{background:var(--band-2);padding:16px 20px;text-decoration:none;color:var(--band-ink);display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 16px;align-items:center;transition:background .15s}
+.two-builds a:hover{background:var(--band-3)}
+.two-builds img{grid-row:span 3;width:96px;height:72px;object-fit:contain}
+.two-builds .k{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--band-ink-2)}
+.two-builds .v{font:700 1.3rem var(--f-display);font-stretch:90%}
+.two-builds .d{font-size:.86rem;color:var(--band-ink-2)}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}.stage{margin:0 auto;max-width:520px}.two-builds{grid-template-columns:1fr}}
+@media (max-width:560px){.stat b{font-size:1.3rem}.hot{font-size:.68rem}}
+
+/* PARTES */
+.parts{padding-block:56px}
+.parts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.part{border-radius:var(--r);padding:20px;display:grid;gap:10px;align-content:start;min-width:0;position:relative}
+.part .n{font:800 2.6rem/1 var(--f-display);font-stretch:80%;color:var(--line)}
+.part .st-tag{font:500 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.part p{font-size:.92rem;color:var(--ink-2)}
+.part.pending{border:1px dashed var(--line);background:repeating-linear-gradient(135deg,transparent 0 12px,color-mix(in srgb,var(--line) 25%,transparent) 12px 13px)}
+.part.pending .st-tag{color:var(--ink-2)}
+.part.live{background:var(--surface);border:1px solid var(--data);box-shadow:0 10px 30px -18px color-mix(in srgb,var(--data) 60%,transparent)}
+.part.live .n{color:var(--data)}
+.part.live .st-tag{color:var(--ok)}
+@media (max-width:820px){.parts-grid{grid-template-columns:1fr}}
+
+/* PERFIL */
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.work{border-top:2px solid var(--ink);padding-top:12px;display:grid;gap:6px}
+.work p{color:var(--ink-2);font-size:.95rem}
+.bottle{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;margin-top:48px;align-items:start}
+.bars{display:grid;gap:10px}
+.bar-row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;font-size:.92rem}
+.bar-row .track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.bar-row .fill{height:100%;background:var(--data)}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.stage-c{padding:18px;border-right:1px solid var(--line);display:grid;gap:8px;align-content:start}
+.stage-c:last-child{border-right:0}
+.stage-c .tag{font:500 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.stage-c p{font-size:.92rem;color:var(--ink-2)}
+.stage-c.no{background:repeating-linear-gradient(135deg,transparent 0 10px,var(--paper) 10px 20px)}
+@media (max-width:820px){.work-grid{grid-template-columns:1fr 1fr}.bottle{grid-template-columns:1fr}.stages{grid-template-columns:1fr}.stage-c{border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:520px){.work-grid{grid-template-columns:1fr}.bar-row{grid-template-columns:1fr}}
+
+/* glosario (tooltips) */
+.term{background:none;border:0;padding:0;font:inherit;color:inherit;font-weight:600;border-bottom:1px dashed var(--data);cursor:help}
+.tip{position:fixed;z-index:50;max-width:280px;background:var(--band);color:var(--band-ink);border:1px solid var(--band-line);border-radius:6px;padding:10px 12px;font:400 .84rem/1.45 var(--f-body);box-shadow:0 12px 30px rgba(0,0,0,.35);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+.tip.on{opacity:1;transform:none}
+.tip b{color:var(--band-data);font-family:var(--f-mono);font-weight:500;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+/* EXPLORADOR */
+.status-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-2);margin-bottom:20px}
+.explorer{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.ex-top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line)}
+.ex-top .lbl{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-right:8px}
+.ex-nav{display:flex;align-items:center;gap:8px;font:500 .8rem var(--f-mono);color:var(--ink-2)}
+.ex-nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center}
+.ex-nav button:hover{border-color:var(--data);color:var(--data)}
+.ex-body{display:grid;grid-template-columns:270px minmax(0,1fr)}
+.ex-list{display:flex;flex-direction:column;border-right:1px solid var(--line);background:var(--paper);padding:6px;gap:2px}
+.ex-tab{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;align-items:center;text-align:left;border:1px solid transparent;background:none;border-radius:6px;padding:6px 8px;cursor:pointer}
+.ex-tab:hover{background:var(--surface)}
+.ex-tab[aria-selected="true"]{background:var(--surface);border-color:var(--data);box-shadow:inset 3px 0 0 var(--data)}
+.ex-tab .th{width:52px;height:44px;display:grid;place-items:center;background:var(--band);border-radius:4px;overflow:hidden}
+.ex-tab .th img{width:48px;height:40px;object-fit:contain}
+.ex-tab .th svg{width:44px;height:30px;color:var(--band-ink-2)}
+.ex-tab .t{display:grid;min-width:0}
+.ex-tab .t small{font:500 .66rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.ex-tab .t span{font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-tab .t em{font:400 .74rem var(--f-mono);font-style:normal;color:var(--ink-2)}
+.ex-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-width:0}
+.ex-media{position:relative;background:radial-gradient(70% 60% at 50% 45%,rgba(56,182,240,.18),transparent 70%),var(--band);display:grid;grid-template-rows:1fr auto;padding:18px;min-height:380px;color:var(--band-ink)}
+.ex-media .main{display:grid;place-items:center;min-height:260px}
+.ex-media .main img{max-height:300px;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 16px 26px rgba(0,0,0,.6))}
+.ex-media .main svg{width:70%;color:var(--band-ink-2)}
+.ex-media .badge{position:absolute;top:14px;left:14px;max-width:calc(100% - 28px);white-space:normal;z-index:1}
+.gal{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.gal button{width:56px;height:46px;border-radius:4px;border:1px solid var(--band-line);background:var(--band-2);cursor:pointer;padding:3px}
+.gal button img{width:100%;height:100%;object-fit:contain}
+.gal button[aria-pressed="true"]{border-color:var(--band-data)}
+.ex-media .credit{font:400 .7rem var(--f-mono);color:var(--band-ink-2);margin-top:10px;text-align:center}
+.ex-info{padding:20px;display:grid;gap:12px;align-content:start;min-width:0}
+.ex-info .cat{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.ex-info h3{font-size:1.45rem}
+.ex-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.ex-price b{font:800 1.7rem var(--f-display);font-stretch:88%;font-variant-numeric:tabular-nums}
+.ex-price small{font:400 .82rem var(--f-mono);color:var(--ink-2)}
+.share{display:grid;gap:4px}
+.share .tr{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.share .tr i{display:block;height:100%;background:var(--data);border-radius:4px;transition:width .4s ease}
+.share small{font:400 .78rem var(--f-mono);color:var(--ink-2)}
+.kv{display:grid;gap:8px}
+.kv div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;font-size:.9rem}
+.kv dt{font:500 .7rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);padding-top:3px}
+.kv dd{margin:0;color:var(--ink)}
+.kv ul{margin:0;padding-left:16px;color:var(--ink-2)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links span{font-size:.82rem;color:var(--ink-2);align-self:center}
+@media (max-width:1020px){.ex-panel{grid-template-columns:minmax(0,1fr)}.ex-media{min-height:320px}}
+@media (max-width:760px){
+  .ex-body{grid-template-columns:minmax(0,1fr)}
+  .ex-list{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);scroll-snap-type:x mandatory;padding:8px}
+  .ex-tab{grid-template-columns:minmax(0,1fr);min-width:132px;scroll-snap-align:start;grid-template-rows:auto auto;justify-items:start}
+  .ex-tab .th{width:100%}
+  .ex-tab[aria-selected="true"]{box-shadow:inset 0 -3px 0 var(--data)}
+  .ex-media .main img{max-height:220px}
+  .kv div{grid-template-columns:1fr;gap:2px}
+}
+
+/* PRESUPUESTO interactivo */
+.budget{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:40px;margin-top:56px;align-items:start}
+.figures{display:grid;gap:14px}
+.fig{display:grid;gap:2px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.fig .k{font:500 .75rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.fig .v{font:750 2rem var(--f-display);font-stretch:88%;font-variant-numeric:tabular-nums}
+.fig .s{font-size:.85rem;color:var(--ink-2)}
+.meter{height:16px;border-radius:8px;background:var(--line);position:relative;overflow:hidden;margin-top:6px}
+.meter i{position:absolute;inset:0 auto 0 0;background:var(--data)}
+.meter i.over{background:var(--warn)}
+.meter u{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--warn) 0 4px,transparent 4px 8px);opacity:.55}
+.verdict-chip{display:inline-flex;align-items:center;gap:8px;font:600 .85rem var(--f-body);padding:6px 12px;border-radius:20px;width:max-content;max-width:100%}
+.verdict-chip.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.verdict-chip.bad{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.sim label{font-weight:600;font-size:.95rem}
+.sim .out{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:500 .9rem var(--f-mono)}
+.range-wrap{position:relative;padding-top:18px;padding-bottom:10px}
+.range-zone{position:absolute;top:44px;height:5px;border-radius:3px;pointer-events:none}
+.range-wrap input{position:relative;width:100%;accent-color:var(--data);margin:0;height:24px;background:transparent}
+.range-mark{position:absolute;top:0;font:400 .66rem var(--f-mono);color:var(--warn);transform:translateX(-50%);white-space:nowrap}
+.range-mark::after{content:"";position:absolute;left:50%;top:14px;width:1px;height:38px;background:var(--warn)}
+.range-ticks{display:flex;justify-content:space-between;font:400 .7rem var(--f-mono);color:var(--ink-2)}
+.sim .note{font-size:.8rem;color:var(--ink-2)}
+.alloc{display:grid;gap:6px}
+.alloc-row{display:grid;grid-template-columns:30px 120px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:.9rem;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:6px;padding:5px 6px;cursor:pointer}
+.alloc-row:hover{background:var(--surface);border-color:var(--line)}
+.alloc-row[aria-pressed="true"]{background:var(--surface);border-color:var(--data)}
+.alloc-row img{width:30px;height:26px;object-fit:contain}
+.alloc-row .track{height:22px;background:var(--paper);border:1px solid var(--line);border-radius:3px;position:relative}
+.alloc-row .fill{position:absolute;inset:0 auto 0 0;background:var(--data);border-radius:2px;transition:width .4s ease}
+.alloc-row .fill.est{background:repeating-linear-gradient(135deg,var(--warn) 0 5px,color-mix(in srgb,var(--warn) 55%,transparent) 5px 10px)}
+.alloc-row .pct{font:500 .82rem var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.alloc-detail{margin-top:14px;display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.alloc-detail .ph{width:88px;height:72px;background:var(--band);border-radius:4px;display:grid;place-items:center}
+.alloc-detail .ph img{width:80px;height:64px;object-fit:contain}
+.alloc-detail h4{margin:0;font:700 1rem var(--f-display);font-stretch:95%}
+.alloc-detail p{font:400 .84rem var(--f-mono);color:var(--ink-2)}
+.disclose{margin-top:14px;font-size:.88rem;color:var(--ink-2);border-left:3px solid var(--warn);padding:6px 0 6px 12px}
+@media (max-width:820px){.budget{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.alloc-row{grid-template-columns:26px 92px minmax(0,1fr) 54px;gap:6px;font-size:.8rem}}
+
+/* POR QUÉ */
+.why-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;margin-top:20px}
+.why-item{display:grid;gap:6px}
+.why-item p{color:var(--ink-2);font-size:.95rem}
+.why-item h3::before{content:"";display:inline-block;width:10px;height:10px;margin-right:10px;border-radius:2px;background:var(--data);vertical-align:1px}
+.why-item.lim h3::before{background:var(--warn)}
+@media (max-width:720px){.why-grid{grid-template-columns:1fr}}
+
+/* CARGAS */
+.wl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.wl-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;align-content:start;min-width:0;transition:border-color .15s,transform .15s}
+.wl-card:hover{border-color:var(--data);transform:translateY(-2px)}
+.wl-card svg{width:36px;height:36px}
+.wl-card p{font-size:.88rem;color:var(--ink-2)}
+.fit{font:500 .72rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.fit.y{color:var(--ok)} .fit.m{color:var(--warn)}
+.measured{margin-top:24px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.measured .big{font:800 3rem/1 var(--f-display);font-stretch:85%;color:var(--data)}
+@media (max-width:1000px){.wl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.wl{grid-template-columns:1fr}.measured{grid-template-columns:1fr}}
+
+/* HOJA DE RUTA (acordeón) */
+.road{display:grid;gap:10px;margin-top:12px;counter-reset:st}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .15s}
+.step.open{border-color:var(--data)}
+.step-btn{width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto 24px;gap:14px;align-items:center;padding:14px 16px;background:none;border:0;text-align:left;cursor:pointer}
+.step-btn b{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 .95rem var(--f-mono);border:2px solid var(--data);color:var(--data)}
+.step.open .step-btn b{background:var(--data);color:var(--surface)}
+.step-btn h3{font-size:1.1rem}
+.step-btn .cost{font:500 .8rem var(--f-mono);color:var(--ink-2);text-align:right}
+.step-btn .chev{transition:transform .2s;color:var(--ink-2)}
+.step.open .chev{transform:rotate(180deg)}
+.step-body{display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:20px;padding:0 16px 18px 70px}
+.step-body[hidden]{display:none}
+.step-body p{font-size:.92rem;color:var(--ink-2)}
+.step-body dl{display:grid;gap:8px;margin:10px 0 0}
+.step-body dt{font:500 .7rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.step-body dd{margin:0;font-size:.92rem}
+.step-body .ph{background:var(--band);border-radius:6px;display:grid;place-items:center;padding:8px;align-self:start}
+.step-body .ph img{width:120px;height:100px;object-fit:contain}
+.step-body .ph small{font:400 .64rem var(--f-mono);color:var(--band-ink-2);text-align:center}
+.road-tools{display:flex;gap:8px;margin-top:-20px;margin-bottom:16px;flex-wrap:wrap}
+@media (max-width:640px){.step-btn{grid-template-columns:36px minmax(0,1fr) 20px}.step-btn .cost{display:none}.step-body{grid-template-columns:minmax(0,1fr);padding-left:16px}}
+
+/* DIAGRAMA */
+.dg-tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:24px}
+.diagram-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;margin-top:14px;align-items:start}
+.diagram-scroll{overflow-x:auto;background:var(--band);border:1px solid var(--band-line);border-radius:var(--r);padding:12px}
+.diagram-scroll svg{display:block;min-width:720px;width:100%;height:auto}
+.dg-part{cursor:pointer;transition:opacity .2s}
+.dg-part:hover rect.box,.dg-part:focus rect.box,.dg-part.on rect.box{stroke:var(--band-data);stroke-width:2.4}
+.dg-part:focus{outline:none}
+.ln{transition:opacity .2s}
+#dgBudget.focus .ln:not(.hl),#dgBudget.focus .dg-part:not(.hl){opacity:.14}
+#dgBudget.focus .ln.hl path.base{stroke-width:3.4}
+#dgBudget.simple .adv{display:none}
+#dgBudget.no-data .k-data,#dgBudget.no-power .k-power,#dgBudget.no-air .k-air{display:none}
+.flow{opacity:0}
+#dgBudget.anim .flow{opacity:.9}
+@media (prefers-reduced-motion:no-preference){#dgBudget.anim .flow{animation:flow 1.1s linear infinite}}
+@keyframes flow{to{stroke-dashoffset:-18}}
+.info{color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;position:sticky;top:80px}
+.info .ph{background:var(--band);border-radius:4px;display:grid;place-items:center;height:130px;position:relative}
+.info .ph img{max-height:120px;width:auto;object-fit:contain}
+.info .ph .pill{position:absolute;left:8px;top:8px;font-size:.62rem}
+.info .cat{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.info p{font-size:.9rem;color:var(--ink-2)}
+.info ul{margin:0;padding-left:0;list-style:none;display:grid;gap:4px;font-size:.84rem}
+.info li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;color:var(--ink-2)}
+.info li i{width:14px;height:3px;margin-top:9px;border-radius:2px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:.85rem;color:var(--band-ink-2)}
+.legend button{display:inline-flex;align-items:center;gap:8px;background:var(--band-2);border:1px solid var(--band-line);color:var(--band-ink);padding:6px 10px;border-radius:4px;cursor:pointer;font-size:.82rem}
+.legend button[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.sr-text{margin-top:16px;font-size:.9rem}
+.sr-text summary{cursor:pointer;color:var(--band-data);font-weight:500}
+.sr-text ul{color:var(--band-ink-2);display:grid;gap:4px;margin-top:8px}
+@media (max-width:960px){.diagram-wrap{grid-template-columns:minmax(0,1fr)}.info{position:static}}
+
+/* PREMIUM */
+.premium{background:var(--band);color:var(--band-ink)}
+.premium .lead,.premium .prose{color:var(--band-ink-2)}
+.premium .prose b{color:var(--band-ink)}
+.premium .eyebrow{color:var(--band-power)}
+.premium a{color:var(--band-data)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--band-2);border:1px solid var(--band-line);border-radius:var(--r);display:grid;grid-template-rows:auto 1fr;overflow:hidden;min-width:0;transition:border-color .2s,transform .2s}
+.card:hover{border-color:#3C4754;transform:translateY(-2px)}
+.card.hero-card{grid-column:span 2;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-rows:none;border-color:var(--band-data)}
+.card .art{background:radial-gradient(70% 70% at 50% 50%,rgba(56,182,240,.12),transparent 70%),var(--band);border-bottom:1px solid var(--band-line);display:grid;place-items:center;padding:16px;position:relative;aspect-ratio:16/10}
+.card.hero-card .art{aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--band-line);min-height:260px}
+.card .art img{max-height:100%;width:auto;max-width:86%;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.5));transition:transform .3s}
+.card:hover .art img{transform:scale(1.04)}
+.card .art .sub{position:absolute;right:10px;bottom:10px;width:30%;max-width:120px}
+.art .ill{position:absolute;left:10px;bottom:8px;font:400 .66rem var(--f-mono);color:var(--band-ink-2)}
+.card .body{padding:16px;display:grid;gap:10px;align-content:start}
+.card .cat{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--band-ink-2)}
+.card h3{font-size:1.12rem}
+.card ul{margin:0;padding-left:18px;font-size:.88rem;color:var(--band-ink-2);display:grid;gap:2px}
+.card .why{font-size:.9rem}
+.card .price{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--band-line);padding-top:10px;margin-top:4px}
+.card .price b{font:700 1.15rem var(--f-display);font-stretch:95%}
+.card .price small{color:var(--band-ink-2);font:400 .78rem var(--f-mono)}
+.card .src{font-size:.85rem;display:flex;gap:14px;flex-wrap:wrap}
+.card .compat{font-size:.82rem;color:var(--band-ink-2);background:var(--band);padding:8px 10px;border-radius:4px}
+.premium .pill.ref{color:#6FD39A}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.card.hero-card{grid-column:span 2}}
+@media (max-width:600px){.cards{grid-template-columns:1fr}.card.hero-card{grid-column:auto;grid-template-columns:1fr}.card.hero-card .art{border-right:0;border-bottom:1px solid var(--band-line);min-height:220px}}
+.callout{border:1px solid var(--band-power);background:color-mix(in srgb,var(--band-power) 8%,transparent);border-radius:var(--r);padding:18px 20px;display:grid;gap:8px;margin-block:28px}
+.callout h3{color:var(--band-power)}
+.callout p{color:var(--band-ink-2);font-size:.95rem}
+.vram svg{width:100%;height:auto;display:block}
+.prem-total{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:24px;align-items:baseline}
+.prem-total b{font:800 2.2rem var(--f-display);font-stretch:85%;font-variant-numeric:tabular-nums}
+
+/* COMPARAR */
+.cmp-heads{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.cmp-head{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center;border-radius:var(--r);padding:14px;background:var(--surface);border:1px solid var(--line);transition:opacity .2s,border-color .2s}
+.cmp-head .ph{background:var(--band);border-radius:6px;height:96px;display:grid;place-items:center}
+.cmp-head .ph img{max-height:86px;width:auto;max-width:110px;object-fit:contain}
+.cmp-head .k{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.cmp-head b{font:750 1.3rem var(--f-display);font-stretch:88%;display:block}
+.cmp-head small{font:400 .8rem var(--f-mono);color:var(--ink-2)}
+.cmp-head.b{border-top:3px solid var(--data)}
+.cmp-head.p{border-top:3px solid var(--power)}
+.cmp-tools{display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.diffs{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:20px}
+.diff{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:center}
+.diff>span{font-size:.88rem;font-weight:600}
+.diff .rows{display:grid;gap:4px}
+.diff .r{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:center;transition:opacity .2s}
+.diff .tr{display:flex;gap:3px;height:14px}
+.diff .tr i{height:100%;border-radius:2px;min-width:3px;transition:width .5s ease}
+.diff .r.b i{background:var(--data)}
+.diff .r.p i{background:var(--power)}
+.diff small{font:400 .76rem var(--f-mono);color:var(--ink-2);white-space:nowrap}
+.cmp[data-view="b"] .diff .r.p,.cmp[data-view="p"] .diff .r.b{opacity:.2}
+.cmp[data-view="b"] .cmp-head.p,.cmp[data-view="p"] .cmp-head.b{opacity:.4}
+.cmp[data-view="b"] .c-p,.cmp[data-view="p"] .c-b{display:none}
+.cmp[data-view="b"] table,.cmp[data-view="p"] table{min-width:0}
+.diff-note{font-size:.82rem;color:var(--ink-2)}
+@media (max-width:640px){.cmp-heads{grid-template-columns:1fr}.cmp-head{grid-template-columns:88px minmax(0,1fr)}.cmp-head .ph{height:72px}.cmp-head .ph img{max-width:80px;max-height:64px}.diff{grid-template-columns:1fr;gap:4px}.diff .r{grid-template-columns:minmax(0,1fr) 104px}}
+.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:.92rem}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font:600 .8rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);background:var(--paper)}
+tbody th{font-weight:600;width:22%}
+tbody tr:hover td,tbody tr:hover th{background:color-mix(in srgb,var(--data) 5%,transparent)}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums}
+.verdict{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.verdict div{border-top:3px solid var(--data);padding-top:12px;display:grid;gap:6px}
+.verdict div:last-child{border-color:var(--power)}
+.verdict p{color:var(--ink-2);font-size:.95rem}
+@media (max-width:720px){.verdict{grid-template-columns:1fr}}
+
+/* INFOGRAFÍA */
+.ig-frame{max-width:860px;margin:28px auto 0}
+.ig-frame svg{width:100%;height:auto;display:block;border-radius:var(--r);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.ig-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.ig-note{font-size:.85rem;color:var(--band-ink-2);text-align:center;margin-top:12px}
+
+/* BIBLIO */
+.bib{display:grid;gap:28px;margin-top:12px}
+.bib h3{font-size:1rem;font-family:var(--f-mono);font-stretch:100%;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--line);padding-bottom:8px}
+.bib ol{margin:12px 0 0;padding-left:0;list-style:none;display:grid;gap:10px}
+.bib li{padding-left:28px;text-indent:-28px;font-size:.92rem;color:var(--ink-2);overflow-wrap:anywhere}
+.bib li:target{background:var(--data-soft);outline:1px solid var(--data);border-radius:3px}
+.bib li a{color:var(--data)}
+.method{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px;margin-top:28px}
+.method p,.method li{font-size:.92rem;color:var(--ink-2)}
+footer{background:var(--band);color:var(--band-ink-2);font-size:.85rem;padding-block:28px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* volver arriba + revelado */
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid var(--band-line);background:var(--band);color:var(--band-ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .2s,transform .2s}
+.to-top.on{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{border-color:var(--band-data)}
+@media (prefers-reduced-motion:no-preference){
+  .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .js .reveal.in{opacity:1;transform:none}
+  .st{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+  .st-cpu{animation-delay:.1s}.st-ram{animation-delay:.2s}.st-ssd{animation-delay:.3s}
+  .scroll-cue svg{animation:bob 1.8s ease-in-out infinite}
+}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+@keyframes bob{50%{transform:translateY(5px)}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><i aria-hidden="true"></i>IACO 2026 <span>PARTE 3 · WORKSTATION DE IA</span></a>
+    <!-- Navegación: para sumar las Partes 1 y 2, agregar sus enlaces en NAV y cambiar su estado en PARTS (script) -->
+    <nav class="nav" id="nav" aria-label="Secciones"></nav>
+    <div class="tools">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Cambiar tema">Tema: auto</button>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="band hero" id="inicio">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">IACO 2026 · Parte 3 · El Diseño Maestro</p>
+        <h1>Tu workstation de IA. <em>Pensada para presupuestos reales.</em></h1>
+        <p class="lead">Dos configuraciones armadas con piezas en stock en tiendas argentinas y una misma pregunta: ¿cuánta inteligencia artificial podés ejecutar con tu hardware?</p>
+        <div class="cta">
+          <a class="btn btn-main" href="#diagrama">Explorar el armado</a>
+          <a class="btn btn-ghost" href="#explorador">Ver componentes</a>
+          <a class="btn btn-ghost" href="#comparar">Comparar workstations</a>
+        </div>
+        <div class="stats" aria-label="Resumen de El Punto Dulce">
+          <div class="stat"><b data-count="total"></b><small>TOTAL TORRE</small></div>
+          <div class="stat"><b data-count="usd"></b><small>DÓLAR BNA <span data-bind="fx"></span></small></div>
+          <div class="stat"><b class="c" data-count="vram"></b><small>VRAM CON CUDA</small></div>
+          <div class="stat"><b data-count="left"></b><small>MARGEN AL TOPE</small></div>
+        </div>
+        <div class="chips" id="heroChips"></div>
+      </div>
+      <div>
+        <div class="stage" id="stage">
+          <img class="st st-cpu" src="assets/img/budget-cpu-ryzen5-5500.webp" alt="Caja del procesador AMD Ryzen 5 5500" width="720" height="720">
+          <img class="st st-gpu" src="assets/img/budget-gpu-rtx3060-ref-angle.webp" alt="Placa de video GeForce RTX 3060 12 GB, modelo representativo Gigabyte Windforce OC" width="900" height="900">
+          <img class="st st-ram" src="assets/img/budget-ram-hiksemi-armour-16gb.webp" alt="Módulo de memoria Hiksemi Armour DDR4 de 16 GB" width="720" height="720">
+          <img class="st st-ssd" src="assets/img/budget-ssd-hiksemi-wave-512.webp" alt="SSD M.2 NVMe Hiksemi Wave de 512 GB" width="720" height="720">
+          <button class="hot h-gpu" type="button" data-go="gpu">RTX 3060 · 12 GB</button>
+          <button class="hot h-cpu" type="button" data-go="cpu">Ryzen 5 5500</button>
+          <button class="hot h-ram" type="button" data-go="ram">16 GB DDR4</button>
+          <button class="hot h-ssd" type="button" data-go="ssd">NVMe 512 GB</button>
+        </div>
+        <p class="hero-note">Fotos de producto: Venex. La RTX 3060 es una imagen representativa (Gigabyte Windforce OC); la unidad usada puede ser de otro fabricante. Tocá una etiqueta para ver la pieza.</p>
+      </div>
+    </div>
+    <div class="two-builds">
+      <a href="#punto-dulce"><img src="assets/img/budget-gpu-rtx3060-ref-front.webp" alt=""><span class="k">Configuración 1 · tope USD 800</span><span class="v">El Punto Dulce</span><span class="d"><span data-bind="budget.ars"></span> · RTX 3060 12 GB (usada) · 16 GB RAM</span></a>
+      <a href="#premium"><img src="assets/img/premium-gpu-pny-rtx-pro-4000.webp" alt=""><span class="k">Configuración 2 · sin límite práctico</span><span class="v">Money Is No Object</span><span class="d"><span data-bind="premium.ars"></span> · 2 × RTX PRO 4000 24 GB · 128 GB RAM</span></a>
+    </div>
+    <a class="scroll-cue" href="#partes">Deslizá para explorar<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+  </div>
+</section>
+
+<!-- PARTES DEL TRABAJO -->
+<section class="parts" id="partes">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">El trabajo completo</p><h2>IACO 2026 en tres partes</h2>
+      <p class="lead">Este sitio está preparado para reunir las tres partes del trabajo. La Parte 3 está completa; las Partes 1 y 2 se suman cuando esté su material.</p></div>
+    <div class="parts-grid" id="partsGrid"></div>
+  </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 3 · Perfil profesional</p><h2>Ingeniero/a de IA</h2>
+    <p class="lead">Alguien que corre modelos de lenguaje en su propia máquina, prueba redes de deep learning, ajusta modelos chicos, genera imágenes y hace visión por computadora en Python.</p></div>
+    <div class="work-grid reveal" id="workGrid"></div>
+
+    <div class="bottle reveal">
+      <div class="prose">
+        <h3 style="color:var(--ink)">Qué frena a estas tareas</h3>
+        <p><b>La <button class="term" type="button" data-term="vram">VRAM</button> decide qué modelo entra.</b> Si los pesos no caben en la memoria de la placa de video, una parte pasa a la RAM y la velocidad cae mucho. Un modelo de 7.000 millones de parámetros ocupa unos 14 GB en 16 bits y unos 4 GB comprimido a 4 bits (<button class="term" type="button" data-term="quant">cuantización</button>).</p>
+        <p><b><button class="term" type="button" data-term="cuda">CUDA</button> importa tanto como el hardware.</b> PyTorch, bitsandbytes y la mayoría de los tutoriales están pensados primero para NVIDIA. Intel y AMD funcionan, pero con más pasos; PyTorch soporta las Intel Arc desde la versión 2.5 como prototipo <a class="cite" href="#ref-pytorch">(PyTorch, 2026)</a>.</p>
+        <p><b>La RAM, la CPU y el disco acompañan.</b> Cargan los datos, preparan los lotes y guardan modelos de varios GB. Importan, pero menos que la GPU.</p>
+      </div>
+      <div>
+        <p class="eyebrow" style="color:var(--ink-2)">Impacto relativo en estas cargas · criterio editorial, no medición</p>
+        <div class="bars" id="bottleBars"></div>
+      </div>
+    </div>
+
+    <div class="stages reveal" aria-label="Usar, ajustar y entrenar un modelo">
+      <div class="stage-c"><span class="tag" style="color:var(--ok)">Usar un modelo · sí</span><h3>Inferencia</h3><p>Cargar pesos ya entrenados y generar texto o imágenes. Solo necesita los pesos y la caché del contexto en VRAM. Es lo más liviano.</p></div>
+      <div class="stage-c"><span class="tag" style="color:var(--warn)">Ajustar un modelo · con límites</span><h3>Fine-tuning</h3><p>Suma gradientes y estados del optimizador. <button class="term" type="button" data-term="qlora">QLoRA</button> lo abarata: sus autores ajustaron un modelo de 65.000 millones de parámetros en una GPU de 48 GB <a class="cite" href="#ref-qlora">(Dettmers et al., 2023)</a>.</p></div>
+      <div class="stage-c no"><span class="tag" style="color:var(--ink-2)">Entrenar desde cero · no</span><h3>Un modelo de frontera</h3><p>Entrenar algo como ChatGPT requiere miles de GPUs de centro de datos durante meses. Ninguna de las dos máquinas sirve para eso.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PUNTO DULCE + EXPLORADOR -->
+<section id="punto-dulce" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Configuración 1 · mercado argentino</p><h2>El Punto Dulce</h2>
+      <p class="lead">Una torre completa por menos de USD 800, con 12 GB de VRAM y CUDA. Incluye sistema operativo gratuito. No incluye monitor, teclado, mouse ni envío. Precios relevados el <span data-bind="date"></span>.</p></div>
+    <div class="status-legend"><span><span class="pill ref">Precio de referencia</span> leído en la página del producto, con stock</span><span><span class="pill est">Estimado · usada</span> rango de publicaciones, sin compra confirmada</span></div>
+
+    <div class="explorer reveal" id="explorador">
+      <div class="ex-top">
+        <div><span class="lbl">Armado</span><div class="seg" id="exBuild" role="group" aria-label="Elegir configuración"><button type="button" data-b="budget" aria-pressed="true">El Punto Dulce</button><button type="button" data-b="premium" aria-pressed="false">Money Is No Object</button></div></div>
+        <div class="ex-nav"><button type="button" id="exPrev" aria-label="Pieza anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span id="exCount" aria-live="polite"></span><button type="button" id="exNext" aria-label="Pieza siguiente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+      </div>
+      <div class="ex-body">
+        <div class="ex-list" id="exList" role="tablist" aria-label="Componentes" aria-orientation="vertical"></div>
+        <div class="ex-panel" id="exPanel" role="tabpanel"></div>
+      </div>
+    </div>
+
+    <div class="budget" id="presupuesto">
+      <div class="figures reveal">
+        <div class="fig"><span class="k">Total de la torre</span><span class="v" id="bTotal"></span><span class="s">Suma calculada de las piezas</span></div>
+        <div class="fig"><span class="k">Equivalente</span><span class="v" id="bUsd"></span><span class="s">Dólar BNA venta <span data-bind="fx"></span> · <span data-bind="date"></span> <a class="cite" href="#ref-lanacion">(La Nación, 2026)</a></span></div>
+        <div class="fig"><span class="k" id="bLeftK">Margen hasta USD 800</span><span class="v" id="bLeft"></span><span class="s" id="bLeftArs"></span>
+          <div class="meter" aria-hidden="true"><i id="meterFill"></i><u id="meterEst"></u></div>
+          <span class="s">Rayado: parte del total que depende del precio estimado de la GPU usada.</span></div>
+        <div class="sim">
+          <label for="gpuRange">¿Y si la GPU usada cuesta otra cosa?</label>
+          <div class="out"><span id="gpuOut"></span><span id="verdict" class="verdict-chip ok" role="status"></span></div>
+          <div class="range-wrap" id="rangeWrap">
+            <div class="range-zone" id="zoneObs" title="Rango observado en Mercado Libre"></div>
+            <span class="range-mark" id="limitMark"></span>
+            <input type="range" id="gpuRange" step="1000" aria-describedby="gpuHelp">
+          </div>
+          <div class="range-ticks"><span id="rMin"></span><span id="rMax"></span></div>
+          <p class="note" id="gpuHelp">Banda celeste: rango de publicaciones observado. Línea naranja: precio máximo para no pasar USD 800. Mové el control para recalcular todo el presupuesto.</p>
+          <button class="btn btn-sm btn-line" type="button" id="gpuReset" style="justify-self:start">Volver al precio estimado</button>
+        </div>
+      </div>
+      <div class="reveal">
+        <h3>Cómo se reparte el dinero</h3>
+        <p class="lead" style="font-size:.95rem;margin-top:6px;margin-bottom:14px">Porcentaje del total por pieza. Tocá una barra para ver su monto en pesos y dólares.</p>
+        <div class="alloc" id="alloc"></div>
+        <div class="alloc-detail" id="allocDetail" aria-live="polite"></div>
+        <p class="disclose" id="gpuDisclose"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ -->
+<section id="por-que" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Ingeniería del armado</p><h2>Dónde invertimos y dónde ahorramos</h2>
+      <p class="lead">La GPU y la RAM se llevan casi la mitad del presupuesto. El resto se eligió para no frenarlas, gastando lo justo en piezas confiables.</p></div>
+    <div class="why-grid reveal">
+      <div class="why-item"><h3>RTX 3060 de 12 GB</h3><p>12 GB es el mínimo razonable para modelos de 7–8 mil millones de parámetros comprimidos y para Stable Diffusion. Usada cuesta unos $350.000; nueva figuraba a <span data-bind="gpuNew"></span> y sin stock <a class="cite" href="#ref-venex-3060new">(Venex, 2026)</a>.</p></div>
+      <div class="why-item"><h3>Por qué CUDA</h3><p>Es el entorno que da por sentado casi todo el material de PyTorch y de cuantización. Elegimos NVIDIA por compatibilidad y precio a igual VRAM, no por marca: la Intel Arc B580 de 12 GB costaba $639.990 nueva <a class="cite" href="#ref-venex-b580">(Venex, 2026)</a>.</p></div>
+      <div class="why-item"><h3>Ryzen 5 5500 para ahorrar</h3><p>Seis núcleos alcanzan para alimentar una sola GPU de gama media. Cuesta $74.000 menos que el Ryzen 5 5600. A cambio usa <button class="term" type="button" data-term="pcie">PCIe</button> 3.0 y tiene la mitad de caché <a class="cite" href="#ref-pcgamer">(Dexter, 2022)</a>.</p></div>
+      <div class="why-item lim"><h3>16 GB de RAM son el límite visible</h3><p>Alcanzan para cargar un modelo comprimido y trabajar en Jupyter, pero con un solo módulo no hay doble canal. Es la primera mejora: sumar un segundo módulo igual.</p></div>
+      <div class="why-item lim"><h3>512 GB se llenan rápido</h3><p>Un modelo de 7B comprimido pesa unos 4 GB y los datasets de imágenes ocupan decenas. El disco alcanza para el sistema y algunos proyectos; después hace falta más.</p></div>
+      <div class="why-item"><h3>La fuente no es donde se ahorra</h3><p>NVIDIA recomienda 550 W para la RTX 3060 <a class="cite" href="#ref-nvidia-3060">(NVIDIA, s. f.)</a>. La P650SS da 650 W con certificación Silver y trae dos cables PCIe 6+2, así sirve para cualquier versión de la tarjeta.</p></div>
+      <div class="why-item lim"><h3>La GPU usada hay que probarla</h3><p>Pedir una prueba de estrés con temperaturas estables, confirmar que sea de 12 GB (existe una de 8 GB más lenta), medir el largo (el gabinete acepta hasta 280 mm) y elegir vendedores con buena reputación. No hay garantía de tienda.</p></div>
+      <div class="why-item"><h3>Compatibilidad física</h3><p>Procesador y placa usan el mismo zócalo AM4. La placa admite hasta 64 GB en dos ranuras y tiene un M.2 conectado a la CPU <a class="cite" href="#ref-msi">(MSI, s. f.)</a>. Tiene un solo conector SYS_FAN: va al ventilador trasero y los tres frontales necesitan un hub o divisor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ CORRE -->
+<section id="que-corre" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Expectativas realistas</p><h2>¿Qué podés hacer con ella?</h2>
+      <p class="lead">Estas son estimaciones a partir de la VRAM, salvo el dato medido de abajo. El rendimiento real cambia con la arquitectura del modelo, la cuantización, el largo del contexto, el tamaño del lote y las versiones de software.</p></div>
+    <div class="wl reveal" id="workloads"></div>
+    <div class="measured reveal">
+      <div><p class="eyebrow">Dato medido, no estimado</p><p class="big num">76,92 <span style="font-size:1.1rem;color:var(--ink-2)">tokens/s</span></p><p style="color:var(--ink-2);font-size:.92rem;margin-top:6px">Generación de texto de una RTX 3060 con Llama 2 7B comprimido a 4 bits (Q4_0), en llama.cpp con flash attention <a class="cite" href="#ref-llamacpp">(llama.cpp, 2025)</a>.</p></div>
+      <p style="font-size:.88rem;color:var(--ink-2)">Un token es un fragmento de palabra, así que el texto aparece más rápido de lo que se lee. Limitaciones: los resultados los cargan usuarios con distintos equipos y drivers, y un modelo de 7B es un caso favorable que entra entero en la VRAM.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEJORAS -->
+<section id="mejoras" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Hoja de ruta</p><h2>En qué orden mejorarla</h2>
+      <p class="lead">El orden importa: cada paso ataca el límite que más se nota después del anterior. Los precios son los de referencia del <span data-bind="date"></span>; no proyectamos precios futuros.</p></div>
+    <div class="road-tools"><button class="btn btn-sm btn-line" type="button" id="roadAll">Abrir todas</button></div>
+    <div class="road reveal" id="road"></div>
+  </div>
+</section>
+
+<!-- DIAGRAMA -->
+<section class="band" id="diagrama">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Diagrama de bloques</p><h2>Cómo se conecta El Punto Dulce</h2>
+      <p class="lead">Las líneas celestes son datos; las naranjas punteadas, energía. Tocá una pieza para resaltar sus conexiones y ver qué hace.</p></div>
+    <div class="dg-tools">
+      <div class="seg" id="dgMode" role="group" aria-label="Nivel de detalle"><button type="button" data-m="simple" aria-pressed="false">Simple</button><button type="button" data-m="full" aria-pressed="true">Completo</button></div>
+      <button class="btn btn-sm btn-ghost" type="button" id="dgReset">Mostrar todas las conexiones</button>
+      <button class="btn btn-sm btn-ghost" type="button" id="dgAnim" aria-pressed="true">Pausar animación</button>
+    </div>
+    <div class="diagram-wrap">
+      <div>
+        <div class="diagram-scroll"><svg id="dgBudget" class="anim" viewBox="0 0 980 660" role="img" aria-labelledby="dgTitle dgDesc"><title id="dgTitle">Diagrama de bloques de El Punto Dulce</title><desc id="dgDesc">La placa madre está en el centro. La CPU conecta la RAM, la ranura PCIe x16 con la RTX 3060 y la ranura M.2 con el SSD. La fuente alimenta la placa por 24 pines y 4 pines, la GPU por PCIe 6+2 y un hub para los 3 ventiladores frontales; el trasero va al SYS_FAN.</desc></svg></div>
+        <div class="legend" role="group" aria-label="Filtrar conexiones">
+          <button type="button" data-k="data" aria-pressed="true"><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="34" y2="5" stroke="#38B6F0" stroke-width="3"/></svg>Datos (PCIe, memoria)</button>
+          <button type="button" data-k="power" aria-pressed="true"><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="34" y2="5" stroke="#F0A93B" stroke-width="3" stroke-dasharray="7 5"/></svg>Energía desde la fuente</button>
+          <button type="button" data-k="air" aria-pressed="true"><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="34" y2="5" stroke="#7E8B99" stroke-width="2" stroke-dasharray="2 4"/></svg>Flujo de aire</button>
+        </div>
+        <details class="sr-text"><summary>Ver el diagrama en texto</summary><ul id="dgText"></ul></details>
+      </div>
+      <aside class="info" id="dgInfo" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIUM -->
+<section class="premium" id="premium">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Configuración 2 · sin límite práctico</p><h2>Money Is No Object</h2>
+      <p class="lead">La workstation más potente que pudimos armar con piezas en stock en tiendas argentinas el <span data-bind="date"></span>. La RTX 5090 de 32 GB era la primera opción, pero figuraba sin stock en todas las tiendas que revisamos <a class="cite" href="#ref-venex-5090">(Venex, 2026)</a>.</p></div>
+    <div class="prem-total"><b data-bind="premium.ars"></b><span class="mono" style="color:var(--band-ink-2)">≈ <span data-bind="premium.usdExact"></span> · dólar BNA <span data-bind="fx"></span></span></div>
+    <div class="cards" id="premiumCards" style="margin-top:28px"></div>
+
+    <div class="callout reveal">
+      <h3>Dos placas de 24 GB no son una de 48 GB</h3>
+      <p>Cada GPU tiene su propia memoria: la VRAM no se suma sola. Para usar las dos con un mismo modelo hace falta software que lo reparta (por ejemplo, llama.cpp o PyTorch con varios dispositivos). El resultado depende de la carga y de la conexión entre placas.</p>
+      <p>En esta placa madre la primera ranura va a la CPU en PCIe 5.0 x16, pero la segunda depende del chipset y funciona en PCIe 4.0 x4 <a class="cite" href="#ref-asus">(ASUS, s. f.)</a>. Para repartir un modelo grande alcanza; para entrenar en paralelo con mucho intercambio entre GPUs, esa ranura es un cuello de botella.</p>
+    </div>
+
+    <div class="vram reveal"><svg id="vramChart" viewBox="0 0 900 250" role="img" aria-label="Comparación de VRAM física: 12 GB en una GPU contra dos GPUs separadas de 24 GB"></svg></div>
+
+    <div class="diagram-scroll reveal" style="margin-top:28px;border-color:var(--band-line)"><svg id="dgPremium" viewBox="0 0 980 440" role="img" aria-labelledby="dgpT dgpD"><title id="dgpT">Conexiones de Money Is No Object</title><desc id="dgpD">La CPU Ryzen 9 9950X conecta la RAM, la GPU A por PCIe 5.0 x16 y el SSD 1 por PCIe 5.0 x4. El chipset X870E conecta la GPU B por PCIe 4.0 x4 y el SSD 2 por PCIe 4.0 x4.</desc></svg></div>
+    <p class="hero-note" style="margin-top:10px">El SSD 2 va en una ranura M.2 del chipset (M.2_4 o M.2_5): si se ocupan M.2_2 o M.2_3, la ranura de la GPU A baja a x8 <a class="cite" href="#ref-asus">(ASUS, s. f.)</a>.</p>
+  </div>
+</section>
+
+<!-- COMPARAR -->
+<section id="comparar">
+  <div class="wrap cmp" id="cmp" data-view="both">
+    <div class="sec-head reveal"><p class="eyebrow">Comparación</p><h2>Las dos workstations, lado a lado</h2>
+      <p class="lead">Mismo perfil, distinta escala. No usamos puntajes de rendimiento inventados: solo especificaciones y precios de referencia.</p></div>
+    <div class="cmp-tools"><span class="mono" style="font-size:.75rem;letter-spacing:.1em;color:var(--ink-2)">VER</span>
+      <div class="seg" id="cmpView" role="group" aria-label="Qué configuración mostrar"><button type="button" data-v="both" aria-pressed="true">Las dos</button><button type="button" data-v="b" aria-pressed="false">El Punto Dulce</button><button type="button" data-v="p" aria-pressed="false">Money Is No Object</button></div></div>
+    <div class="cmp-heads" id="cmpHeads"></div>
+    <div class="diffs reveal" id="diffs"></div>
+    <div class="table-scroll"><table id="cmpTable"><caption class="sr-only">Comparación de El Punto Dulce y Money Is No Object</caption></table></div>
+    <div class="verdict">
+      <div><h3>Para estudiar y empezar</h3><p>El Punto Dulce alcanza para aprender, prototipar y correr modelos chicos con las mismas herramientas que se usan en la industria. Por <span data-bind="budget.usd"></span> es la puerta de entrada razonable para un estudiante.</p></div>
+      <div><h3>Para trabajo profesional</h3><p>Money Is No Object tiene sentido cuando el trabajo paga la inversión: modelos más grandes, varios a la vez, ajustes serios y datos que no entran en 16 GB. Cuesta unas <span data-bind="ratio"></span> veces más.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOGRAFÍA -->
+<section class="band" id="infografia">
+  <div class="wrap">
+    <div class="sec-head" style="text-align:center;justify-items:center"><p class="eyebrow">Infografía final</p><h2>El Punto Dulce en una imagen</h2></div>
+    <div class="ig-frame"><svg id="infographic" viewBox="0 0 1080 1350" role="img" aria-label="Infografía de El Punto Dulce: precio, componentes con fotos, usos, límites y mejoras"></svg></div>
+    <div class="ig-actions" id="igActions" hidden><button class="btn btn-main" type="button" id="igPng">Descargar PNG (2160 × 2700)</button></div>
+    <p class="ig-note" id="igNote">La infografía también se entrega como archivo SVG y PNG para la presentación.</p>
+  </div>
+</section>
+
+<!-- BIBLIO -->
+<section id="bibliografia">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Transparencia académica</p><h2>Bibliografía y Recursos</h2>
+      <p class="lead">Formato APA. Los listados de productos son páginas dinámicas: el precio citado es el que mostraban el día de consulta.</p></div>
+    <div class="bib" id="bib"></div>
+    <div class="method">
+      <h3>Método y límites</h3>
+      <ul>
+        <li>Precios: precio especial (efectivo o transferencia) de cada página de producto, consultado el 27/10/2026. No incluyen cuotas ni descuentos temporales.</li>
+        <li>Dólar: oficial Banco Nación, venta, $1.560 el 27/10/2026. Ese día el MEP cerró en $1.559,24 y el blue en $1.575 <a class="cite" href="#ref-ambito">(Ámbito, 2026)</a>, así que el resultado no cambia con otra referencia razonable.</li>
+        <li>GPU usada: precio estimado a partir de publicaciones de Mercado Libre entre $350.000 y $390.000. Falta elegir una publicación concreta. Si cuesta más de <span data-bind="gpuMax"></span>, la torre supera USD 800.</li>
+        <li>Placas de video premium: precio por transferencia y stock leídos en Compra Gamer (modelo VCNRTXPRO4000B-PB, 241 mm, una ranura). La ficha de la tienda menciona por error "RTX PRO 4500" en un campo; usamos los datos del título y de PNY. RAM premium: precio leído en Hardcore Computación (SKU CMK64GX5M2B5600Z40).</li>
+        <li>Imágenes: fotos de producto tomadas de las páginas de Venex, Compra Gamer y Hardcore Computación, usadas solo para identificar cada pieza. Se les quitó el fondo blanco. La foto de la RTX 3060 es representativa (Gigabyte Windforce OC 12 GB): la placa usada puede ser de otro fabricante. Ubuntu no tiene foto de producto y se muestra con una ilustración.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>IACO 2026 · Parte 3: El Diseño Maestro</span><span>Datos de referencia al <span data-bind="date"></span></span></div></footer>
+<button class="to-top" id="toTop" type="button" aria-label="Volver arriba"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+document.documentElement.classList.add("js");
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const IMG = "assets/img/";
+/* =========================================================
+   FUENTE ÚNICA DE DATOS. Todo total, porcentaje, conversión
+   y texto con precios se calcula a partir de este objeto.
+   ========================================================= */
+const DATA = {
+  date: "27/10/2026",
+  fx: { arsPerUsd: 1560, label: "dólar oficial BNA, venta" },
+  limitUsd: 800,
+  budget: [
+    { id:"cpu", cat:"Procesador", model:"AMD Ryzen 5 5500", short:"Ryzen 5 5500", art:"cpu",
+      img:["budget-cpu-ryzen5-5500.webp"], imgSrc:"Venex",
+      specs:["6 núcleos / 12 hilos, Zen 3","Hasta 4,2 GHz, 16 MB L3, 65 W","Incluye cooler Wraith Stealth"],
+      ars:180999, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/microprocesadores/microprocesador-cpu-amd-ryzen-5-5500-6-12-4-2ghz-zen3-am4.html",
+      spec:"https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-5-5500.html",
+      why:"Seis núcleos alcanzan para alimentar una GPU de gama media y ahorra $74.000 frente al Ryzen 5 5600.",
+      compat:"Zócalo AM4. Limita la placa a PCIe 3.0.", role:"Ejecuta el sistema, prepara los datos y le envía el trabajo a la GPU." },
+    { id:"mb", cat:"Placa madre", model:"MSI B550M-A PRO", short:"B550M-A PRO", art:"mb",
+      img:["budget-mb-msi-b550m-a-pro.webp"], imgSrc:"Venex",
+      specs:["Micro-ATX, chipset B550","2 ranuras DDR4, hasta 64 GB","1 PCIe x16 y 1 M.2 NVMe"],
+      ars:124999, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/motherboards/amd/motherboard-msi-b550m-a-pro-am4.html",
+      spec:"https://www.msi.com/Motherboard/B550M-A-PRO/Specification",
+      why:"La B550 de marca más barata con stock; acepta procesadores Ryzen 5000 más potentes después.",
+      compat:"Un solo SYS_FAN: los ventiladores del gabinete necesitan hub.", role:"Conecta todo: zócalo, memorias, ranura de la GPU, M.2 y los cables de energía." },
+    { id:"ram", cat:"Memoria RAM", model:"Hiksemi Armour 16 GB DDR4-3200", short:"16 GB DDR4", art:"ram",
+      img:["budget-ram-hiksemi-armour-16gb.webp"], imgSrc:"Venex",
+      specs:["16 GB, 1 módulo","DDR4-3200, DIMM de escritorio","Deja una ranura libre"],
+      ars:254990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/memorias-ram/desktop/memoria-ram-hiksemi-armor-ddr4-16gb-3200mhz.html",
+      why:"16 GB permiten cargar un modelo comprimido y trabajar en Jupyter. Un segundo módulo es la primera mejora.",
+      compat:"Con un solo módulo funciona en un canal.", role:"Guarda el sistema, los datos en uso y la parte de un modelo que no entra en la VRAM." },
+    { id:"ssd", cat:"Almacenamiento", model:"Hiksemi Wave 512 GB NVMe", short:"512 GB NVMe", art:"ssd",
+      img:["budget-ssd-hiksemi-wave-512.webp"], imgSrc:"Venex",
+      specs:["M.2 2280, NVMe PCIe 3.0","2.500 MB/s lectura","1.025 MB/s escritura"],
+      ars:170990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/discos-solidos-ssd/disco-solido-ssd-512gb-hiksemi-m-2-nvme-wave-25000mb-s.html",
+      why:"Carga un modelo de varios GB en segundos. La velocidad del disco no cambia los tokens por segundo.",
+      compat:"Toma energía de la ranura M.2, sin cable.", role:"Guarda el sistema, los modelos y los datasets." },
+    { id:"gpu", cat:"Placa de video", model:"NVIDIA GeForce RTX 3060 12 GB (usada)", short:"RTX 3060 12 GB", art:"gpu", hero:true, rep:true,
+      img:["budget-gpu-rtx3060-ref-angle.webp","budget-gpu-rtx3060-ref-front.webp","budget-gpu-rtx3060-gigabyte-windforce-ref.webp"], imgSrc:"Venex · Gigabyte RTX 3060 Windforce OC 12 GB",
+      specs:["12 GB GDDR6, bus de 192 bits","3.584 núcleos CUDA","Tensor Cores de 3.ª generación","Pide fuente de 550 W y un conector PCIe de 8 pines (diseño de referencia)"],
+      ars:350000, status:"est", store:"Mercado Libre",
+      url:"https://listado.mercadolibre.com.ar/rtx-3060-12-gb-usada",
+      spec:"https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3060-3060ti/",
+      why:"La pieza que define la máquina: 12 GB de VRAM con CUDA por menos de la mitad de lo que cuesta nueva.",
+      compat:"Elegir un modelo de hasta 280 mm. Precio estimado: aún no hay una publicación concreta elegida.", role:"Hace el cálculo de IA. Su VRAM decide qué modelos entran." },
+    { id:"psu", cat:"Fuente", model:"Gigabyte P650SS 650 W", short:"650 W Silver", art:"psu",
+      img:["budget-psu-gigabyte-p650ss.webp"], imgSrc:"Venex",
+      specs:["80 Plus Silver, ATX 3.0","2 × PCIe 6+2 pines","2 × CPU 4+4, 24 pines"],
+      ars:87990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/fuentes/fuente-gigabyte-650w-p650ss-80-silver-atx-3-0.html",
+      spec:"https://www.gigabyte.com/Power-Supply/GP-P650SS/sp",
+      why:"100 W por encima de lo recomendado y de marca conocida: no conviene ahorrar acá con una GPU usada.",
+      compat:"Cubre cualquier RTX 3060 con 1 o 2 conectores.", role:"Entrega energía estable a la placa, la CPU, la GPU y los ventiladores." },
+    { id:"case", cat:"Gabinete", model:"Arkham Cozu con 4 ventiladores", short:"Arkham Cozu", art:"case",
+      img:["budget-case-arkham-cozu.webp"], imgSrc:"Venex",
+      specs:["Mid tower, admite Micro-ATX","GPU hasta 280 mm, cooler hasta 155 mm","3 × 120 mm al frente, 1 × 120 mm atrás"],
+      ars:57990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/gabinetes/gabinete-arkham-cozu-c-coolers-x4-argb-atx.html",
+      why:"Ya trae los 4 ventiladores: tres entran aire por el frente y uno lo saca por atrás.",
+      compat:"Revisar si incluye hub: la placa solo alimenta un ventilador del gabinete.", role:"Aloja las piezas y ordena el flujo de aire." },
+    { id:"os", cat:"Sistema operativo", model:"Ubuntu 24.04 LTS + CUDA + PyTorch", short:"Ubuntu", art:"os",
+      img:[], specs:["Gratuito","Entorno estándar para CUDA"],
+      ars:0, status:"free", store:"ubuntu.com", url:"https://ubuntu.com/download/desktop",
+      why:"Evita pagar una licencia y es el sistema donde más se prueba el software de IA.",
+      compat:"", role:"Corre los drivers de NVIDIA, CUDA y PyTorch." }
+  ],
+  premium: [
+    { id:"pgpu", cat:"Placas de video (2)", model:"PNY NVIDIA RTX PRO 4000 Blackwell 24 GB", art:"gpu", hero:true, qty:2,
+      img:["premium-gpu-pny-rtx-pro-4000.webp","premium-gpu-pny-rtx-pro-4000-box.webp"], imgSrc:"Compra Gamer",
+      specs:["24 GB GDDR7 con ECC cada una","192 bits, ~672 GB/s","140 W · una ranura · 241 mm","Conector de 16 pines (adaptador incluido)"],
+      ars:6004665, status:"ref", store:"Compra Gamer",
+      url:"https://compragamer.com/producto/Placa_de_Video_PNY_RTX_PRO_4000_Blackwell_24GB_GDDR7_ECC_IA_21850",
+      spec:"https://www.pny.com/en-eu/nvidia-rtx-pro-4000-blackwell",
+      why:"La opción profesional en stock: memoria con corrección de errores, bajo consumo y formato de una ranura que permite dos.",
+      compat:"Cada una usa un conector de 16 pines; la tienda indica adaptador incluido. Confirmar cables de la fuente.", role:"Hacen el cálculo de IA, cada una con 24 GB propios." },
+    { id:"pcpu", cat:"Procesador", model:"AMD Ryzen 9 9950X", art:"cpu",
+      img:["premium-cpu-ryzen9-9950x.webp"], imgSrc:"Venex",
+      specs:["16 núcleos / 32 hilos","Hasta 5,7 GHz, AM5, 170 W","Sin cooler incluido"],
+      ars:1079990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/microprocesadores/microprocesador-cpu-amd-ryzen-9-9950x-16-32-5-7ghz-zen5-am5.html",
+      spec:"https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x.html",
+      why:"El procesador de escritorio más fuerte en stock; acelera el preprocesamiento de datos.", compat:"", role:"Prepara datos y coordina las dos GPUs." },
+    { id:"pmb", cat:"Placa madre", model:"ASUS ROG Strix X870E-E Gaming WiFi", art:"mb",
+      img:["premium-mb-asus-rog-strix-x870e-e.webp"], imgSrc:"Venex",
+      specs:["AM5, 4 ranuras DDR5","PCIe 5.0 x16 (CPU) + PCIe 4.0 x4 (chipset)","5 ranuras M.2"],
+      ars:929999, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/motherboards/amd/motherboard-asus-rog-strix-x870-e-gaming-wifi-am5-ddr5.html",
+      spec:"https://rog.asus.com/motherboards/rog-strix/rog-strix-x870e-e-gaming-wifi/spec/",
+      why:"Admite hasta 256 GB de RAM y dos placas de video, con buena conectividad.",
+      compat:"La segunda GPU queda en PCIe 4.0 x4.", role:"Une CPU, memoria, dos GPUs y cinco M.2." },
+    { id:"pram", cat:"Memoria RAM", model:"128 GB DDR5 (2 kits Corsair Vengeance 2 × 32 GB 5600)", art:"ram", qty:2,
+      img:["premium-ram-corsair-vengeance-ddr5.webp"], imgSrc:"Hardcore Computación",
+      specs:["4 × 32 GB DDR5","5600 MT/s, EXPO","SKU CMK64GX5M2B5600Z40"],
+      ars:2222300, status:"ref", store:"Hardcore Computación",
+      url:"https://hardcorecomputacion.com.ar/producto/memoria-corsair-vengeance-2x32gb-ddr5-5600mhz-cl40-expo/",
+      why:"Más RAM que VRAM total: datasets enteros en memoria y margen para cargar modelos.",
+      compat:"Con 4 módulos en AM5 la velocidad suele bajar respecto de 2.", role:"Datos y modelos en memoria antes de pasar a la GPU." },
+    { id:"pssd", cat:"Almacenamiento (2)", model:"Hiksemi Future Lite 1 TB NVMe", art:"ssd", qty:2,
+      img:["premium-ssd-hiksemi-future-lite-1tb.webp"], imgSrc:"Venex",
+      specs:["PCIe 4.0, 7.100 MB/s lectura","Uno para sistema, otro para datos"],
+      ars:324990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/discos-solidos-ssd/disco-solido-ssd-1tb-hiksemi-m2-nvme-future-lite-7100mb-s.html",
+      why:"Dos discos separan el sistema de los datos y cargan modelos grandes rápido.", compat:"", role:"Sistema en un disco, modelos y datasets en el otro." },
+    { id:"pcool", cat:"Refrigeración", model:"Thermaltake LA360-S (líquida, 360 mm)", art:"cool",
+      img:["premium-cooler-thermaltake-la360s.webp"], imgSrc:"Venex",
+      specs:["Radiador de 360 mm","Compatible con AM5"],
+      ars:169990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/refrigeracion/coolers-y-water-coolers/water-cooler-cpu-thermaltake-tt-la360-s-argb-aio-argb-black-240.html",
+      why:"El 9950X no trae cooler y llega a 170 W; un radiador de 360 mm lo mantiene estable en cargas largas.", compat:"Va arriba o al frente del gabinete.", role:"Saca el calor del procesador." },
+    { id:"ppsu", cat:"Fuente", model:"Corsair RM1000x Shift 1000 W", art:"psu",
+      img:["premium-psu-corsair-rm1000x-shift.webp"], imgSrc:"Venex",
+      specs:["80 Plus Gold, modular","7 conectores PCIe según la tienda"],
+      ars:269990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/fuentes/fuente-corsair-rm1000x-1000w-80-gold-full-modular.html",
+      why:"Unos 450 W de consumo previsto (2 × 140 W + 170 W) más el resto: sobra margen.",
+      compat:"Confirmar que incluya dos cables de 16 pines o usar los adaptadores de las placas.", role:"Alimenta dos GPUs, la CPU y el resto." },
+    { id:"pcase", cat:"Gabinete", model:"Cooler Master Elite 502", art:"case",
+      img:["premium-case-cooler-master-elite-502.webp"], imgSrc:"Venex",
+      specs:["Mid tower, admite ATX y E-ATX","GPU hasta 410 mm","3 ventiladores, radiador 360 mm"],
+      ars:92990, status:"ref", store:"Venex",
+      url:"https://www.venex.com.ar/componentes-de-pc/gabinetes/gabinete-cooler-master-elite-502-black.html",
+      spec:"https://www.coolermaster.com/en-in/products/elite-502/",
+      why:"Espacio para dos placas de video, el radiador y buen flujo de aire.", compat:"", role:"Aloja todo con espacio para dos GPUs." }
+  ],
+  summary: {
+    budget:  { cores:6,  vram:[12],    ram:16,  storage:512,  psu:650 },
+    premium: { cores:16, vram:[24,24], ram:128, storage:2048, psu:1000 }
+  },
+  usedGpuRange: [350000, 390000],
+  gpuNewArs: 831990,
+  upgrades: [
+    { t:"RAM a 32 GB", d:"Sumar un segundo Hiksemi Armour de 16 GB igual al actual: 2 × 16 GB en doble canal, las dos ranuras de la placa ocupadas.", costRef:"ram",
+      fix:"Doble canal y el doble de memoria para datasets y para la parte de un modelo que no entra en la VRAM.", check:"Mismo modelo y velocidad (DDR4-3200). La placa admite hasta 64 GB en dos ranuras.", img:"budget-ram-hiksemi-armour-16gb.webp", imgCap:"Mismo módulo que el actual" },
+    { t:"Más almacenamiento", d:"Un SSD SATA o un NVMe de 1–2 TB para modelos y datasets.", cost:"Desde ARS 324.990 (NVMe 1 TB, Venex)",
+      fix:"Espacio para varios modelos y datasets de imágenes sin borrar cada vez.", check:"La placa tiene un solo M.2: el segundo disco va por SATA o reemplaza al actual.", img:"premium-ssd-hiksemi-future-lite-1tb.webp", imgCap:"NVMe 1 TB de referencia" },
+    { t:"Procesador", d:"Solo si la carga lo pide: un Ryzen 5 5600 o Ryzen 7 5700X en la misma placa.", cost:"Ryzen 5 5600: ARS 254.999 (Venex)",
+      fix:"Más núcleos para preparar datos, el doble de caché y PCIe 4.0.", check:"Puede requerir actualizar la BIOS de la B550M-A PRO. Mantiene AM4 y DDR4." },
+    { t:"Placa de video", d:"Cuando los modelos no entren en 12 GB: una GPU de 16 GB o más.", cost:"RTX 5060 Ti 16 GB: desde ARS 1.499.249 (PCompara)",
+      fix:"Modelos más grandes o con más contexto sin pasar a la RAM.", check:"Potencia de la fuente (650 W) y largo máximo del gabinete (280 mm)." }
+  ]
+};
+
+/* ---------- cálculos derivados ---------- */
+const fmtArs = n => "ARS " + Math.round(n).toLocaleString("es-AR");
+const fmtUsd = (n,d=0) => "USD " + n.toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtPct = n => n.toFixed(1).replace(".",",") + " %";
+const lineTotal = c => c.ars * (c.qty||1);
+const sum = list => list.reduce((a,c)=>a+lineTotal(c),0);
+const toUsd = ars => ars / DATA.fx.arsPerUsd;
+const BT = sum(DATA.budget), PT = sum(DATA.premium);
+const GPU = DATA.budget.find(c=>c.id==="gpu");
+const est = DATA.budget.filter(c=>c.status==="est").reduce((a,c)=>a+lineTotal(c),0);
+const limitArs = DATA.limitUsd * DATA.fx.arsPerUsd;
+const GPU_MAX = est + (limitArs - BT);
+const CALC = {
+  "date": DATA.date,
+  "fx": "$" + DATA.fx.arsPerUsd.toLocaleString("es-AR"),
+  "budget.ars": fmtArs(BT),
+  "budget.usd": fmtUsd(toUsd(BT)),
+  "budget.usdExact": fmtUsd(toUsd(BT),2),
+  "premium.ars": fmtArs(PT),
+  "premium.usdExact": fmtUsd(toUsd(PT),2),
+  "ratio": Math.round(PT/BT),
+  "gpuNew": fmtArs(DATA.gpuNewArs),
+  "gpuMax": fmtArs(GPU_MAX)
+};
+document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = CALC[el.dataset.bind]; });
+const findAny = id => DATA.budget.find(c=>c.id===id) || DATA.premium.find(c=>c.id===id);
+const esc = s => String(s).replace(/"/g,"&quot;");
+
+/* ---------- partes del trabajo (extensible) ---------- */
+const PARTS = [
+  { n:1, status:"pending", title:"Parte 1", href:null },
+  { n:2, status:"pending", title:"Parte 2", href:null },
+  { n:3, status:"live", title:"El Diseño Maestro: tu Workstation de IA", href:"#perfil" }
+];
+document.getElementById("partsGrid").innerHTML = PARTS.map(p => p.status==="live"
+  ? `<article class="part live"><span class="n">0${p.n}</span><span class="st-tag">● Disponible</span><h3>Parte ${p.n} · ${p.title}</h3><p>Perfil, dos configuraciones con precios argentinos, diagrama de bloques, comparación e infografía.</p><a class="btn btn-sm btn-line" href="${p.href}" style="justify-self:start">Ir a la Parte ${p.n}</a></article>`
+  : `<article class="part pending" aria-label="${p.title}, pendiente de integración"><span class="n">0${p.n}</span><span class="st-tag">◌ Pendiente de integración</span><h3>${p.title}</h3><p>Este espacio queda reservado. Su contenido se incorporará cuando esté disponible el material de la ${p.title}.</p></article>`).join("");
+
+/* ---------- navegación ---------- */
+const NAV = [
+  ["#partes","Partes"],["#perfil","Perfil"],["#explorador","Componentes"],["#presupuesto","Presupuesto"],["#diagrama","Diagrama"],
+  ["#premium","Premium"],["#comparar","Comparar"],["#infografia","Infografía"],["#bibliografia","Fuentes"]
+];
+const nav = document.getElementById("nav");
+nav.innerHTML = NAV.map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+const menuBtn = document.getElementById("menuBtn");
+menuBtn.addEventListener("click",()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)});
+nav.addEventListener("click",e=>{if(e.target.tagName==="A"){nav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false")}});
+// sección activa
+(function(){
+  const links = [...nav.querySelectorAll("a")];
+  const targets = NAV.map(([h])=>document.querySelector(h)).filter(Boolean);
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ const id="#"+e.target.id; links.forEach(a=>a.setAttribute("aria-current", a.getAttribute("href")===id ? "true":"false")); } });
+  },{rootMargin:"-40% 0px -55% 0px"});
+  targets.forEach(t=>io.observe(t));
+})();
+
+/* ---------- tema ---------- */
+(function(){
+  const btn=document.getElementById("themeBtn"), modes=["auto","light","dark"], names={auto:"auto",light:"claro",dark:"oscuro"};
+  let m="auto"; try{ m=localStorage.getItem("iaco-theme")||"auto"; }catch(e){}
+  const apply=()=>{ if(m==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme",m); btn.textContent="Tema: "+names[m]; };
+  apply();
+  btn.addEventListener("click",()=>{ m=modes[(modes.indexOf(m)+1)%3]; apply(); try{localStorage.setItem("iaco-theme",m)}catch(e){} });
+})();
+
+/* ---------- volver arriba + revelado ---------- */
+(function(){
+  const b=document.getElementById("toTop");
+  addEventListener("scroll",()=>b.classList.toggle("on",scrollY>900),{passive:true});
+  b.addEventListener("click",()=>{scrollTo({top:0,behavior:RM?"auto":"smooth"}); document.querySelector(".brand").focus({preventScroll:true});});
+})();
+function initReveal(){
+  if(RM||!("IntersectionObserver" in window)){document.querySelectorAll(".reveal").forEach(e=>e.classList.add("in"));return;}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".reveal").forEach(e=>io.observe(e));
+}
+
+/* ---------- glosario (tooltips) ---------- */
+const TERMS = {
+  vram:["VRAM","Memoria propia de la placa de video. Ahí tienen que entrar los pesos del modelo para que corra rápido."],
+  cuda:["CUDA","Plataforma de NVIDIA para programar la GPU. PyTorch y la mayoría de las herramientas de IA la usan primero."],
+  quant:["Cuantización","Guardar los pesos del modelo con menos bits (por ejemplo 4 en vez de 16) para que ocupe menos memoria, con algo de pérdida de calidad."],
+  qlora:["QLoRA","Técnica de ajuste fino que entrena pocas matrices extra sobre un modelo cuantizado a 4 bits. Reduce mucho la memoria necesaria."],
+  pcie:["PCIe","El bus que conecta la GPU y los SSD con la CPU. La versión (3.0, 4.0, 5.0) y la cantidad de carriles (x4, x16) fijan su ancho de banda."]
+};
+(function(){
+  const tip=document.getElementById("tip"); let cur=null;
+  const show=el=>{const t=TERMS[el.dataset.term]; if(!t) return; cur=el; tip.innerHTML=`<b>${t[0]}</b>${t[1]}`; el.setAttribute("aria-describedby","tip");
+    const r=el.getBoundingClientRect(); tip.classList.add("on"); const w=tip.offsetWidth,h=tip.offsetHeight;
+    let x=Math.min(Math.max(8,r.left+r.width/2-w/2),innerWidth-w-8), y=r.top-h-10; if(y<70) y=r.bottom+10;
+    tip.style.left=x+"px"; tip.style.top=y+"px"; };
+  const hide=()=>{ if(cur) cur.removeAttribute("aria-describedby"); cur=null; tip.classList.remove("on"); };
+  document.querySelectorAll(".term").forEach(el=>{
+    el.addEventListener("mouseenter",()=>show(el)); el.addEventListener("mouseleave",hide);
+    el.addEventListener("focus",()=>show(el)); el.addEventListener("blur",hide);
+    el.addEventListener("click",()=>cur===el?hide():show(el));
+  });
+  addEventListener("keydown",e=>{if(e.key==="Escape") hide()});
+  addEventListener("scroll",hide,{passive:true});
+})();
+
+/* ---------- ilustraciones (solo para piezas sin foto) ---------- */
+const ART = {
+ os:`<svg viewBox="0 0 200 120" aria-hidden="true"><rect x="40" y="18" width="120" height="78" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><text x="54" y="48" font-family="IBM Plex Mono,monospace" font-size="12" fill="#38B6F0">$ python</text><text x="54" y="66" font-family="IBM Plex Mono,monospace" font-size="12" fill="currentColor">&gt;&gt;&gt; import torch</text><path d="M80 96 v10 h40 v-10" stroke="currentColor" stroke-width="2" fill="none"/></svg>`
+};
+const pic = (c,i=0,cls="") => c.img && c.img[i] ? `<img ${cls?`class="${cls}" `:""}src="${IMG+c.img[i]}" alt="${esc(c.model)}${c.rep?" (imagen representativa)":""}" loading="lazy">` : ART[c.art]||"";
+
+/* ---------- hero ---------- */
+document.getElementById("heroChips").innerHTML = ["gpu","cpu","ram","ssd","psu"].map(id=>`<span>${DATA.budget.find(c=>c.id===id).short}</span>`).join("");
+(function(){
+  const vals = { total:[BT,v=>fmtArs(v)], usd:[toUsd(BT),v=>fmtUsd(v)], vram:[12,v=>Math.round(v)+" GB"], left:[DATA.limitUsd-toUsd(BT),v=>fmtUsd(v,2)] };
+  const els=[...document.querySelectorAll("[data-count]")];
+  els.forEach(el=>{ const [v,f]=vals[el.dataset.count]; el.textContent=f(v); });
+  if(RM) return;
+  const run=()=>{ const t0=performance.now(), D=1400;
+    const tick=t=>{ const p=Math.min(1,(t-t0)/D), e=1-Math.pow(1-p,3);
+      els.forEach(el=>{const [v,f]=vals[el.dataset.count]; el.textContent=f(v*e)}); if(p<1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick); };
+  run();
+  const st=document.getElementById("stage");
+  st.addEventListener("pointermove",e=>{ if(e.pointerType!=="mouse") return; const r=st.getBoundingClientRect(); st.style.setProperty("--px",((e.clientX-r.left)/r.width-.5)*2); st.style.setProperty("--py",((e.clientY-r.top)/r.height-.5)*2); });
+  st.addEventListener("pointerleave",()=>{st.style.setProperty("--px",0);st.style.setProperty("--py",0)});
+})();
+document.querySelectorAll(".hot").forEach(b=>b.addEventListener("click",()=>exSelect("budget",b.dataset.go,true)));
+
+/* ---------- explorador de componentes ---------- */
+const STATUS = { ref:'<span class="pill ref">Precio de referencia</span>', est:'<span class="pill est">Estimado · GPU usada</span>', free:'<span class="pill free">Gratis</span>' };
+const ORDER = { budget:["gpu","cpu","mb","ram","ssd","psu","case","os"], premium:DATA.premium.map(c=>c.id) };
+const EX = { build:"budget", id:"gpu", img:0 };
+const exList=document.getElementById("exList"), exPanel=document.getElementById("exPanel");
+function exItems(){ return ORDER[EX.build].map(id=>DATA[EX.build].find(c=>c.id===id)); }
+function exRenderList(){
+  exList.innerHTML = exItems().map(c=>`<button class="ex-tab" role="tab" type="button" id="tab-${c.id}" data-id="${c.id}" aria-controls="exPanel" aria-selected="${c.id===EX.id}" tabindex="${c.id===EX.id?0:-1}">
+    <span class="th">${c.img.length?`<img src="${IMG+c.img[0]}" alt="" loading="lazy">`:ART[c.art]}</span>
+    <span class="t"><small>${c.cat}</small><span>${c.short||c.model}</span><em>${c.ars?fmtArs(lineTotal(c)):"Gratis"}</em></span></button>`).join("");
+}
+function exRenderPanel(){
+  const items=exItems(), c=items.find(x=>x.id===EX.id), i=items.indexOf(c), total=EX.build==="budget"?BT:PT;
+  const share = lineTotal(c)/total*100;
+  const qty = c.qty ? ` · ${c.qty} × ${fmtArs(c.ars)}` : "";
+  const badge = c.rep ? `<span class="pill rep badge">Imagen representativa · la unidad usada puede variar</span>` : "";
+  const gal = c.img.length>1 ? `<div class="gal" role="group" aria-label="Fotos">${c.img.map((f,k)=>`<button type="button" data-k="${k}" aria-pressed="${k===EX.img}" aria-label="Foto ${k+1} de ${c.img.length}"><img src="${IMG+f}" alt=""></button>`).join("")}</div>` : "";
+  const credit = c.img.length ? `Foto: ${c.imgSrc}` : "Software gratuito: sin foto de producto";
+  exPanel.setAttribute("aria-labelledby","tab-"+c.id);
+  exPanel.innerHTML = `<div class="ex-media">${badge}<div class="main">${c.img.length?`<img src="${IMG+c.img[EX.img]||c.img[0]}" alt="${esc(c.model)}${c.rep?" (imagen representativa)":""}">`:ART[c.art]}</div><div>${gal}<p class="credit">${credit}</p></div></div>
+   <div class="ex-info">
+     <span class="cat">${c.cat}</span><h3>${c.model}</h3>
+     <div class="ex-price"><b>${c.ars?fmtArs(lineTotal(c)):"ARS 0"}</b><small>${c.ars?"≈ "+fmtUsd(toUsd(lineTotal(c))):""}${qty}</small>${STATUS[c.status]}</div>
+     ${c.ars?`<div class="share"><div class="tr" aria-hidden="true"><i style="width:${share}%"></i></div><small>${fmtPct(share)} del total de ${EX.build==="budget"?"El Punto Dulce":"Money Is No Object"}</small></div>`:""}
+     <dl class="kv">
+       ${c.role?`<div><dt>Qué hace</dt><dd>${c.role}</dd></div>`:""}
+       <div><dt>Specs</dt><dd><ul>${c.specs.map(s=>`<li>${s}</li>`).join("")}</ul></dd></div>
+       <div><dt>Por qué</dt><dd>${c.why}</dd></div>
+       ${c.compat?`<div><dt>Compatib.</dt><dd>${c.compat}</dd></div>`:""}
+     </dl>
+     <div class="links"><a class="btn btn-sm btn-line" href="${c.url}" target="_blank" rel="noopener">Ver en ${c.store} ↗</a>${c.spec?`<a class="btn btn-sm btn-line" href="${c.spec}" target="_blank" rel="noopener">Ficha del fabricante ↗</a>`:`<span>Ficha técnica: la de la tienda</span>`}</div>
+   </div>`;
+  document.getElementById("exCount").textContent = `${i+1} / ${items.length}`;
+  exPanel.querySelectorAll(".gal button").forEach(b=>b.addEventListener("click",()=>{EX.img=+b.dataset.k;exRenderPanel()}));
+}
+function exSelect(build,id,scroll){
+  if(build!==EX.build){ EX.build=build; document.querySelectorAll("#exBuild button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.b===build)); }
+  EX.id=id; EX.img=0; exRenderList(); exRenderPanel();
+  if(scroll) document.getElementById("explorador").scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
+}
+exList.addEventListener("click",e=>{const b=e.target.closest(".ex-tab"); if(b){exSelect(EX.build,b.dataset.id); document.getElementById("tab-"+b.dataset.id).focus();}});
+exList.addEventListener("keydown",e=>{
+  const ids=ORDER[EX.build], i=ids.indexOf(EX.id); let n=null;
+  if(["ArrowDown","ArrowRight"].includes(e.key)) n=(i+1)%ids.length;
+  if(["ArrowUp","ArrowLeft"].includes(e.key)) n=(i-1+ids.length)%ids.length;
+  if(e.key==="Home") n=0; if(e.key==="End") n=ids.length-1;
+  if(n!==null){e.preventDefault(); exSelect(EX.build,ids[n]); const t=document.getElementById("tab-"+ids[n]); t.focus(); t.scrollIntoView({block:"nearest",inline:"nearest"});}
+});
+const exStep=d=>{const ids=ORDER[EX.build]; exSelect(EX.build,ids[(ids.indexOf(EX.id)+d+ids.length)%ids.length]); document.getElementById("tab-"+EX.id).scrollIntoView({block:"nearest",inline:"nearest"});};
+document.getElementById("exPrev").addEventListener("click",()=>exStep(-1));
+document.getElementById("exNext").addEventListener("click",()=>exStep(1));
+document.querySelectorAll("#exBuild button").forEach(b=>b.addEventListener("click",()=>exSelect(b.dataset.b,ORDER[b.dataset.b][0])));
+exSelect("budget","gpu");
+
+/* ---------- tarjetas premium ---------- */
+function card(c){
+  const total = lineTotal(c);
+  const qty = c.qty ? ` <small>(${c.qty} × ${fmtArs(c.ars)})</small>` : "";
+  return `<article class="card${c.hero?" hero-card":""} reveal">
+    <div class="art">${pic(c,0)}${c.hero&&c.img[1]?`<img class="sub" src="${IMG+c.img[1]}" alt="Caja de la ${esc(c.model)}" loading="lazy">`:""}<span class="ill">Foto: ${c.imgSrc}</span></div>
+    <div class="body">
+      <span class="cat">${c.cat}</span>
+      <h3>${c.model}</h3>
+      <ul>${c.specs.map(s=>`<li>${s}</li>`).join("")}</ul>
+      <p class="why">${c.why}</p>
+      ${c.compat?`<p class="compat">${c.compat}</p>`:""}
+      <div class="price"><div><b class="num">${fmtArs(total)}</b>${qty}<br><small>≈ ${fmtUsd(toUsd(total))}</small></div>${STATUS[c.status]}</div>
+      <div class="src"><a href="${c.url}" target="_blank" rel="noopener">Ver en ${c.store} ↗</a>${c.spec?`<a href="${c.spec}" target="_blank" rel="noopener">Ficha oficial ↗</a>`:""}</div>
+    </div></article>`;
+}
+document.getElementById("premiumCards").innerHTML = DATA.premium.map(card).join("");
+
+/* ---------- perfil ---------- */
+const WORK = [
+ ["LLMs locales","Correr modelos de lenguaje comprimidos en la propia máquina, sin depender de la nube."],
+ ["Deep learning","Probar arquitecturas y entrenar redes chicas con PyTorch."],
+ ["Ajuste fino","Adaptar modelos existentes a datos propios con LoRA o QLoRA."],
+ ["Stable Diffusion","Generar imágenes con IA generativa en ComfyUI o Automatic1111."],
+ ["Visión por computadora","Clasificar, detectar y segmentar imágenes."],
+ ["Python y datos","Análisis con pandas, scikit-learn y Jupyter."]
+];
+document.getElementById("workGrid").innerHTML = WORK.map(([t,d])=>`<div class="work"><h3>${t}</h3><p>${d}</p></div>`).join("");
+const BOTTLE = [["VRAM de la GPU",100],["Arquitectura y CUDA",85],["RAM del sistema",55],["CPU",35],["Almacenamiento",30],["Fuente y ampliación",25]];
+document.getElementById("bottleBars").innerHTML = BOTTLE.map(([t,v])=>`<div class="bar-row"><span>${t}</span><div class="track" aria-hidden="true"><div class="fill" style="width:${v}%"></div></div></div>`).join("");
+
+/* ---------- presupuesto interactivo (escenario de precio de GPU) ---------- */
+const SC = { gpu: GPU.ars, sel: "gpu" };
+const R = { min:300000, max:450000 };
+const range=document.getElementById("gpuRange");
+range.min=R.min; range.max=R.max; range.value=GPU.ars;
+document.getElementById("rMin").textContent=fmtArs(R.min); document.getElementById("rMax").textContent=fmtArs(R.max);
+const rpos = v => (v-R.min)/(R.max-R.min)*100;
+(function(){
+  const z=document.getElementById("zoneObs"); z.style.left=`calc(${rpos(DATA.usedGpuRange[0])}% )`; z.style.width=`${rpos(DATA.usedGpuRange[1])-rpos(DATA.usedGpuRange[0])}%`; z.style.background="color-mix(in srgb,var(--data) 45%,transparent)";
+  const m=document.getElementById("limitMark"); m.style.left=rpos(GPU_MAX)+"%"; m.textContent="máx. "+fmtArs(GPU_MAX);
+})();
+const scParts = () => DATA.budget.filter(c=>c.ars>0).map(c=>({...c, cur: c.id==="gpu"?SC.gpu:lineTotal(c)})).sort((a,b)=>b.cur-a.cur);
+function renderBudget(){
+  const total = BT - lineTotal(GPU) + SC.gpu, usd = toUsd(total), left = DATA.limitUsd - usd, ok = total <= limitArs;
+  const changed = SC.gpu !== GPU.ars;
+  document.getElementById("bTotal").textContent = fmtArs(total) + (changed?" *":"");
+  document.getElementById("bUsd").textContent = fmtUsd(usd,2);
+  document.getElementById("bLeftK").textContent = ok ? "Margen hasta USD 800" : "Exceso sobre USD 800";
+  document.getElementById("bLeft").textContent = fmtUsd(Math.abs(left),2);
+  document.getElementById("bLeft").style.color = ok ? "" : "var(--warn)";
+  document.getElementById("bLeftArs").textContent = (ok?"Equivale a ":"Se pasa por ") + fmtArs(Math.abs(limitArs-total)) + " · tope " + fmtArs(limitArs) + (changed?" · * escenario simulado":"");
+  const mf=document.getElementById("meterFill"); mf.style.width=Math.min(100,total/limitArs*100)+"%"; mf.classList.toggle("over",!ok);
+  const mEst=document.getElementById("meterEst"); mEst.style.left=Math.min(100,(total-SC.gpu)/limitArs*100)+"%"; mEst.style.width=Math.max(0,Math.min(SC.gpu,limitArs-(total-SC.gpu))/limitArs*100)+"%";
+  document.getElementById("gpuOut").textContent = `GPU: ${fmtArs(SC.gpu)} · ≈ ${fmtUsd(toUsd(SC.gpu))}`;
+  const v=document.getElementById("verdict"); v.className="verdict-chip "+(ok?"ok":"bad"); v.textContent = ok ? `✓ Dentro del tope · ${fmtUsd(left,2)} de margen` : `✕ Supera el tope por ${fmtUsd(-left,2)}`;
+  range.setAttribute("aria-valuetext", `${fmtArs(SC.gpu)}. Total ${fmtArs(total)}, ${ok?"dentro":"fuera"} del tope de USD 800`);
+  const parts = scParts(), top = parts[0].cur;
+  document.getElementById("alloc").innerHTML = parts.map(c=>{
+    const p=c.cur/total*100;
+    return `<button type="button" class="alloc-row" data-id="${c.id}" aria-pressed="${c.id===SC.sel}" aria-label="${c.cat}: ${fmtPct(p)}"><img src="${IMG+c.img[0]}" alt=""><span>${c.cat}</span><span class="track" aria-hidden="true"><span class="fill${c.status==="est"?" est":""}" style="width:${c.cur/top*100}%"></span></span><span class="pct">${fmtPct(p)}</span></button>`;
+  }).join("");
+  const s = parts.find(c=>c.id===SC.sel);
+  document.getElementById("allocDetail").innerHTML = `<div class="ph"><img src="${IMG+s.img[0]}" alt="${esc(s.model)}"></div><div><h4>${s.model}</h4><p>${fmtArs(s.cur)} · ≈ ${fmtUsd(toUsd(s.cur),2)}<br>${fmtPct(s.cur/total*100)} del total${s.status==="est"?" · precio estimado":""}</p><button type="button" class="btn btn-sm btn-line" style="margin-top:8px" data-ex="${s.id}">Ver en el explorador</button></div>`;
+}
+range.addEventListener("input",()=>{SC.gpu=+range.value; renderBudget();});
+document.getElementById("gpuReset").addEventListener("click",()=>{SC.gpu=GPU.ars; range.value=GPU.ars; renderBudget();});
+document.getElementById("alloc").addEventListener("click",e=>{const b=e.target.closest(".alloc-row"); if(b){SC.sel=b.dataset.id; renderBudget(); document.querySelector(`.alloc-row[data-id="${SC.sel}"]`).focus();}});
+document.getElementById("allocDetail").addEventListener("click",e=>{const b=e.target.closest("[data-ex]"); if(b) exSelect("budget",b.dataset.ex,true);});
+renderBudget();
+document.getElementById("gpuDisclose").textContent =
+  `La GPU usada representa ${fmtArs(est)} del total y es un precio estimado. Ese día había RTX 3060 de 12 GB usadas entre ${fmtArs(DATA.usedGpuRange[0])} y ${fmtArs(DATA.usedGpuRange[1])}. Si se paga más de ${CALC.gpuMax}, la torre supera USD ${DATA.limitUsd}.`;
+
+/* ---------- cargas de trabajo ---------- */
+const ICON = {
+ llm:`<svg viewBox="0 0 36 36" aria-hidden="true"><rect x="3" y="6" width="30" height="20" rx="3" fill="none" stroke="var(--data)" stroke-width="2"/><path d="M9 14h18M9 19h11" stroke="var(--data)" stroke-width="2"/><path d="M10 26l-3 6 7-6" fill="var(--data)"/></svg>`,
+ tune:`<svg viewBox="0 0 36 36" aria-hidden="true"><path d="M6 10h24M6 18h24M6 26h24" stroke="var(--ink-2)" stroke-width="2"/><circle cx="13" cy="10" r="3.5" fill="var(--surface)" stroke="var(--data)" stroke-width="2"/><circle cx="24" cy="18" r="3.5" fill="var(--surface)" stroke="var(--data)" stroke-width="2"/><circle cx="16" cy="26" r="3.5" fill="var(--surface)" stroke="var(--data)" stroke-width="2"/></svg>`,
+ img:`<svg viewBox="0 0 36 36" aria-hidden="true"><rect x="4" y="6" width="28" height="24" rx="3" fill="none" stroke="var(--data)" stroke-width="2"/><circle cx="13" cy="14" r="3" fill="var(--data)"/><path d="M4 26l9-8 7 6 5-4 7 6" fill="none" stroke="var(--data)" stroke-width="2"/></svg>`,
+ cv:`<svg viewBox="0 0 36 36" aria-hidden="true"><path d="M3 18s6-10 15-10 15 10 15 10-6 10-15 10S3 18 3 18z" fill="none" stroke="var(--data)" stroke-width="2"/><circle cx="18" cy="18" r="5" fill="var(--data)"/><path d="M4 4h6M4 4v6M32 4h-6M32 4v6M4 32h6M4 32v-6M32 32h-6M32 32v-6" stroke="var(--ink-2)" stroke-width="1.5"/></svg>`,
+ py:`<svg viewBox="0 0 36 36" aria-hidden="true"><rect x="4" y="22" width="5" height="9" fill="var(--data)"/><rect x="12" y="15" width="5" height="16" fill="var(--data)"/><rect x="20" y="9" width="5" height="22" fill="var(--data)"/><rect x="28" y="4" width="5" height="27" fill="var(--data)" opacity=".6"/></svg>`
+};
+const WL = [
+ ["llm","LLMs de 7–8B","y","Modelos de 7–8 mil millones de parámetros en 4 a 8 bits. 13–14B en 4 bits entra justo, con contexto corto."],
+ ["tune","QLoRA chico","m","Ajuste de modelos de 7–8B con lotes chicos y contexto acotado, si la memoria lo permite."],
+ ["img","Stable Diffusion","y","SD 1.5 y SDXL a resolución estándar, de a pocas imágenes por lote."],
+ ["cv","Visión por computadora","y","Clasificadores y detectores chicos (ResNet, YOLO) con datasets de miles de imágenes."],
+ ["py","Python y Jupyter","y","pandas, scikit-learn y notebooks con datos que entren en 16 GB de RAM."]
+];
+document.getElementById("workloads").innerHTML = WL.map(([i,t,f,d])=>`<div class="wl-card">${ICON[i]}<h3>${t}</h3><span class="fit ${f}">${f==="y"?"Funciona bien":"Con límites"}</span><p>${d}</p></div>`).join("");
+
+/* ---------- hoja de ruta (acordeón) ---------- */
+(function(){
+  const road=document.getElementById("road");
+  road.innerHTML = DATA.upgrades.map((u,i)=>{
+    const cost = u.costRef ? `Otro módulo: ${fmtArs(DATA.budget.find(c=>c.id===u.costRef).ars)} (Venex)` : u.cost;
+    return `<div class="step${i===0?" open":""}"><button class="step-btn" type="button" aria-expanded="${i===0}" aria-controls="st-${i}"><b>${i+1}</b><h3>${u.t}</h3><span class="cost">${cost}</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="step-body" id="st-${i}"${i===0?"":" hidden"}><div><p>${u.d}</p><dl><div><dt>Qué resuelve</dt><dd>${u.fix}</dd></div><div><dt>Qué revisar antes</dt><dd>${u.check}</dd></div><div><dt>Precio de referencia (${DATA.date})</dt><dd>${cost}</dd></div></dl></div>
+      ${u.img?`<div class="ph"><img src="${IMG+u.img}" alt="" loading="lazy"><small>${u.imgCap}</small></div>`:""}</div></div>`;
+  }).join("");
+  const setOpen=(s,o)=>{s.classList.toggle("open",o); s.querySelector(".step-btn").setAttribute("aria-expanded",o); s.querySelector(".step-body").hidden=!o;};
+  road.addEventListener("click",e=>{const b=e.target.closest(".step-btn"); if(b){const s=b.parentElement; setOpen(s,!s.classList.contains("open"));}});
+  const all=document.getElementById("roadAll");
+  all.addEventListener("click",()=>{const steps=[...road.children], open=!steps.every(s=>s.classList.contains("open")); steps.forEach(s=>setOpen(s,open)); all.textContent=open?"Cerrar todas":"Abrir todas";});
+})();
+
+/* ---------- diagrama de bloques interactivo ---------- */
+const C = {data:"#38B6F0",power:"#F0A93B",air:"#7E8B99",ink:"#E9EDF1",ink2:"#9AA6B4",line:"#3A4552",box:"#171C23",board:"#121820"};
+const box = (id,x,y,w,h,t,s,acc,extra="")=>`<g class="dg-part" data-id="${id}" tabindex="0" role="button" aria-label="${t}"><rect class="box" x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${C.box}" stroke="${acc||C.line}" stroke-width="1.5"/><text x="${x+12}" y="${y+22}" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="15" fill="${C.ink}">${t}</text>${(s||[]).map((l,i)=>`<text x="${x+12}" y="${y+41+i*16}" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="${C.ink2}">${l}</text>`).join("")}${extra}</g>`;
+const markers = ["data","power","air"].map(k=>`<marker id="ar-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${C[k]}"/></marker>`).join("");
+const line = (d,kind,arrow=true)=>`<path d="${d}" fill="none" stroke="${C[kind]}" stroke-width="${kind==="air"?2:2.6}" ${kind==="power"?'stroke-dasharray="8 6"':kind==="air"?'stroke-dasharray="2 5"':""} ${arrow?`marker-end="url(#ar-${kind})"`:""}/>`;
+const lbl = (x,y,t,kind,anchor="start")=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="${C[kind]||C.ink2}">${t}</text>`;
+// conexiones: d, tipo, piezas que une, descripción (para el panel y la versión en texto), avanzado
+const LINES = [
+ {d:"M390 160 H466",k:"data",l:"cpu,ram",t:"CPU ↔ RAM por el controlador de memoria (DDR4)"},
+ {d:"M466 186 H394",k:"data",l:"cpu,ram"},
+ {d:"M290 222 V286",k:"data",l:"cpu,pcie",t:"CPU → ranura PCIe x16 (PCIe 3.0)"},
+ {d:"M360 222 V250 H545 V286",k:"data",l:"cpu,m2",t:"CPU → ranura M.2 (PCIe 3.0 x4)"},
+ {d:"M290 354 V466",k:"data",l:"pcie,gpu",t:"Ranura PCIe x16 → RTX 3060"},
+ {d:"M545 354 V466",k:"data",l:"m2,ssd",t:"Ranura M.2 → SSD NVMe (datos y energía)"},
+ {d:"M760 520 V268",k:"power",l:"psu,hdr",t:"Fuente → placa: 24 pines ATX + 4 pines de CPU"},
+ {d:"M660 600 H315 V564",k:"power",l:"psu,gpu",t:"Fuente → RTX 3060: conector PCIe 6+2"},
+ {d:"M760 620 V638 H94 V542",k:"power",l:"psu,hub",t:"Fuente → hub de ventiladores (SATA o Molex)",adv:1},
+ {d:"M58 458 V402",k:"power",l:"hub,fans",t:"Hub → 3 ventiladores frontales",adv:1},
+ {d:"M780 150 H905 V132",k:"power",l:"hdr,fans",t:"SYS_FAN de la placa → ventilador trasero",adv:1},
+ ...[0,1,2].map(i=>({d:`M92 ${150+i*110} H140`,k:"air",l:"fans",t:i===0?"Aire: entra por 3 ventiladores frontales y sale por el trasero":"",adv:1})),
+ {d:"M836 100 H872",k:"air",l:"fans",adv:1},{d:"M936 100 H962",k:"air",l:"fans",adv:1}
+];
+const LBLS = [
+ [400,150,"memoria","data","cpu,ram"],[368,244,"PCIe","data","cpu,m2,pcie"],[298,420,"x16","data","pcie,gpu"],
+ [768,470,"24 + 4 pines","power","psu,hdr"],[470,616,"PCIe 6+2 → GPU","power","psu,gpu"],
+ [104,600,"SATA/Molex","power","psu,hub",1],[70,430,"3 fans","power","hub,fans",1],[800,170,"SYS_FAN → trasero","power","hdr,fans",1],
+ [28,108,"ENTRADA ×3","air","fans",1],[870,58,"SALIDA ×1","air","fans",1]
+];
+const flowCol = {data:"#BFE9FF",power:"#FFE2B0",air:"#C9D2DC"};
+document.getElementById("dgBudget").insertAdjacentHTML("beforeend", `
+ <defs>${markers}<clipPath id="cpGpu"><rect x="360" y="478" width="74" height="74" rx="4"/></clipPath></defs>
+ <rect x="10" y="10" width="960" height="640" rx="10" fill="none" stroke="${C.line}" stroke-dasharray="3 6"/>
+ ${lbl(24,34,"GABINETE ARKHAM COZU","ink2")}
+ <rect x="160" y="60" width="640" height="370" rx="10" fill="${C.board}" stroke="#4A5868" stroke-width="2"/>
+ <g class="dg-part" data-id="mb" tabindex="0" role="button" aria-label="Placa madre MSI B550M-A PRO"><text x="176" y="84" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="15" fill="${C.ink}">MSI B550M-A PRO</text>${lbl(176,102,"placa madre Micro-ATX","ink2")}<rect class="box" x="160" y="60" width="640" height="370" rx="10" fill="none" stroke="none"/></g>
+ ${LINES.map(L=>`<g class="ln k-${L.k}${L.adv?" adv":""}" data-links="${L.l}">${line(L.d,L.k).replace("<path","<path class=\"base\"")}<path class="flow" d="${L.d}" fill="none" stroke="${flowCol[L.k]}" stroke-width="2" stroke-dasharray="3 15" stroke-linecap="round"/></g>`).join("")}
+ ${LBLS.map(([x,y,t,k,l,a])=>`<g class="ln k-${k}${a?" adv":""}" data-links="${l}">${lbl(x,y,t,k)}</g>`).join("")}
+ ${[0,1,2].map(i=>`<g class="dg-part adv" data-id="fans" tabindex="0" role="button" aria-label="Ventilador frontal ${i+1}"><circle cx="58" cy="${150+i*110}" r="28" fill="${C.box}" stroke="${C.line}" stroke-width="1.5"/><circle cx="58" cy="${150+i*110}" r="8" fill="${C.air}"/></g>`).join("")}
+ <g class="dg-part adv" data-id="fans" tabindex="0" role="button" aria-label="Ventilador trasero"><circle cx="905" cy="100" r="28" fill="${C.box}" stroke="${C.line}" stroke-width="1.5"/><circle cx="905" cy="100" r="8" fill="${C.air}"/></g>
+ ${box("cpu",190,124,200,98,"Ryzen 5 5500",["zócalo AM4","cooler → CPU_FAN"],C.data,`<image href="${IMG}budget-cpu-ryzen5-5500.webp" x="336" y="150" width="50" height="50"/>`)}
+ ${box("ram",470,124,150,98,"RAM DIMM",["16 GB DDR4-3200","ranura 2: libre"])}
+ ${box("pcie",190,290,200,64,"Ranura PCIe x16",["PCIe 3.0 x16 (CPU)"])}
+ ${box("m2",470,290,150,64,"Ranura M.2",["PCIe 3.0 x4 (CPU)"])}
+ ${box("hdr",650,124,130,140,"Conectores",["24 pines ATX","4 pines CPU","CPU_FAN","SYS_FAN ×1"],C.power)}
+ ${box("gpu",190,470,250,90,"RTX 3060 12 GB",["usada · 12 GB GDDR6","alimentación PCIe 6+2"],C.data,`<image href="${IMG}budget-gpu-rtx3060-ref-front.webp" x="352" y="472" width="86" height="86" preserveAspectRatio="xMidYMid meet"/>`)}
+ ${box("ssd",470,470,160,90,"SSD NVMe 512 GB",["Hiksemi Wave","energía por el M.2"])}
+ ${box("psu",660,520,200,100,"Fuente P650SS",["650 W · 80 Plus Silver","2 × PCIe 6+2"],C.power)}
+ <g class="adv">${box("hub",18,462,160,76,"Hub de fans",["3 fans frontales","¿incluido? verificar"])}</g>
+`);
+const DG_INFO = {
+  cpu:["Procesador","AMD Ryzen 5 5500","Ejecuta el sistema y prepara los datos. Controla la memoria y entrega 20 carriles PCIe 3.0: 16 para la GPU y 4 para el SSD. Su cooler va al conector CPU_FAN.","cpu"],
+  ram:["Memoria","Hiksemi Armour 16 GB DDR4","Conectada al controlador de memoria de la CPU. Queda una ranura libre para llegar a 32 GB.","ram"],
+  pcie:["Ranura","PCIe x16","Conecta la GPU directo a la CPU. Con el Ryzen 5 5500 funciona en PCIe 3.0; en IA casi solo afecta el tiempo de carga del modelo.","mb"],
+  m2:["Ranura","M.2 NVMe","Única ranura M.2 de la placa, conectada a la CPU. Da datos y energía al SSD.","mb"],
+  hdr:["Conectores de la placa","Energía y ventiladores","24 pines ATX y 4 pines de CPU desde la fuente. CPU_FAN para el cooler y un solo SYS_FAN para el gabinete (MSI, s. f.).","mb"],
+  gpu:["Placa de video","RTX 3060 12 GB (usada)","Hace el cálculo de IA. Toma datos por la ranura PCIe x16 y energía por su conector PCIe (8 pines en el diseño de referencia de NVIDIA).","gpu"],
+  ssd:["Almacenamiento","Hiksemi Wave 512 GB","Guarda modelos y datos. Se alimenta por la ranura M.2: no lleva cables.","ssd"],
+  psu:["Fuente","Gigabyte P650SS 650 W","Alimenta la placa (24 + 4 pines), la GPU (PCIe 6+2) y el hub de los ventiladores frontales (SATA o Molex).","psu"],
+  hub:["Ventilación","Hub o divisor de ventiladores","La placa tiene un solo SYS_FAN, que usamos para el ventilador trasero. Los 3 frontales van a un hub alimentado por la fuente; hay que verificar si el Arkham Cozu lo incluye o comprar uno.","case"],
+  fans:["Flujo de aire","4 ventiladores de 120 mm","Tres al frente meten aire fresco hacia la placa y la GPU; uno atrás lo saca. Distribución según la ficha del gabinete en Venex.","case"],
+  mb:["Placa madre","MSI B550M-A PRO","El centro de todo: une la CPU, la memoria, la ranura de la GPU, el M.2 y los conectores de energía.","mb"]
+};
+(function(){
+  const svg=document.getElementById("dgBudget"), info=document.getElementById("dgInfo");
+  const parts=[...svg.querySelectorAll(".dg-part")], lns=[...svg.querySelectorAll(".ln")];
+  const KCOL={data:C.data,power:C.power,air:C.air};
+  const linesOf = id => LINES.filter(L=>L.t && L.l.split(",").includes(id));
+  function overview(){
+    info.innerHTML = `<span class="cat">Vista general</span><h3>Todas las conexiones</h3><p>${LINES.filter(L=>L.k==="data"&&L.t).length} enlaces de datos y ${LINES.filter(L=>L.k==="power"&&L.t).length} de energía. Tocá cualquier pieza del diagrama para aislar sus conexiones.</p>
+      <ul>${LINES.filter(L=>L.t).map(L=>`<li><i style="background:${KCOL[L.k]}"></i>${L.t}</li>`).join("")}</ul>`;
+  }
+  function select(id){
+    const d=DG_INFO[id]; if(!d) return;
+    const set=new Set([id]); LINES.forEach(L=>{const ids=L.l.split(","); if(ids.includes(id)) ids.forEach(x=>set.add(x));});
+    if(id==="mb") ["cpu","ram","pcie","m2","hdr","gpu","ssd","psu"].forEach(x=>set.add(x));
+    svg.classList.add("focus");
+    parts.forEach(g=>{g.classList.toggle("hl",set.has(g.dataset.id)); g.classList.toggle("on",g.dataset.id===id);});
+    lns.forEach(g=>g.classList.toggle("hl", id==="mb" ? !g.dataset.links.includes("fans")&&!g.dataset.links.includes("hub") : g.dataset.links.split(",").includes(id)));
+    const c=DATA.budget.find(x=>x.id===d[3]);
+    const conns = linesOf(id);
+    info.innerHTML = `<div class="ph">${c&&c.img[0]?`<img src="${IMG+c.img[0]}" alt="${esc(c.model)}${c.rep?" (imagen representativa)":""}">`:""}${c&&c.rep?'<span class="pill rep">Imagen representativa</span>':""}</div>
+      <span class="cat">${d[0]}</span><h3>${d[1]}</h3><p>${d[2]}</p>
+      ${conns.length?`<ul>${conns.map(L=>`<li><i style="background:${KCOL[L.k]}"></i>${L.t}</li>`).join("")}</ul>`:""}
+      ${c?`<button type="button" class="btn btn-sm btn-line" data-ex="${c.id}" style="justify-self:start">Ver ficha de la pieza</button>`:""}`;
+  }
+  function reset(){ svg.classList.remove("focus"); parts.forEach(g=>g.classList.remove("hl","on")); lns.forEach(g=>g.classList.remove("hl")); overview(); }
+  parts.forEach(g=>{
+    g.addEventListener("click",()=>select(g.dataset.id));
+    g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(g.dataset.id)} if(e.key==="Escape") reset();});
+  });
+  info.addEventListener("click",e=>{const b=e.target.closest("[data-ex]"); if(b) exSelect("budget",b.dataset.ex,true);});
+  document.getElementById("dgReset").addEventListener("click",reset);
+  document.querySelectorAll("#dgMode button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#dgMode button").forEach(x=>x.setAttribute("aria-pressed",x===b)); svg.classList.toggle("simple",b.dataset.m==="simple");
+  }));
+  const an=document.getElementById("dgAnim");
+  const setAnim=on=>{svg.classList.toggle("anim",on); an.setAttribute("aria-pressed",on); an.textContent=on?"Pausar animación":"Animar flujo";};
+  setAnim(!RM);
+  an.addEventListener("click",()=>setAnim(!svg.classList.contains("anim")));
+  document.querySelectorAll(".legend button").forEach(b=>b.addEventListener("click",()=>{
+    const on=b.getAttribute("aria-pressed")!=="true"; b.setAttribute("aria-pressed",on); svg.classList.toggle("no-"+b.dataset.k,!on);
+  }));
+  select("gpu");
+  document.getElementById("dgText").innerHTML = LINES.filter(L=>L.t).map(L=>`<li>${{data:"Datos",power:"Energía",air:"Aire"}[L.k]}: ${L.t}.</li>`).join("") + "<li>El cooler del procesador va al conector CPU_FAN; el SSD se alimenta por la ranura M.2.</li>";
+})();
+
+/* ---------- diagrama premium (estático) ---------- */
+document.getElementById("dgPremium").insertAdjacentHTML("beforeend", `
+ <defs>${markers}</defs>
+ ${box("p-ram",30,40,200,80,"RAM 128 GB",["4 × 32 GB DDR5"])}
+ ${box("p-cpu",290,40,220,80,"Ryzen 9 9950X",["16 núcleos · AM5"],C.data)}
+ ${box("p-gpuA",590,30,360,90,"GPU A · RTX PRO 4000",["24 GB propios · PCIe 5.0 x16","directo a la CPU"],C.data,`<image href="${IMG}premium-gpu-pny-rtx-pro-4000.webp" x="850" y="36" width="94" height="80"/>`)}
+ ${box("p-ssd1",290,190,220,70,"SSD 1 · 1 TB",["M.2_1 · PCIe 5.0 x4 (CPU)"])}
+ ${box("p-chip",30,300,200,90,"Chipset X870E",["enlace con la CPU","reparte carriles extra"])}
+ ${box("p-gpuB",590,300,360,90,"GPU B · RTX PRO 4000",["24 GB propios · PCIe 4.0 x4","vía chipset: más lenta"],C.power,`<image href="${IMG}premium-gpu-pny-rtx-pro-4000.webp" x="850" y="306" width="94" height="80"/>`)}
+ ${box("p-ssd2",290,320,220,70,"SSD 2 · 1 TB",["M.2_4 · PCIe 4.0 x4 (chipset)"])}
+ ${line("M234 80 H286","data")}${line("M286 96 H234","data")}
+ ${line("M510 75 H586","data")}${lbl(520,66,"x16","data")}
+ ${line("M400 120 V186","data")}
+ ${line("M330 120 V160 H130 V296","data")}${lbl(140,180,"enlace CPU–chipset","data")}
+ ${line("M230 345 H286","data")}
+ ${line("M130 390 V420 H770 V394","data")}${lbl(560,414,"x4","data")}
+ <rect x="580" y="150" width="380" height="110" rx="6" fill="none" stroke="${C.power}" stroke-dasharray="4 5"/>
+ <text x="596" y="178" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="15" fill="${C.power}">La VRAM no se suma sola</text>
+ ${lbl(596,200,"24 GB + 24 GB en dos memorias separadas.","ink2")}
+ ${lbl(596,218,"Repartir un modelo entre ambas requiere","ink2")}
+ ${lbl(596,236,"software multi-GPU compatible.","ink2")}`);
+document.querySelectorAll("#dgPremium .dg-part").forEach(g=>{g.removeAttribute("tabindex");g.removeAttribute("role");g.classList.remove("dg-part")});
+
+/* ---------- gráfico de VRAM ---------- */
+(function(){
+  const s=document.getElementById("vramChart"), max=24, W=560, x0=250;
+  const X=v=>x0+v/max*W;
+  const rows=[["El Punto Dulce","RTX 3060",[12],C.data],["Money Is No Object","GPU A · RTX PRO 4000",[24],C.data],["","GPU B · RTX PRO 4000",[24],C.power]];
+  let g=`<text x="0" y="22" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="17" fill="${C.ink}">VRAM física por GPU (GB) · no se combina automáticamente</text>`;
+  [0,6,12,18,24].forEach(t=>{g+=`<line x1="${X(t)}" x2="${X(t)}" y1="44" y2="214" stroke="#2A323C"/><text x="${X(t)}" y="236" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" fill="${C.ink2}">${t}</text>`});
+  rows.forEach((r,i)=>{const y=62+i*52;
+    g+=`<text x="0" y="${y+12}" font-family="IBM Plex Sans,Arial,sans-serif" font-size="13" font-weight="600" fill="${C.ink}">${r[0]}</text><text x="0" y="${y+30}" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="${C.ink2}">${r[1]}</text><rect x="${x0}" y="${y}" width="${X(r[2][0])-x0}" height="30" rx="3" fill="${r[3]}" opacity=".9"/><text x="${X(r[2][0])-10}" y="${y+20}" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="500" fill="#0B1015">${r[2][0]} GB</text>`});
+  s.innerHTML=g;
+})();
+
+/* ---------- comparación interactiva ---------- */
+(function(){
+  const b=id=>DATA.budget.find(c=>c.id===id), p=id=>DATA.premium.find(c=>c.id===id);
+  const S=DATA.summary;
+  document.getElementById("cmpHeads").innerHTML = `
+   <div class="cmp-head b"><div class="ph"><img src="${IMG+b("gpu").img[1]}" alt="RTX 3060 12 GB (imagen representativa)"></div><div><span class="k">Configuración 1</span><b>El Punto Dulce</b><small>${fmtArs(BT)} · ≈ ${fmtUsd(toUsd(BT),2)}</small></div></div>
+   <div class="cmp-head p"><div class="ph"><img src="${IMG+p("pgpu").img[0]}" alt="PNY RTX PRO 4000 Blackwell"></div><div><span class="k">Configuración 2</span><b>Money Is No Object</b><small>${fmtArs(PT)} · ≈ ${fmtUsd(toUsd(PT),2)}</small></div></div>`;
+  const DIFF = [
+    ["Costo",toUsd(BT),toUsd(PT),v=>fmtUsd(v)],
+    ["VRAM por GPU",S.budget.vram,S.premium.vram,v=>v.length>1?`${v.length} × ${v[0]} GB`:`${v[0]} GB`],
+    ["RAM",S.budget.ram,S.premium.ram,v=>v+" GB"],
+    ["Almacenamiento",S.budget.storage,S.premium.storage,v=>v>=1024?(v/1024)+" TB":v+" GB"],
+    ["Núcleos de CPU",S.budget.cores,S.premium.cores,v=>v+" núcleos"],
+    ["Fuente",S.budget.psu,S.premium.psu,v=>v+" W"]
+  ];
+  const bar=(v,max)=>Array.isArray(v)?v.map(x=>`<i style="width:${x/48*100}%"></i>`).join(""):`<i style="width:${v/max*100}%"></i>`;
+  document.getElementById("diffs").innerHTML = DIFF.map(([t,vb,vp,f])=>{
+    const max=Array.isArray(vb)?48:Math.max(vb,vp);
+    return `<div class="diff"><span>${t}</span><div class="rows"><div class="r b"><div class="tr">${bar(vb,max)}</div><small>${f(vb)}</small></div><div class="r p"><div class="tr">${bar(vp,max)}</div><small>${f(vp)}</small></div></div></div>`;
+  }).join("") + `<p class="diff-note">Celeste: El Punto Dulce · naranja: Money Is No Object. En VRAM, las dos barras separadas indican dos memorias independientes de 24 GB: no se combinan en una de 48 GB.</p>`;
+  const rows=[
+   ["Precio",`${fmtArs(BT)}<br>≈ ${fmtUsd(toUsd(BT),2)}`,`${fmtArs(PT)}<br>≈ ${fmtUsd(toUsd(PT),2)}`],
+   ["Procesador",b("cpu").model+" · 6 núcleos",p("pcpu").model+" · 16 núcleos"],
+   ["GPU","1 × RTX 3060 12 GB (usada)","2 × RTX PRO 4000 Blackwell 24 GB"],
+   ["VRAM física y uso","12 GB en una sola GPU","2 × 24 GB separadas; usarlas juntas requiere software multi-GPU"],
+   ["RAM","16 GB DDR4 (1 módulo)","128 GB DDR5 (4 módulos)"],
+   ["Almacenamiento","512 GB NVMe PCIe 3.0","2 × 1 TB NVMe PCIe 4.0"],
+   ["Energía",`Fuente ${S.budget.psu} W Silver · RTX 3060: NVIDIA recomienda fuente de 550 W`,`Fuente ${S.premium.psu} W Gold · 2 × 140 W de GPU + CPU de 170 W`],
+   ["Cargas previstas","LLMs de 7–8B, QLoRA chico, Stable Diffusion, visión, Python","LLMs grandes comprimidos, varios modelos a la vez, ajustes más grandes"],
+   ["Ampliación","RAM a 32 GB, más disco, CPU Ryzen 5000, GPU de 16 GB+","Hasta 256 GB de RAM; la segunda GPU limitada a PCIe 4.0 x4"],
+   ["Límites clave","16 GB de RAM, 12 GB de VRAM, GPU sin garantía","Precio, segunda ranura x4, VRAM no combinada automáticamente"],
+   ["Perfil recomendado","Estudiante o principiante con presupuesto ajustado","Profesional cuyo trabajo justifica la inversión"]
+  ];
+  document.getElementById("cmpTable").insertAdjacentHTML("beforeend",`<thead><tr><th scope="col"><span class="sr-only">Aspecto</span></th><th scope="col" class="c-b">El Punto Dulce</th><th scope="col" class="c-p">Money Is No Object</th></tr></thead><tbody>${rows.map(r=>`<tr><th scope="row">${r[0]}</th><td class="n c-b">${r[1]}</td><td class="n c-p">${r[2]}</td></tr>`).join("")}</tbody>`);
+  const cmp=document.getElementById("cmp");
+  document.querySelectorAll("#cmpView button").forEach(btn=>btn.addEventListener("click",()=>{
+    document.querySelectorAll("#cmpView button").forEach(x=>x.setAttribute("aria-pressed",x===btn)); cmp.dataset.view=btn.dataset.v;
+  }));
+})();
+
+/* ---------- infografía (paleta fija, exportable) ---------- */
+function buildInfographic(){
+  const P={bg:"#0F1318",panel:"#171C23",line:"#2A323C",ink:"#E9EDF1",ink2:"#9AA6B4",data:"#38B6F0",power:"#F0A93B",ok:"#6FD39A",warn:"#F08A4B"};
+  const D="Archivo,'Arial Narrow',Arial,sans-serif", B="'IBM Plex Sans',Arial,sans-serif", M="'IBM Plex Mono',Consolas,monospace";
+  const t=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-family="${o.f||B}" font-size="${o.size||18}" font-weight="${o.w||400}" fill="${o.c||P.ink}" text-anchor="${o.a||"start"}"${o.ls?` letter-spacing="${o.ls}"`:""}>${s}</text>`;
+  const im=(f,x,y,w,h,par="xMidYMid meet")=>`<image href="${IMG+f}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="${par}"/>`;
+  const usd = toUsd(BT), pctUsed = usd/DATA.limitUsd;
+  let s = `<rect width="1080" height="1350" fill="${P.bg}"/>`;
+  s += `<defs><pattern id="igg" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#161C23" stroke-width="1"/></pattern><radialGradient id="igglow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#38B6F0" stop-opacity=".28"/><stop offset="1" stop-color="#38B6F0" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#igg)"/>`;
+  s += t(64,84,"IACO 2026 · PARTE 3 · EL PUNTO DULCE",{f:M,size:18,c:P.data,ls:"2"});
+  s += t(64,168,"IA profesional,",{f:D,size:78,w:800,c:P.ink});
+  s += t(64,248,"presupuesto real",{f:D,size:78,w:800,c:P.data});
+  // precio
+  s += `<rect x="64" y="292" width="952" height="150" rx="10" fill="${P.panel}" stroke="${P.line}"/>`;
+  s += t(96,350,fmtArs(BT),{f:D,size:56,w:800});
+  s += t(96,392,`≈ ${fmtUsd(usd,2)} · dólar BNA $${DATA.fx.arsPerUsd.toLocaleString("es-AR")} · ${DATA.date}`,{f:M,size:18,c:P.ink2});
+  s += t(96,422,"Torre completa · sin monitor, periféricos ni envío",{size:16,c:P.ink2});
+  s += t(640,340,`TOPE USD ${DATA.limitUsd}`,{f:M,size:15,c:P.ink2,ls:"1"});
+  s += `<rect x="640" y="356" width="344" height="20" rx="10" fill="${P.line}"/><rect x="640" y="356" width="${344*pctUsed}" height="20" rx="10" fill="${P.data}"/>`;
+  const estStart = 640 + 344*((BT-est)/limitArs);
+  s += `<rect x="${estStart}" y="356" width="${344*(est/limitArs)}" height="20" fill="none" stroke="${P.warn}" stroke-width="2" stroke-dasharray="6 4"/>`;
+  s += t(640,404,`Margen: ${fmtUsd(DATA.limitUsd-usd,2)}`,{f:M,size:15,c:P.ink});
+  s += t(640,426,"línea punteada = GPU usada, precio estimado",{f:M,size:13,c:P.warn});
+  // GPU con foto real
+  s += `<rect x="64" y="476" width="952" height="300" rx="10" fill="${P.panel}" stroke="${P.data}" stroke-width="2"/>`;
+  s += `<ellipse cx="316" cy="616" rx="230" ry="120" fill="url(#igglow)"/>`;
+  s += im(GPU.img[1],86,486,460,262,"xMidYMid slice");
+  s += t(96,762,"Imagen representativa: Gigabyte RTX 3060 Windforce OC 12 GB (foto: Venex)",{f:M,size:12,c:P.ink2});
+  s += t(580,540,"PIEZA CENTRAL",{f:M,size:15,c:P.data,ls:"2"});
+  s += t(580,588,"RTX 3060",{f:D,size:46,w:800});
+  s += t(580,646,"12 GB",{f:D,size:64,w:800,c:P.data});
+  s += t(780,646,"VRAM GDDR6",{f:M,size:18,c:P.ink2});
+  s += t(580,684,"3.584 núcleos CUDA · Tensor Cores",{size:18,c:P.ink2});
+  s += `<rect x="580" y="706" width="230" height="36" rx="4" fill="none" stroke="${P.warn}" stroke-dasharray="6 4"/>`;
+  s += t(596,730,`Usada · ${fmtArs(GPU.ars)} est.`,{f:M,size:15,c:P.warn});
+  // specs con foto
+  const specs=[["CPU","Ryzen 5 5500","6 núcleos","cpu"],["RAM","16 GB","DDR4-3200","ram"],["SSD","512 GB","NVMe","ssd"],["FUENTE","650 W","80 Plus Silver","psu"]];
+  specs.forEach((r,i)=>{const x=64+i*244, c=DATA.budget.find(q=>q.id===r[3]);
+    s+=`<rect x="${x}" y="796" width="220" height="128" rx="8" fill="${P.panel}" stroke="${P.line}"/>`+im(c.img[0],x+150,802,62,62)+t(x+20,830,r[0],{f:M,size:14,c:P.ink2,ls:"2"})+t(x+20,884,r[1],{f:D,size:27,w:750})+t(x+20,910,r[2],{size:15,c:P.ink2})});
+  s += t(64,972,"QUÉ PUEDE HACER",{f:M,size:15,c:P.ok,ls:"2"});
+  ["LLMs locales de 7–8B (4–8 bits)","Stable Diffusion 1.5 y SDXL","Visión por computadora chica","QLoRA con lotes chicos","Python, Jupyter y datos"].forEach((u,i)=>{const y=1008+i*38;s+=`<circle cx="74" cy="${y-6}" r="6" fill="${P.ok}"/>`+t(92,y,u,{size:19})});
+  s += t(560,972,"LÍMITES",{f:M,size:15,c:P.warn,ls:"2"});
+  ["16 GB de RAM en un canal","12 GB: modelos de 30B+ no entran","512 GB se llenan rápido","GPU usada, sin garantía de tienda"].forEach((u,i)=>{const y=1008+i*38;s+=`<rect x="568" y="${y-12}" width="12" height="12" fill="none" stroke="${P.warn}" stroke-width="2"/>`+t(592,y,u,{size:19})});
+  s += t(64,1222,"PRÓXIMAS MEJORAS",{f:M,size:15,c:P.data,ls:"2"});
+  ["+16 GB RAM","Más disco","CPU Ryzen 5000","GPU 16 GB+"].forEach((u,i)=>{const x=64+i*244;s+=`<circle cx="${x+18}" cy="1258" r="18" fill="none" stroke="${P.data}" stroke-width="2" stroke-dasharray="4 3"/>`+t(x+18,1264,i+1,{f:M,size:16,c:P.data,a:"middle"})+t(x+48,1264,u,{size:19})});
+  s += `<line x1="64" y1="1306" x2="1016" y2="1306" stroke="${P.line}"/>`;
+  s += `<rect x="64" y="1320" width="22" height="12" fill="${P.data}"/>`+t(94,1331,"Especificación confirmada",{f:M,size:13,c:P.ink2});
+  s += `<rect x="330" y="1320" width="22" height="12" fill="none" stroke="${P.warn}" stroke-dasharray="4 3"/>`+t(360,1331,"Precio estimado",{f:M,size:13,c:P.ink2});
+  s += `<circle cx="540" cy="1326" r="7" fill="none" stroke="${P.data}" stroke-dasharray="3 2"/>`+t(556,1331,"Mejora opcional",{f:M,size:13,c:P.ink2});
+  s += t(1016,1331,"Fuentes: Venex, Mercado Libre, NVIDIA",{f:M,size:13,c:P.ink2,a:"end"});
+  return s;
+}
+document.getElementById("infographic").innerHTML = buildInfographic();
+// descarga: solo si la plataforma concede la capacidad "downloads"; si no, el botón queda oculto
+(async function(){
+  try{
+    if(!window.claude || typeof window.claude.use!=="function") return;
+    const dl = await window.claude.use("downloads"); if(!dl) return;
+    const wrap=document.getElementById("igActions"), btn=document.getElementById("igPng"), note=document.getElementById("igNote");
+    wrap.hidden=false;
+    btn.addEventListener("click",async()=>{
+      btn.disabled=true;
+      try{ const r=await fetch("assets/infografia-punto-dulce.png"); if(!r.ok) throw new Error("fetch"); const blob=await r.blob();
+        await dl.save({filename:"infografia-punto-dulce.png",data:blob}); note.textContent="Infografía guardada."; }
+      catch(e){ note.textContent = e&&e.code==="declined" ? "Descarga cancelada." : "No se pudo descargar en esta vista."; if(e&&["unavailable","not_granted"].includes(e.code)) wrap.hidden=true; }
+      btn.disabled=false;
+    });
+  }catch(e){}
+})();
+
+/* ---------- bibliografía ---------- */
+const BIB = [
+ ["1. Listados y precios en Argentina (consultados el 27/10/2026)",[
+  ["venex-r5","Venex. (2026). <i>Procesador AMD Ryzen 5 5500 6/12 4.2GHz AM4 Sin Video</i>.",DATA.budget[0].url],
+  ["venex-mb","Venex. (2026). <i>Motherboard MSI B550M-A PRO AM4 DDR4</i>.",DATA.budget[1].url],
+  ["venex-ram","Venex. (2026). <i>Memoria RAM Hiksemi Armour DDR4 16GB 3200MHz</i>.",DATA.budget[2].url],
+  ["venex-ssd","Venex. (2026). <i>Disco sólido SSD Hiksemi Wave 512GB M.2 NVMe PCIe 3.0</i>.",DATA.budget[3].url],
+  ["ml-3060","Mercado Libre Argentina. (2026). <i>RTX 3060 12 GB usada</i> [Listado de publicaciones].",DATA.budget[4].url],
+  ["venex-psu","Venex. (2026). <i>Fuente Gigabyte 650W 80 Plus Silver P650SS ATX 3.0</i>.",DATA.budget[5].url],
+  ["venex-case","Venex. (2026). <i>Gabinete Arkham Cozu ATX C/Coolers x4 ARGB</i>.",DATA.budget[6].url],
+  ["venex-3060new","Venex. (2026). <i>Placa de Video Gigabyte GeForce RTX 3060 Windforce OC 12Gb</i> [Sin stock; fuente de la imagen representativa].","https://www.venex.com.ar/componentes-de-pc/placas-de-video/placa-de-video-gigabyte-geforce-rtx-3060-windforce-oc-12gb.html"],
+  ["venex-b580","Venex. (2026). <i>Placa de Video ASRock Intel Arc B580 12GB Challenger OC</i>.","https://www.venex.com.ar/componentes-de-pc/placas-de-video/placa-de-video-asrock-intel-arc-b580-challenger-12gb-oc.html"],
+  ["venex-5090","Venex. (2026). <i>Placa de Video Gigabyte NVIDIA GeForce RTX 5090 Windforce 32GB Gaming OC</i> [Sin stock].","https://www.venex.com.ar/componentes-de-pc/placas-de-video/placa-de-video-gigabyte-nvidia-geforce-rtx-2090-windforce-oc-32gb.html"],
+  ["compragamer","Compra Gamer. (2026). <i>Placa de Video PNY RTX PRO 4000 Blackwell 24GB GDDR7 ECC IA</i>.",DATA.premium[0].url],
+  ["venex-9950x","Venex. (2026). <i>Procesador AMD Ryzen 9 9950X 16/32 5.7GHz AM5</i>.",DATA.premium[1].url],
+  ["venex-x870e","Venex. (2026). <i>Motherboard ASUS ROG Strix X870E-E Gaming WiFi AM5 DDR5</i>.",DATA.premium[2].url],
+  ["hardcore","Hardcore Computación. (2026). <i>Memoria Corsair Vengeance 2x32GB DDR5 5600MHz CL40 EXPO</i>.",DATA.premium[3].url],
+  ["venex-ssd2","Venex. (2026). <i>Disco sólido SSD Hiksemi Future Lite 1TB M.2 NVMe PCIe 4.0</i>.",DATA.premium[4].url],
+  ["venex-cool","Venex. (2026). <i>Water Cooler CPU Thermaltake TT LA360-S ARGB</i>.",DATA.premium[5].url],
+  ["venex-psu2","Venex. (2026). <i>Fuente Corsair RM1000X Shift 1000W 80+ Gold Full Modular</i>.",DATA.premium[6].url],
+  ["venex-case2","Venex. (2026). <i>Gabinete Cooler Master Elite 502 C/Coolers x3 ARGB</i>.",DATA.premium[7].url]
+ ]],
+ ["2. Especificaciones oficiales",[
+  ["amd-5500","AMD. (s. f.). <i>AMD Ryzen 5 5500</i>.",DATA.budget[0].spec],
+  ["msi","MSI. (s. f.). <i>B550M-A PRO: Specification</i>.","https://www.msi.com/Motherboard/B550M-A-PRO/Specification"],
+  ["nvidia-3060","NVIDIA. (s. f.). <i>GeForce RTX 3060 family</i>.","https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3060-3060ti/"],
+  ["gigabyte-psu","GIGABYTE. (s. f.). <i>P650SS: Specification</i>.",DATA.budget[5].spec],
+  ["pny","PNY. (s. f.). <i>NVIDIA RTX PRO 4000 Blackwell</i>.",DATA.premium[0].spec],
+  ["amd-9950x","AMD. (s. f.). <i>AMD Ryzen 9 9950X</i>.",DATA.premium[1].spec],
+  ["asus","ASUS. (s. f.). <i>ROG Strix X870E-E Gaming WiFi: Tech specs</i>.","https://rog.asus.com/motherboards/rog-strix/rog-strix-x870e-e-gaming-wifi/spec/"],
+  ["coolermaster","Cooler Master. (s. f.). <i>Elite 502</i>.",DATA.premium[7].spec],
+  ["tpu","TechPowerUp. (s. f.). <i>NVIDIA RTX PRO 4000 Blackwell</i> [Base de datos de especificaciones de terceros].","https://www.techpowerup.com/gpu-specs/rtx-pro-4000-blackwell.c4279"]
+ ]],
+ ["3. Benchmarks de GPU y CPU",[
+  ["llamacpp","llama.cpp. (2025). <i>Performance of llama.cpp on Nvidia CUDA</i> (Discusión n.º 15013) [Resultados comunitarios].","https://github.com/ggml-org/llama.cpp/discussions/15013"],
+  ["pcgamer","Dexter, A. (2022, 29 de julio). <i>AMD Ryzen 5 5500 review</i>. PC Gamer.","https://www.pcgamer.com/amd-ryzen-5-5500-review-performance-benchmarks"]
+ ]],
+ ["4. Frameworks y documentación de software",[
+  ["pytorch","PyTorch. (2026). <i>Getting started on Intel GPU</i> (Documentación de PyTorch 2.14).","https://docs.pytorch.org/docs/2.14/notes/get_start_xpu.html"],
+  ["cuda","NVIDIA. (2026). <i>CUDA GPU compute capability</i>.","https://developer.nvidia.com/cuda-gpus"]
+ ]],
+ ["5. Investigación en IA",[
+  ["qlora","Dettmers, T., Pagnoni, A., Holtzman, A. y Zettlemoyer, L. (2023). <i>QLoRA: Efficient finetuning of quantized LLMs</i> (arXiv:2305.14314). arXiv.","https://arxiv.org/abs/2305.14314"]
+ ]],
+ ["6. Tipo de cambio",[
+  ["lanacion","La Nación. (2026, 27 de octubre). <i>Dólar hoy y dólar blue, en vivo: a cuánto cotiza el oficial y cuál es el precio del paralelo este martes 27 de octubre</i>.","https://www.lanacion.com.ar/economia/dolar/dolar-hoy-y-dolar-blue-en-vivo-a-cuanto-cotiza-el-oficial-y-cual-es-el-precio-del-paralelo-este-nid27102026/"],
+  ["ambito","Ámbito. (2026, 27 de octubre). <i>Real blue: a cuánto operó este martes 27 de octubre</i>.","https://ambito.com/finanzas/real-blue-cuanto-opero-este-martes-27-octubre-n6338582"]
+ ]]
+];
+document.getElementById("bib").innerHTML = BIB.map(([h,items])=>`<div><h3>${h}</h3><ol>${items.map(([id,t,u])=>`<li id="ref-${id}">${t} <a href="${u}" target="_blank" rel="noopener">${u}</a></li>`).join("")}</ol></div>`).join("");
+initReveal();
+</script>
+
+</body></html>
