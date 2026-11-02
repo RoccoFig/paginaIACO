@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Workstation de IA · IACO 2026</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -472,28 +471,379 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 }
 @keyframes rise{from{opacity:0;transform:translateY(24px)}}
 @keyframes bob{50%{transform:translateY(5px)}}
+
+/* ===== PORTADA + PARTE 2 =====
+   Parte 2 suma una paleta categórica por fabricante (Intel/AMD/NVIDIA) y un violeta para la NPU;
+   el resto (tipografía, bandas, botones, segmentados) es el mismo sistema de la Parte 3. */
+:root{--intel:#2563C9;--amd:#C2410C;--nvidia:#4D7C0F;--npu:#6D3FD9}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--intel:#6EA8FF;--amd:#FF8A5C;--nvidia:#9BD14B;--npu:#B39BFF}}
+:root[data-theme="dark"]{--intel:#6EA8FF;--amd:#FF8A5C;--nvidia:#9BD14B;--npu:#B39BFF}
+.band,.premium{--intel:#6EA8FF;--amd:#FF8A5C;--nvidia:#9BD14B;--npu:#B39BFF}
+.c-intel-t{color:var(--intel)}.c-amd-t{color:var(--amd)}.c-nvidia-t{color:var(--nvidia)}
+.hero .h1{font-size:clamp(2.3rem,4.8vw,3.8rem);font-weight:800;font-stretch:80%;letter-spacing:-.01em;line-height:1.08}
+.hero .h1 em{font-style:normal;color:var(--band-data)}
+[id]{scroll-margin-top:112px}
+
+/* subnavegación por parte */
+.top .wrap.main-row{min-height:56px}
+.subnav{border-top:1px solid var(--band-line)}
+.subnav[hidden]{display:none}
+.subnav .wrap{display:flex;justify-content:flex-start;gap:4px;align-items:center;min-height:42px;overflow-x:auto;scrollbar-width:none}
+.subnav .wrap::-webkit-scrollbar{display:none}
+.subnav .lbl{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--band-data);margin-right:8px;white-space:nowrap}
+.subnav a{color:var(--band-ink-2);text-decoration:none;font:500 .8rem var(--f-body);padding:5px 11px;border-radius:20px;white-space:nowrap}
+.subnav a:hover{color:var(--band-ink);background:var(--band-2)}
+.subnav a[aria-current="true"]{color:var(--band-ink);background:var(--band-2);box-shadow:inset 0 0 0 1px var(--band-line)}
+@media (max-width:1180px){.menu-btn{display:none}.nav{display:flex;position:static;flex-direction:row;padding:0;background:none;border:0}.nav a[aria-current="true"]::after{left:9px;right:9px;top:auto;bottom:2px;width:auto;height:2px}}
+@media (max-width:760px){
+  .menu-btn{display:block}
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--band);border-bottom:1px solid var(--band-line);flex-direction:column;padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));z-index:3}
+  .nav.open{display:flex}
+  .nav a[aria-current="true"]::after{left:0;right:auto;top:8px;bottom:8px;width:2px;height:auto}
+  .brand span{display:none}
+}
+
+/* portada */
+.cover{padding-block:64px 36px}
+.cover .h1{max-width:18ch}
+.cover-grid{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:16px;margin-top:40px}
+.pcard{position:relative;border:1px solid var(--band-line);border-radius:10px;background:rgba(23,28,35,.9);padding:22px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--band-ink)!important;min-height:330px;overflow:hidden;transition:border-color .2s,transform .2s}
+a.pcard:hover{border-color:var(--band-data);transform:translateY(-3px)}
+.pcard .n{font:800 3.2rem/1 var(--f-display);font-stretch:80%;color:#2E3742}
+.pcard.live .n{color:var(--band-data)}
+.pcard .tag{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--band-ink-2)}
+.pcard.live .tag{color:#6FD39A}
+.pcard h3{font-size:1.35rem}
+.pcard p{font-size:.9rem;color:var(--band-ink-2)}
+.pcard .imgs{position:relative;height:160px;margin-top:auto;pointer-events:none}
+.pcard .go{position:relative;z-index:2;margin-bottom:10px}
+.pcard .imgs img{position:absolute;filter:drop-shadow(0 14px 22px rgba(0,0,0,.55));transition:transform .3s}
+a.pcard:hover .imgs img{transform:translateY(-4px)}
+.pcard .go{font:600 .88rem var(--f-body);color:var(--band-data);display:inline-flex;gap:6px;align-items:center}
+.pcard.pending{border-style:dashed;background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(42,50,60,.35) 12px 13px)}
+@media (max-width:900px){.cover-grid{grid-template-columns:minmax(0,1fr)}.pcard{min-height:0}.pcard.pending{order:3}}
+
+/* apertura Parte 2 */
+.p2-hero{position:relative;overflow:hidden;background:radial-gradient(50% 60% at 85% 20%,rgba(179,155,255,.16),transparent 70%),radial-gradient(40% 50% at 10% 90%,rgba(56,182,240,.10),transparent 70%),var(--band)}
+.p2-hero .eyebrow{color:#B39BFF}
+.chips3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}
+.chipc{background:var(--band-2);border:1px solid var(--band-line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;padding:0;color:var(--band-ink);transition:border-color .2s,transform .2s}
+.chipc:hover{transform:translateY(-3px)}
+.chipc[data-v="intel"]:hover{border-color:var(--intel)}.chipc[data-v="amd"]:hover{border-color:var(--amd)}.chipc[data-v="nvidia"]:hover{border-color:var(--nvidia)}
+.chipc .ph{height:190px;background:radial-gradient(60% 60% at 50% 50%,rgba(255,255,255,.06),transparent 70%),var(--band);display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--band-line)}
+.chipc .ph img{max-height:180px;width:auto;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.5))}
+.chipc .ph.photo img{width:100%;height:100%;max-height:none;object-fit:cover;filter:none}
+.chipc .bd{padding:16px;display:grid;gap:6px}
+.chipc .vd{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.chipc h3{font-size:1.15rem}
+.chipc .met{font:800 2rem/1 var(--f-display);font-stretch:85%;margin-top:6px}
+.chipc .met small{font:400 .78rem var(--f-mono);color:var(--band-ink-2);display:block;margin-top:4px;letter-spacing:0}
+.chipc .tdp{font:400 .8rem var(--f-mono);color:var(--band-ink-2)}
+.chipc .go{font:600 .85rem var(--f-body);color:var(--band-data);margin-top:6px}
+@media (max-width:900px){.chips3{grid-template-columns:minmax(0,1fr)}.chipc{flex-direction:row}.chipc .ph{height:auto;width:38%;flex:none;border-bottom:0;border-right:1px solid var(--band-line)}.chipc .ph img{max-height:120px}}
+@media (max-width:480px){.chipc .met{font-size:1.6rem}}
+
+/* tabla técnica */
+.p2-tools{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:16px}
+.p2-tools .lbl{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.spec thead th{vertical-align:bottom}
+.spec .chead{display:grid;gap:6px;text-transform:none;letter-spacing:0}
+.spec .chead img{height:54px;width:auto;max-width:110px;object-fit:contain;border-radius:4px}
+.spec .chead b{font:700 .95rem var(--f-display);font-stretch:95%;color:var(--ink)}
+.spec .chead i{display:block;height:3px;border-radius:2px;width:36px}
+.spec td.hl{background:color-mix(in srgb,var(--data) 6%,transparent)}
+.spec[data-view="intel"] .c-amd,.spec[data-view="intel"] .c-nvidia,
+.spec[data-view="amd"] .c-intel,.spec[data-view="amd"] .c-nvidia,
+.spec[data-view="nvidia"] .c-intel,.spec[data-view="nvidia"] .c-amd{display:none}
+.spec[data-view]:not([data-view="all"]) table{min-width:0}
+.na{color:var(--ink-2);font-style:italic}
+.p2-charts{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;margin-top:24px}
+.p2-chart{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+.p2-chart h3{font-size:1.05rem}
+.p2-chart .ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.hbars{display:grid;gap:10px}
+.hb{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:.86rem}
+.hb .lb{display:flex;gap:8px;align-items:center;line-height:1.25}
+.hb .lb i{width:10px;height:10px;border-radius:2px;flex:none}
+.hb .tr{height:18px;background:var(--paper);border:1px solid var(--line);border-radius:3px;position:relative}
+.hb .tr .f{position:absolute;top:0;bottom:0;left:0;border-radius:2px;transition:width .5s ease,left .5s ease}
+.hb .tr .rg{position:absolute;top:3px;bottom:3px;border-radius:2px;opacity:.35;transition:all .5s ease}
+.hb .tr .dt{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--surface);transition:left .5s ease}
+.hb .v{font:500 .78rem var(--f-mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#tdpBars .hb,.tdp-axis{grid-template-columns:96px minmax(0,1fr) 112px}
+.axis .ticks span{white-space:nowrap}
+.axis{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:10px;font:400 .68rem var(--f-mono);color:var(--ink-2)}
+.axis .ticks{position:relative;height:14px}
+.axis .ticks span{position:absolute;transform:translateX(-50%)}
+.cnote{font-size:.8rem;color:var(--ink-2);border-left:3px solid var(--warn);padding-left:10px}
+@media (max-width:900px){.p2-charts{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.hb,.axis{grid-template-columns:96px minmax(0,1fr) 70px;gap:6px;font-size:.78rem}}
+
+/* núcleos */
+.p2-block{margin-top:48px}
+.p2-block>h3{font-size:1.45rem;margin-bottom:6px}
+.p2-block>.lead{margin-top:4px;margin-bottom:20px;font-size:1rem}
+.cores{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start}
+.die-wrap{background:var(--band);border:1px solid var(--band-line);border-radius:10px;padding:18px;color:var(--band-ink)}
+.die-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.die-sum{font:500 .8rem var(--f-mono);color:var(--band-ink-2)}
+.die{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;padding:16px;border-radius:8px;border:1px dashed #3A4552;background:repeating-linear-gradient(0deg,transparent 0 23px,#161C23 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,#161C23 23px 24px)}
+.cgrp{border:1px solid var(--band-line);border-radius:8px;background:rgba(23,28,35,.85);padding:12px;display:grid;gap:10px;align-content:start;cursor:pointer;text-align:left;color:var(--band-ink);transition:border-color .2s,box-shadow .2s}
+.cgrp:hover{border-color:#5D6B7A}
+.cgrp[aria-pressed="true"]{border-color:var(--gc);box-shadow:0 0 0 1px var(--gc),0 0 24px -6px var(--gc)}
+.cgrp .gt{font:600 .85rem var(--f-body)}
+.cgrp .gs{font:400 .72rem var(--f-mono);color:var(--band-ink-2)}
+.tiles{display:grid;gap:8px}
+.cgrp.big .tiles{grid-template-columns:repeat(2,1fr)}
+.cgrp.small .tiles{grid-template-columns:repeat(2,1fr)}
+.cgrp.small.n8 .tiles{grid-template-columns:repeat(4,1fr)}
+.tile{border-radius:4px;background:color-mix(in srgb,var(--gc) 22%,#141A21);border:1px solid color-mix(in srgb,var(--gc) 60%,transparent);display:grid;place-items:center;font:500 .66rem var(--f-mono);color:var(--band-ink)}
+.cgrp.big .tile{aspect-ratio:1/1}
+.cgrp.small .tile{aspect-ratio:1/1;transform:scale(.78)}
+.die-note{font:400 .72rem var(--f-mono);color:var(--band-ink-2);margin-top:10px}
+.core-info{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:10px}
+.core-info .cat{font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.core-info p{color:var(--ink-2);font-size:.93rem}
+.facts{display:flex;flex-wrap:wrap;gap:6px}
+.facts span{font:500 .74rem var(--f-mono);border:1px solid var(--line);border-radius:20px;padding:3px 10px;color:var(--ink)}
+.diff-call{border-left:3px solid var(--npu);padding:6px 0 6px 12px;font-size:.9rem;color:var(--ink-2)}
+@media (max-width:900px){.cores{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.die{grid-template-columns:minmax(0,1fr)}}
+
+/* inferencia autorregresiva */
+.ar{background:var(--band);border:1px solid var(--band-line);border-radius:10px;padding:18px;color:var(--band-ink);display:grid;gap:16px}
+.ar-stage{display:grid;grid-template-columns:minmax(0,1.3fr) 110px minmax(0,.8fr);gap:12px;align-items:center}
+.ar .k{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--band-ink-2);display:block;margin-bottom:8px}
+.ar-mem{border:1px solid var(--band-line);border-radius:8px;padding:12px;background:var(--band-2)}
+.cells{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}
+.cells i{aspect-ratio:1/1;border-radius:2px;background:#232B35;transition:background .15s}
+.cells i.on{background:var(--band-data);box-shadow:0 0 8px rgba(56,182,240,.6)}
+.ar-arrow{display:grid;justify-items:center;gap:6px;text-align:center;font:400 .68rem var(--f-mono);color:var(--band-ink-2)}
+.ar-arrow svg{width:100%;height:24px}
+.ar-cpu{border:1px solid var(--band-line);border-radius:8px;padding:14px;background:var(--band-2);text-align:center}
+.ar-cpu b{font:700 1rem var(--f-display);font-stretch:95%}
+.ar-cpu.busy{border-color:var(--band-data);box-shadow:0 0 0 1px var(--band-data)}
+.ar-out{border:1px solid var(--band-line);border-radius:8px;padding:12px 14px;min-height:64px;background:#0B0F13}
+.ar-out p{font:500 1.05rem var(--f-mono);color:var(--band-ink)}
+.ar-out p span{color:var(--band-data)}
+.ar-out p .cur{display:inline-block;width:9px;height:1.1em;background:var(--band-data);vertical-align:-2px;margin-left:3px}
+@media (prefers-reduced-motion:no-preference){.ar-out p .cur{animation:blink 1s steps(2) infinite}}
+@keyframes blink{50%{opacity:0}}
+.ar-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ar-tools .mono{font-size:.8rem;color:var(--band-ink-2)}
+@media (max-width:640px){.ar-stage{grid-template-columns:minmax(0,1fr)}.ar-arrow svg{transform:rotate(90deg);height:30px;width:30px}}
+
+/* memoria en el paquete */
+.ll{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
+.ll-photo{margin:0;position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#000}
+.ll-photo img{width:100%;height:auto}
+.ll-photo .hs{position:absolute;transform:translate(-50%,-50%);background:rgba(15,19,24,.88);color:#E9EDF1;border:1px solid #38B6F0;font:500 .72rem var(--f-mono);padding:4px 9px;border-radius:20px;white-space:nowrap}
+.ll-photo .hs.mem{border-color:#B39BFF}
+.ll-photo figcaption{font:400 .72rem var(--f-mono);color:#9AA6B4;background:#0F1318;padding:8px 12px}
+.ll-side{display:grid;gap:14px}
+.ll-svg{background:var(--band);border:1px solid var(--band-line);border-radius:10px;padding:10px}
+.ll-svg svg{width:100%;height:auto;display:block}
+.ll-cap{font-size:.92rem;color:var(--ink-2)}
+@media (prefers-reduced-motion:no-preference){.trace{animation:flow 1s linear infinite}}
+@media (max-width:860px){.ll{grid-template-columns:minmax(0,1fr)}}
+
+/* GPU vs NPU */
+.duel-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.duel-tabs button{border:1px solid var(--band-line);background:var(--band-2);color:var(--band-ink-2);padding:8px 13px;border-radius:20px;font:500 .84rem var(--f-body);cursor:pointer}
+.duel-tabs button:hover{color:var(--band-ink)}
+.duel-tabs button[aria-selected="true"]{background:var(--band-ink);color:var(--band);border-color:var(--band-ink)}
+.duel-body{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:0;border:1px solid var(--band-line);border-radius:10px;overflow:hidden;background:var(--band-2)}
+.side{padding:20px;display:grid;gap:10px;align-content:start;position:relative;min-width:0}
+.side .who{display:flex;gap:12px;align-items:center}
+.side .who img{width:84px;height:64px;object-fit:contain}
+.side .who .pair{display:flex;gap:4px}
+.side .who .pair img{width:60px;height:46px;object-fit:cover;border-radius:4px}
+.side .who b{font:700 1.15rem var(--f-display);font-stretch:92%;display:block}
+.side .who small{font:400 .74rem var(--f-mono);color:var(--band-ink-2)}
+.side p{font-size:1rem;color:var(--band-ink);line-height:1.55}
+.side.win{background:linear-gradient(180deg,rgba(111,211,154,.08),transparent 60%)}
+.win-tag{font:500 .7rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:#6FD39A;border:1px solid #6FD39A;border-radius:3px;padding:2px 8px;justify-self:start}
+.vs{display:grid;place-items:center;border-inline:1px solid var(--band-line);font:800 1.1rem var(--f-display);color:var(--band-ink-2);background:var(--band)}
+.duel-nav{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font:500 .8rem var(--f-mono);color:var(--band-ink-2)}
+.duel-nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--band-line);background:var(--band-2);color:var(--band-ink);cursor:pointer;display:grid;place-items:center}
+.duel-score{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-size:.9rem;color:var(--band-ink-2)}
+.duel-score b{color:var(--band-ink)}
+.duel-all{margin-top:18px}
+.duel-all summary{cursor:pointer;color:var(--band-data);font-weight:500}
+.duel-all .table-scroll{margin-top:12px;background:var(--band-2);border-color:var(--band-line)}
+.duel-all th,.duel-all td{border-color:var(--band-line);color:var(--band-ink)}
+.duel-all thead th{background:var(--band);color:var(--band-ink-2)}
+@media (max-width:760px){.duel-body{grid-template-columns:minmax(0,1fr)}.vs{border-inline:0;border-block:1px solid var(--band-line);padding:6px}}
+
+/* galería de aplicaciones */
+.apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+.app{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:border-color .2s,transform .2s}
+.app:hover{transform:translateY(-2px)}
+.app .ph{height:200px;background:var(--band);display:grid;place-items:center;overflow:hidden;position:relative}
+.app .ph img{max-height:190px;width:auto;object-fit:contain}
+.app .ph.photo img{width:100%;height:100%;max-height:none;object-fit:cover}
+.app .ph .uses{position:absolute;left:10px;top:10px;font:500 .68rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:rgba(15,19,24,.88);color:#E9EDF1;border:1px solid currentColor}
+.app .bd{padding:18px;display:grid;gap:10px;align-content:start}
+.app .vd{font:500 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.app h3{font-size:1.15rem}
+.sw{display:flex;flex-wrap:wrap;gap:6px}
+.sw span{font:500 .76rem var(--f-body);background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:3px 10px}
+.app p{font-size:.92rem;color:var(--ink-2)}
+.app .more[hidden]{display:none}
+.app .tg{justify-self:start}
+.pill.chk{color:var(--warn);border-style:dashed;font-size:.66rem;vertical-align:1px}
+@media (max-width:980px){.apps{grid-template-columns:minmax(0,1fr)}.app{flex-direction:row}.app .ph{width:38%;flex:none;height:auto;min-height:200px}}
+@media (max-width:560px){.app{flex-direction:column}.app .ph{width:auto;height:180px;min-height:0}}
+
+.p2-next{margin-top:40px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:10px;padding:20px 22px;background:var(--surface)}
+.p2-next p{color:var(--ink-2);max-width:60ch}
+.p2-next b{color:var(--ink);font-family:var(--f-display);font-size:1.15rem;display:block;margin-bottom:2px}
+.bib .part-h{font:800 1.4rem var(--f-display);font-stretch:88%;text-transform:none;letter-spacing:0;color:var(--ink);border:0;padding:0;margin-top:12px}
+.bib .note{display:block;font-size:.82rem;color:var(--ink-2);margin-top:2px;text-indent:0}
 </style>
 
 <header class="top">
-  <div class="wrap">
-    <a class="brand" href="#inicio"><i aria-hidden="true"></i>IACO 2026 <span>PARTE 3 · WORKSTATION DE IA</span></a>
-    <!-- Navegación: para sumar las Partes 1 y 2, agregar sus enlaces en NAV y cambiar su estado en PARTS (script) -->
+  <div class="wrap main-row">
+    <a class="brand" href="#inicio"><i aria-hidden="true"></i>IACO 2026 <span>HARDWARE PARA IA</span></a>
+    <!-- Navegación: las partes y sus secciones se definen en GROUPS (script). Para sumar la Parte 1, agregar su grupo y cambiar su estado en PARTS. -->
     <nav class="nav" id="nav" aria-label="Secciones"></nav>
     <div class="tools">
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Cambiar tema">Tema: auto</button>
       <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
     </div>
   </div>
+  <nav class="subnav" id="subnav" aria-label="Secciones de la parte actual" hidden><div class="wrap"></div></nav>
 </header>
 
 <main>
-<!-- HERO -->
-<section class="band hero" id="inicio">
+<!-- PORTADA DEL PROYECTO -->
+<section class="band hero cover" id="inicio">
+  <div class="wrap">
+    <p class="eyebrow">IACO 2026 · Arquitectura de computadoras</p>
+    <h1 class="h1">Hardware para <em>inteligencia artificial</em></h1>
+    <p class="lead">Cómo calculan IA los chips de hoy y cómo se arma una computadora para usarla. Un trabajo en partes, con datos verificables y sus fuentes.</p>
+    <div class="cover-grid" id="partsGrid"></div>
+    <a class="scroll-cue" href="#parte-2">Empezar por la Parte 2<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+  </div>
+</section>
+
+<!-- ================= PARTE 2 ================= -->
+<section class="band p2-hero" id="parte-2">
+  <div class="wrap">
+    <p class="eyebrow">Parte 2 · Arquitectura de computadoras</p>
+    <h2 class="h1" style="font-size:clamp(2.1rem,4.4vw,3.4rem);font-weight:800;font-stretch:80%">El corazón inteligente <span style="color:#B39BFF">de la máquina</span></h2>
+    <p class="lead">Dos procesadores de notebook con NPU y una placa de video de escritorio: tres formas distintas de hacer cálculo de inteligencia artificial. Tocá un chip para ver su ficha.</p>
+    <div class="chips3" id="p2Chips"></div>
+  </div>
+</section>
+
+<section id="p2-tabla">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 2 · Sección 1</p><h2>Tabla técnica comparativa</h2>
+      <p class="lead">Las especificaciones de los tres chips, con la fuente de cada columna. Elegí uno para verlo solo, ideal en el celular.</p></div>
+    <div class="spec" id="spec" data-view="all">
+      <div class="p2-tools"><span class="lbl">Ver</span><div class="seg" id="specView" role="group" aria-label="Qué chip mostrar"><button type="button" data-v="all" aria-pressed="true">Los tres</button><button type="button" data-v="intel" aria-pressed="false">Intel</button><button type="button" data-v="amd" aria-pressed="false">AMD</button><button type="button" data-v="nvidia" aria-pressed="false">NVIDIA</button></div></div>
+      <div class="table-scroll"><table id="specTable"><caption class="sr-only">Comparación técnica de Intel Core Ultra 7 258V, AMD Ryzen AI 9 HX 370 y NVIDIA GeForce RTX 4090</caption></table></div>
+    </div>
+    <div class="p2-charts">
+      <div class="p2-chart reveal">
+        <h3>Potencia de IA declarada (TOPS)</h3>
+        <div class="ctl"><div class="seg" id="topsScale" role="group" aria-label="Escala"><button type="button" data-s="lin" aria-pressed="true">Lineal</button><button type="button" data-s="log" aria-pressed="false">Logarítmica</button></div>
+          <button type="button" class="btn btn-sm btn-line" id="topsSparse" aria-pressed="true">RTX 4090: con sparsity</button></div>
+        <div class="hbars" id="topsBars"></div>
+        <div class="axis"><span></span><div class="ticks" id="topsTicks"></div><span></span></div>
+        <p class="cnote">No son cifras directamente comparables: las NPU se miden en INT8 y la cifra de NVIDIA es su "AI TOPS" con sparsity. Sin sparsity, la RTX 4090 da 660,6 TOPS <a class="cite" href="#ref-p2-vast">(Vast.ai, s. f.)</a>. Con la escala lineal las NPU casi no se ven; la logarítmica permite comparar órdenes de magnitud.</p>
+      </div>
+      <div class="p2-chart reveal">
+        <h3>Consumo (TDP)</h3>
+        <div class="hbars" id="tdpBars"></div>
+        <div class="axis tdp-axis"><span></span><div class="ticks" id="tdpTicks"></div><span></span></div>
+        <p class="cnote" style="border-color:var(--ink-2)">El punto marca el TDP nominal y la franja, el rango configurable o máximo que informa la fuente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="p2-arquitectura" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 2 · Sección 2</p><h2>Análisis arquitectónico profundo</h2>
+      <p class="lead">Por qué los procesadores mezclan núcleos grandes y chicos, y por qué la memoria es la clave para ejecutar IA.</p></div>
+
+    <div class="p2-block reveal" style="margin-top:0">
+      <h3>P-Cores, E-Cores y Zen 5c</h3>
+      <p class="lead">Los P-Cores y E-Cores son una estrategia de diseño para equilibrar la potencia máxima y el consumo energético. AMD plantea una alternativa basada en densidad y eficiencia de área. Tocá cada grupo de núcleos.</p>
+      <div class="cores">
+        <div class="die-wrap">
+          <div class="die-top"><div class="seg" id="coreVendor" role="group" aria-label="Fabricante"><button type="button" data-v="intel" aria-pressed="true">Intel Lunar Lake</button><button type="button" data-v="amd" aria-pressed="false">AMD Strix Point</button></div><span class="die-sum" id="dieSum"></span></div>
+          <div class="die" id="die"></div>
+          <p class="die-note">Esquema ilustrativo: muestra cantidad y tamaño relativo de los núcleos, no el plano real del chip.</p>
+        </div>
+        <aside class="core-info" id="coreInfo" aria-live="polite"></aside>
+      </div>
+    </div>
+
+    <div class="p2-block reveal">
+      <h3>¿Por qué la memoria es crucial para la IA?</h3>
+      <p class="lead">La memoria ultrarrápida y de gran ancho de banda es el factor más crítico para ejecutar IA: los modelos de lenguaje y de imágenes mueven miles de millones de parámetros desde la memoria al procesador en milisegundos. Si la memoria es lenta, el procesador se queda "esperando" y se produce un cuello de botella.</p>
+      <div class="ar" id="ar">
+        <div class="ar-stage">
+          <div class="ar-mem"><span class="k">Memoria · pesos del modelo</span><div class="cells" id="arCells" aria-hidden="true"></div></div>
+          <div class="ar-arrow"><svg viewBox="0 0 110 24" aria-hidden="true"><path d="M2 12H100" stroke="#38B6F0" stroke-width="2.5" stroke-dasharray="6 5" class="trace"/><path d="M98 5l9 7-9 7z" fill="#38B6F0"/></svg><span id="arBw">lee el modelo completo</span></div>
+          <div class="ar-cpu" id="arCpu"><span class="k">Procesador</span><b id="arState">Esperando</b></div>
+        </div>
+        <div class="ar-out"><span class="k">Texto generado</span><p id="arText" aria-live="polite"></p></div>
+        <div class="ar-tools"><button class="btn btn-main btn-sm" type="button" id="arGo">Generar la siguiente palabra</button><button class="btn btn-sm btn-ghost" type="button" id="arReset">Reiniciar</button><span class="mono" id="arCount"></span></div>
+        <p style="font-size:.88rem;color:var(--band-ink-2)">Esto es la <b style="color:var(--band-ink)">inferencia autorregresiva</b>: para generar una sola palabra el chip lee el modelo completo desde la memoria, calcula el resultado y vuelve a leer todo el modelo para la palabra siguiente. Animación ilustrativa.</p>
+      </div>
+    </div>
+
+    <div class="p2-block reveal">
+      <h3>Intel Lunar Lake: la memoria dentro del paquete</h3>
+      <p class="lead">En una placa madre tradicional, los datos viajan por pistas de cobre desde la RAM hasta el procesador. Lunar Lake integra la LPDDR5X en el mismo paquete del procesador.</p>
+      <div class="ll">
+        <figure class="ll-photo"><img src="assets/img/p2-intel-lunar-lake-paquete.webp" alt="Paquete del procesador Intel Lunar Lake: arriba el chip principal y abajo dos módulos de memoria LPDDR5X montados en el mismo sustrato" loading="lazy" width="800" height="727">
+          <span class="hs" style="left:47%;top:33%">Procesador</span><span class="hs mem" style="left:47%;top:73%">LPDDR5X en el paquete</span>
+          <figcaption>Paquete Intel Lunar Lake. Imagen del material de la Parte 2.</figcaption></figure>
+        <div class="ll-side">
+          <div class="seg" id="llMode" role="group" aria-label="Comparar diseños" style="justify-self:start"><button type="button" data-m="trad" aria-pressed="false">Placa tradicional</button><button type="button" data-m="ll" aria-pressed="true">Lunar Lake</button></div>
+          <div class="ll-svg"><svg id="llSvg" viewBox="0 0 420 220" role="img" aria-labelledby="llT"><title id="llT">Esquema del recorrido de los datos entre memoria y procesador</title></svg></div>
+          <p class="ll-cap" id="llCap"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="p2-gpu-npu">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 2 · Sección 3</p><h2>Rendimiento en el mundo real: GPU vs NPU</h2>
+      <p class="lead">La GPU de escritorio contra las NPU de notebook, criterio por criterio. Ejemplos: NVIDIA GeForce RTX 4090 frente a Intel AI Boost y AMD XDNA 2.</p></div>
+    <div class="duel reveal">
+      <div class="duel-tabs" id="duelTabs" role="tablist" aria-label="Criterios"></div>
+      <div class="duel-body" id="duelBody" role="tabpanel"></div>
+      <div class="duel-nav"><button type="button" id="duelPrev" aria-label="Criterio anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span id="duelCount"></span><button type="button" id="duelNext" aria-label="Criterio siguiente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+      <div class="duel-score" id="duelScore"></div>
+      <details class="duel-all"><summary>Ver la tabla completa</summary><div class="table-scroll"><table id="duelTable"><caption class="sr-only">Comparación GPU contra NPU</caption></table></div></details>
+    </div>
+  </div>
+</section>
+
+<section id="p2-apps">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 2 · Sección 4</p><h2>Galería de aplicaciones: dónde brilla cada componente</h2>
+      <p class="lead">Software real que aprovecha cada chip y qué parte del hardware hace el trabajo.</p></div>
+    <div class="apps" id="apps"></div>
+    <div class="p2-next reveal"><p><b>Siguiente: Parte 3</b>De la teoría al armado: con lo que vimos sobre memoria y aceleradores, armamos dos workstations de IA con precios reales en Argentina.</p><a class="btn btn-main" href="#parte-3">Ir a la Parte 3</a></div>
+  </div>
+</section>
+
+<!-- ================= PARTE 3 ================= -->
+<section class="band hero" id="parte-3">
   <div class="wrap">
     <div class="hero-grid">
       <div>
         <p class="eyebrow">IACO 2026 · Parte 3 · El Diseño Maestro</p>
-        <h1>Tu workstation de IA. <em>Pensada para presupuestos reales.</em></h1>
+        <h2 class="h1">Tu workstation de IA. <em>Pensada para presupuestos reales.</em></h2>
         <p class="lead">Dos configuraciones armadas con piezas en stock en tiendas argentinas y una misma pregunta: ¿cuánta inteligencia artificial podés ejecutar con tu hardware?</p>
         <div class="cta">
           <a class="btn btn-main" href="#diagrama">Explorar el armado</a>
@@ -526,16 +876,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#punto-dulce"><img src="assets/img/budget-gpu-rtx3060-ref-front.webp" alt=""><span class="k">Configuración 1 · tope USD 800</span><span class="v">El Punto Dulce</span><span class="d"><span data-bind="budget.ars"></span> · RTX 3060 12 GB (usada) · 16 GB RAM</span></a>
       <a href="#premium"><img src="assets/img/premium-gpu-pny-rtx-pro-4000.webp" alt=""><span class="k">Configuración 2 · sin límite práctico</span><span class="v">Money Is No Object</span><span class="d"><span data-bind="premium.ars"></span> · 2 × RTX PRO 4000 24 GB · 128 GB RAM</span></a>
     </div>
-    <a class="scroll-cue" href="#partes">Deslizá para explorar<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
-  </div>
-</section>
-
-<!-- PARTES DEL TRABAJO -->
-<section class="parts" id="partes">
-  <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow">El trabajo completo</p><h2>IACO 2026 en tres partes</h2>
-      <p class="lead">Este sitio está preparado para reunir las tres partes del trabajo. La Parte 3 está completa; las Partes 1 y 2 se suman cuando esté su material.</p></div>
-    <div class="parts-grid" id="partsGrid"></div>
+    <a class="scroll-cue" href="#perfil">Deslizá para explorar<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
   </div>
 </section>
 
@@ -734,10 +1075,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="bibliografia">
   <div class="wrap">
     <div class="sec-head"><p class="eyebrow">Transparencia académica</p><h2>Bibliografía y Recursos</h2>
-      <p class="lead">Formato APA. Los listados de productos son páginas dinámicas: el precio citado es el que mostraban el día de consulta.</p></div>
+      <p class="lead">Formato APA, ordenado por parte. Los listados de productos son páginas dinámicas: el precio citado es el que mostraban el día de consulta.</p></div>
     <div class="bib" id="bib"></div>
     <div class="method">
-      <h3>Método y límites</h3>
+      <h3>Método y límites · Parte 3</h3>
       <ul>
         <li>Precios: precio especial (efectivo o transferencia) de cada página de producto, consultado el 27/10/2026. No incluyen cuotas ni descuentos temporales.</li>
         <li>Dólar: oficial Banco Nación, venta, $1.560 el 27/10/2026. Ese día el MEP cerró en $1.559,24 y el blue en $1.575 <a class="cite" href="#ref-ambito">(Ámbito, 2026)</a>, así que el resultado no cambia con otra referencia razonable.</li>
@@ -750,7 +1091,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </section>
 </main>
 
-<footer><div class="wrap"><span>IACO 2026 · Parte 3: El Diseño Maestro</span><span>Datos de referencia al <span data-bind="date"></span></span></div></footer>
+<footer><div class="wrap"><span>IACO 2026 · Hardware para inteligencia artificial · Partes 2 y 3</span><span>Datos de referencia al <span data-bind="date"></span></span></div></footer>
 <button class="to-top" id="toTop" type="button" aria-label="Volver arriba"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 <div class="tip" id="tip" role="tooltip"></div>
 
@@ -930,34 +1271,48 @@ document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = CALC[e
 const findAny = id => DATA.budget.find(c=>c.id===id) || DATA.premium.find(c=>c.id===id);
 const esc = s => String(s).replace(/"/g,"&quot;");
 
-/* ---------- partes del trabajo (extensible) ---------- */
+/* ---------- partes del trabajo (portada, extensible) ---------- */
 const PARTS = [
-  { n:1, status:"pending", title:"Parte 1", href:null },
-  { n:2, status:"pending", title:"Parte 2", href:null },
-  { n:3, status:"live", title:"El Diseño Maestro: tu Workstation de IA", href:"#perfil" }
+  { n:1, status:"pending", title:"Parte 1" },
+  { n:2, status:"live", title:"El corazón inteligente de la máquina", href:"#parte-2", text:"Intel Core Ultra 7 258V, AMD Ryzen AI 9 HX 370 y NVIDIA RTX 4090: núcleos, memoria, NPU contra GPU y aplicaciones reales.",
+    imgs:[["p2-amd-ryzen-ai-300.webp","left:0;bottom:8px;width:52%;border-radius:6px"],["p2-rtx-4090-gigabyte.webp","right:-6px;bottom:0;width:56%"]] },
+  { n:3, status:"live", title:"El Diseño Maestro: tu workstation de IA", href:"#parte-3", text:"Dos configuraciones con precios reales en Argentina, diagrama de bloques, simulador de presupuesto e infografía.",
+    imgs:[["budget-gpu-rtx3060-ref-angle.webp","left:-6px;bottom:-26px;width:58%"],["budget-cpu-ryzen5-5500.webp","right:0;bottom:0;width:32%"]] }
 ];
 document.getElementById("partsGrid").innerHTML = PARTS.map(p => p.status==="live"
-  ? `<article class="part live"><span class="n">0${p.n}</span><span class="st-tag">● Disponible</span><h3>Parte ${p.n} · ${p.title}</h3><p>Perfil, dos configuraciones con precios argentinos, diagrama de bloques, comparación e infografía.</p><a class="btn btn-sm btn-line" href="${p.href}" style="justify-self:start">Ir a la Parte ${p.n}</a></article>`
-  : `<article class="part pending" aria-label="${p.title}, pendiente de integración"><span class="n">0${p.n}</span><span class="st-tag">◌ Pendiente de integración</span><h3>${p.title}</h3><p>Este espacio queda reservado. Su contenido se incorporará cuando esté disponible el material de la ${p.title}.</p></article>`).join("");
+  ? `<a class="pcard live reveal" href="${p.href}"><span class="n">0${p.n}</span><span class="tag">● Disponible</span><h3>Parte ${p.n} · ${p.title}</h3><p>${p.text}</p><span class="go">Explorar la Parte ${p.n} →</span><span class="imgs" aria-hidden="true">${p.imgs.map(([f,st])=>`<img src="${IMG+f}" alt="" style="${st}">`).join("")}</span></a>`
+  : `<article class="pcard pending" aria-label="${p.title}, pendiente de integración"><span class="n">0${p.n}</span><span class="tag">◌ Pendiente de integración</span><h3>${p.title}</h3><p>Este espacio queda reservado. Su contenido se incorporará cuando esté disponible el material de la ${p.title}.</p></article>`).join("");
 
-/* ---------- navegación ---------- */
-const NAV = [
-  ["#partes","Partes"],["#perfil","Perfil"],["#explorador","Componentes"],["#presupuesto","Presupuesto"],["#diagrama","Diagrama"],
-  ["#premium","Premium"],["#comparar","Comparar"],["#infografia","Infografía"],["#bibliografia","Fuentes"]
+/* ---------- navegación por partes ---------- */
+const GROUPS = [
+  { id:"p2", label:"Parte 2", href:"#parte-2", items:[["#parte-2","Inicio"],["#p2-tabla","Tabla técnica"],["#p2-arquitectura","Arquitectura"],["#p2-gpu-npu","GPU vs NPU"],["#p2-apps","Aplicaciones"]] },
+  { id:"p3", label:"Parte 3", href:"#parte-3", items:[["#parte-3","Inicio"],["#perfil","Perfil"],["#explorador","Componentes"],["#presupuesto","Presupuesto"],["#mejoras","Mejoras"],["#diagrama","Diagrama"],["#premium","Premium"],["#comparar","Comparar"],["#infografia","Infografía"]] },
+  { id:"bib", label:"Bibliografía", href:"#bibliografia", items:[] }
 ];
-const nav = document.getElementById("nav");
-nav.innerHTML = NAV.map(([h,t])=>`<a href="${h}">${t}</a>`).join("");
+const nav = document.getElementById("nav"), subnav = document.getElementById("subnav");
+nav.innerHTML = `<a href="#inicio" data-g="cover">Portada</a>` + GROUPS.map(g=>`<a href="${g.href}" data-g="${g.id}">${g.label}</a>`).join("");
 const menuBtn = document.getElementById("menuBtn");
 menuBtn.addEventListener("click",()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)});
 nav.addEventListener("click",e=>{if(e.target.tagName==="A"){nav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false")}});
-// sección activa
+// sección activa: el último destino cuyo borde superior pasó el 35 % de la pantalla
 (function(){
-  const links = [...nav.querySelectorAll("a")];
-  const targets = NAV.map(([h])=>document.querySelector(h)).filter(Boolean);
-  const io = new IntersectionObserver(es=>{
-    es.forEach(e=>{ if(e.isIntersecting){ const id="#"+e.target.id; links.forEach(a=>a.setAttribute("aria-current", a.getAttribute("href")===id ? "true":"false")); } });
-  },{rootMargin:"-40% 0px -55% 0px"});
-  targets.forEach(t=>io.observe(t));
+  const T=[{el:document.getElementById("inicio"),g:"cover",h:"#inicio"}];
+  GROUPS.forEach(g=>{ const list=g.items.length?g.items:[[g.href,g.label]]; list.forEach(([h])=>{const el=document.querySelector(h); if(el) T.push({el,g:g.id,h});}); });
+  let curG=null, curH=null;
+  function update(){
+    let cur=T[0]; const y=innerHeight*.35;
+    T.forEach(t=>{ if(t.el.getBoundingClientRect().top<y) cur=t; });
+    if(cur.g!==curG){
+      curG=cur.g; const g=GROUPS.find(x=>x.id===curG);
+      nav.querySelectorAll("a").forEach(a=>a.setAttribute("aria-current",a.dataset.g===curG));
+      if(g&&g.items.length){ subnav.hidden=false; subnav.firstElementChild.innerHTML=`<span class="lbl">${g.label}</span>`+g.items.map(([h,t])=>`<a href="${h}">${t}</a>`).join(""); }
+      else subnav.hidden=true;
+      curH=null;
+    }
+    if(cur.h!==curH){ curH=cur.h; subnav.querySelectorAll("a").forEach(a=>{const on=a.getAttribute("href")===curH; a.setAttribute("aria-current",on); if(on) a.scrollIntoView({block:"nearest",inline:"nearest"});}); }
+  }
+  let raf=0; addEventListener("scroll",()=>{ if(!raf) raf=requestAnimationFrame(()=>{raf=0;update();}); },{passive:true});
+  addEventListener("resize",update); update();
 })();
 
 /* ---------- tema ---------- */
@@ -1439,8 +1794,217 @@ document.getElementById("infographic").innerHTML = buildInfographic();
   }catch(e){}
 })();
 
+
+/* =========================================================
+   PARTE 2 · fuente única de datos (contenido del documento
+   "TP 2 Arquitectura de Computación"). No agregar cifras que
+   no estén en el material o en sus fuentes.
+   ========================================================= */
+const P2 = {
+  chips: [
+    { id:"intel", vendor:"Intel", name:"Intel Core Ultra 7 258V", img:"p2-intel-lunar-lake-paquete.webp", photo:true,
+      alt:"Paquete del procesador Intel Lunar Lake con memoria integrada", metric:"47 TOPS", metricSub:"NPU Intel AI Boost (INT8)", tdpShort:"17 W (hasta 37 W)",
+      rows:{ tipo:"CPU de portátil con NPU", arq:"Lunar Lake (Lion Cove + Skymont)", nuc:"8 / 8 (4 P-Cores + 4 núcleos de bajo consumo)", freq:"4,8 GHz (P-Cores)", cache:"L2 14 MB, L3 12 MB",
+        mem:"LPDDR5X-8533 dentro del paquete (hasta 32 GB)", tdp:"17 W (hasta 37 W)", ia:"NPU Intel AI Boost: 47 TOPS (INT8). Plataforma completa: 115 TOPS" },
+      cites:[["p2-eyb","EatYourBytes, s. f."],["p2-nbc-258v","Notebookcheck, s. f.-a"],["p2-nbc-cmp","Notebookcheck, s. f.-b"]] },
+    { id:"amd", vendor:"AMD", name:"AMD Ryzen AI 9 HX 370", img:"p2-amd-ryzen-ai-300.webp", photo:true,
+      alt:"Render del chip AMD Ryzen AI serie 300", metric:"50 TOPS", metricSub:"NPU XDNA 2 (INT8)", tdpShort:"28 W (15–54 W)",
+      rows:{ tipo:"CPU/APU de portátil con NPU", arq:"Strix Point (Zen 5 + Zen 5c)", nuc:"12 / 24 (4 Zen 5 + 8 Zen 5c)", freq:"5,1 GHz (Zen 5) y 3,3 GHz (Zen 5c)", cache:"L2 12 MB, L3 24 MB",
+        mem:"LPDDR5X-8000 o DDR5-5600", tdp:"28 W (configurable entre 15 y 54 W)", ia:"NPU XDNA 2: 50 TOPS (INT8)" },
+      cites:[["p2-nbc-hx370","Notebookcheck, s. f.-c"]] },
+    { id:"nvidia", vendor:"NVIDIA", name:"NVIDIA GeForce RTX 4090", img:"p2-rtx-4090-gigabyte.webp", photo:false,
+      alt:"Placa de video Gigabyte GeForce RTX 4090 Gaming OC con su caja", metric:"1.321 AI TOPS", metricSub:"Tensor Cores, cifra de NVIDIA con sparsity", tdpShort:"450 W",
+      rows:{ tipo:"GPU de escritorio de gama alta", arq:"Ada Lovelace", nuc:"16.384 núcleos CUDA + 512 Tensor Cores", freq:"2,52 GHz (boost)", cache:null,
+        mem:"24 GB GDDR6X, bus de 384 bits, 1.008 GB/s", tdp:"450 W", ia:"Sin NPU. Tensor Cores: 1.321 AI TOPS (cifra de NVIDIA, con sparsity)" },
+      cites:[["p2-vast","Vast.ai, s. f."],["p2-simplepod","SimplePod, s. f."]] }
+  ],
+  rows:[["tipo","Tipo"],["arq","Arquitectura"],["nuc","Núcleos / hilos"],["freq","Frecuencia máxima"],["cache","Caché"],["mem","Memoria"],["tdp","TDP"],["ia","IA"]],
+  tops:[ ["Intel · NPU",47,"intel"],["Intel · plataforma completa",115,"intel"],["AMD · NPU XDNA 2",50,"amd"],["RTX 4090 · Tensor Cores",null,"nvidia"] ],
+  tdp:[ ["Intel 258V",17,17,37,"intel","17 W (hasta 37)"],["AMD HX 370",28,15,54,"amd","28 W (15–54)"],["RTX 4090",450,450,450,"nvidia","450 W"] ],
+  cores:{
+    intel:{ sum:"8 núcleos · 8 hilos", groups:[
+      { id:"P", cls:"big", n:4, label:"P-Cores", arch:"Lion Cove", tile:"P", col:"var(--intel)",
+        text:"Son los núcleos principales y de mayor tamaño físico. Están diseñados para tareas pesadas que necesitan máxima potencia en ráfaga, como videojuegos, renderizado 3D, edición de video o compilación de código. Operan a frecuencias más altas y consumen más energía.",
+        facts:["4 núcleos","hasta 4,8 GHz","arquitectura Lion Cove"] },
+      { id:"E", cls:"small", n:4, label:"Núcleos de bajo consumo", arch:"Skymont", tile:"E", col:"#7FB3FF",
+        text:"Son físicamente más compactos y diseñados con un enfoque minimalista en la eficiencia energética. Gestionan procesos en segundo plano, tareas del sistema operativo, descargas, música, antivirus o multitarea ligera sin malgastar batería ni generar calor excesivo. Funcionan a frecuencias más bajas, ocupan mucho menos espacio en el silicio y consumen una fracción de la energía.",
+        facts:["4 núcleos","arquitectura Skymont"] } ],
+      note:"Intel usa dos arquitecturas de núcleo distintas: Lion Cove para rendimiento y Skymont para eficiencia. En el 258V la tabla registra 8 núcleos y 8 hilos: cada núcleo procesa un hilo." },
+    amd:{ sum:"12 núcleos · 24 hilos", groups:[
+      { id:"Z5", cls:"big", n:4, label:"Zen 5 (clásico)", arch:"Zen 5", tile:"Z5", col:"var(--amd)",
+        text:"El núcleo Zen 5 estándar está optimizado para alcanzar las frecuencias máximas en cargas de alto rendimiento. Comparte con Zen 5c la misma arquitectura de instrucciones y el mismo rendimiento por ciclo.",
+        facts:["4 núcleos","hasta 5,1 GHz"] },
+      { id:"Z5c", cls:"small n8", n:8, label:"Zen 5c (denso)", arch:"Zen 5c", tile:"5c", col:"#FFB08F",
+        text:"El núcleo Zen 5c ejecuta exactamente el mismo código con idéntica eficiencia por instrucción. La diferencia está en el tamaño y la densidad: está físicamente rediseñado para reducir su huella en el silicio.",
+        facts:["8 núcleos","hasta 3,3 GHz"] } ],
+      note:"A diferencia de Intel, AMD no usa dos arquitecturas distintas: Zen 5 y Zen 5c son la misma arquitectura en dos tamaños. Cambia la densidad, no el tipo de núcleo." }
+  },
+  duel:[
+    { k:"Función principal", gpu:"Cálculo paralelo masivo y entrenamiento de modelos desde cero.", npu:"Aceleración eficiente de inferencia en tiempo real para tareas cotidianas.", win:null },
+    { k:"Potencia de cálculo", gpu:"Altísima fuerza bruta. Alcanza hasta 1.321 AI TOPS (con sparsity).", npu:"Potencia moderada y enfocada, entre 47 y 50 TOPS (INT8).", win:"gpu" },
+    { k:"Consumo energético (TDP)", gpu:"Muy elevado. Consume hasta 450 W y requiere sistemas de refrigeración avanzados.", npu:"Extremadamente bajo. Funciona con apenas unos pocos vatios, dentro de los 17–28 W de la CPU.", win:"npu" },
+    { k:"¿Es mejor para entrenar modelos?", gpu:"Sí, es la mejor opción. Su arquitectura de miles de núcleos CUDA permite procesar enormes volúmenes de datos simultáneamente.", npu:"No. No está diseñada para entrenar modelos complejos, por su menor ancho de banda y capacidad de cómputo.", win:"gpu" },
+    { k:"¿Inferencia más eficiente?", gpu:"Puede hacerlo, pero con un costo energético enorme: desperdicia energía en tareas livianas del sistema.", npu:"Sí, de forma muy eficiente. Está optimizada para ejecutar inferencias locales ahorrando batería.", win:"npu" },
+    { k:"Ejemplo de software", gpu:"Stable Diffusion: generación de imágenes locales de alta complejidad en segundos usando sus Tensor Cores.", npu:"Windows Copilot+ y asistentes de IA: subtítulos automáticos, desenfoque de fondo y asistencia inteligente en segundo plano.", win:null }
+  ],
+  apps:[
+    { chip:"intel", uses:"NPU", sw:["Windows Studio Effects","Zoom AI Companion"],
+      short:"Las herramientas de videoconferencia y Windows 11 usan la NPU Intel AI Boost (47 TOPS) para procesar en tiempo real el seguimiento de mirada y la cancelación de ruido ambiente.",
+      more:`Al pasar ese trabajo a la NPU en lugar de la CPU o la placa de video, el equipo consume una fracción mínima de energía (menos de 5 W en esta tarea <span class="pill chk" title="El material no cita una fuente para esta cifra">dato a verificar</span>), manteniendo la notebook fría y maximizando la batería durante llamadas largas.` },
+    { chip:"amd", uses:"NPU", sw:["Windows Copilot+","Amuse 2.0"],
+      short:"Amuse 2.0 de AMD genera imágenes con modelos livianos de difusión y ejecuta asistentes conversacionales directamente en la notebook usando la NPU XDNA 2 (50 TOPS).",
+      more:"Procesa consultas de texto y edición de imágenes en tiempo real de forma privada y local, sin conexión a internet ni suscripciones en la nube, aprovechando la memoria RAM unificada." },
+    { chip:"nvidia", uses:"GPU · Tensor Cores", sw:["Stable Diffusion (AUTOMATIC1111 / ComfyUI)","PyTorch"],
+      short:"Con 512 Tensor Cores, 24 GB de GDDR6X y 1.008 GB/s de ancho de banda, la RTX 4090 es el estándar de escritorio para creadores y científicos de datos.",
+      more:`Stable Diffusion aprovecha TensorRT de NVIDIA para generar imágenes de 1024×1024 en 1 a 2 segundos <span class="pill chk" title="El material no cita una fuente para esta cifra">dato a verificar</span>. Además, es la herramienta para hacer fine-tuning de modelos de lenguaje pesados como Llama 3 en forma local, algo que las NPU no pueden hacer por el cálculo paralelo masivo que requiere.` }
+  ]
+};
+const chipOf = id => P2.chips.find(c=>c.id===id);
+const citeLinks = c => c.cites.map(([id,t])=>`<a class="cite" href="#ref-${id}">(${t})</a>`).join(" ");
+
+/* apertura: tarjetas de chips */
+document.getElementById("p2Chips").innerHTML = P2.chips.map(c=>`<button type="button" class="chipc reveal" data-v="${c.id}" aria-label="Ver ficha de ${c.name}">
+  <span class="ph${c.photo?" photo":""}"><img src="${IMG+c.img}" alt="${esc(c.alt)}" loading="lazy"></span>
+  <span class="bd"><span class="vd c-${c.id}-t">${c.vendor} · ${c.rows.tipo}</span><h3>${c.name}</h3>
+  <span class="met c-${c.id}-t">${c.metric}<small>${c.metricSub}</small></span><span class="tdp">TDP ${c.tdpShort}</span><span class="go">Ver en la tabla →</span></span></button>`).join("");
+
+/* tabla técnica */
+(function(){
+  const t=document.getElementById("specTable"), spec=document.getElementById("spec");
+  t.insertAdjacentHTML("beforeend", `<thead><tr><th scope="col"><span class="sr-only">Característica</span></th>${P2.chips.map(c=>`<th scope="col" class="c-${c.id}"><span class="chead"><img src="${IMG+c.img}" alt=""><i style="background:var(--${c.id})"></i><b>${c.name}</b></span></th>`).join("")}</tr></thead>
+   <tbody>${P2.rows.map(([k,l])=>`<tr><th scope="row">${l}</th>${P2.chips.map(c=>`<td class="c-${c.id}">${c.rows[k]??'<span class="na">Sin dato en el material</span>'}</td>`).join("")}</tr>`).join("")}
+   <tr><th scope="row">Fuentes</th>${P2.chips.map(c=>`<td class="c-${c.id}">${citeLinks(c)}</td>`).join("")}</tr></tbody>`);
+  const setView=v=>{spec.dataset.view=v; document.querySelectorAll("#specView button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));};
+  document.querySelectorAll("#specView button").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.v)));
+  document.querySelectorAll("#p2Chips .chipc").forEach(b=>b.addEventListener("click",()=>{setView(b.dataset.v); document.getElementById("p2-tabla").scrollIntoView({behavior:RM?"auto":"smooth"});}));
+})();
+
+/* gráficos: TOPS y TDP */
+(function(){
+  const st={scale:"lin",sparse:true};
+  const SP=[1321,660.6];
+  const fmt=v=>v.toLocaleString("es-AR",{maximumFractionDigits:1});
+  function tops(){
+    const data=P2.tops.map(r=>r[1]===null?[r[0],st.sparse?SP[0]:SP[1],r[2]]:r);
+    const lo=10, hi=2000, max=1321;
+    const pos=v=>st.scale==="lin"?v/max*100:(Math.log10(v)-Math.log10(lo))/(Math.log10(hi)-Math.log10(lo))*100;
+    document.getElementById("topsBars").innerHTML=data.map(([l,v,c])=>`<div class="hb"><span class="lb"><i style="background:var(--${c})"></i>${l}</span><span class="tr" role="img" aria-label="${l}: ${fmt(v)} TOPS"><span class="f" style="width:${pos(v)}%;background:var(--${c})"></span></span><span class="v">${fmt(v)}</span></div>`).join("");
+    const ticks=st.scale==="lin"?[0,500,1000]:[10,100,1000];
+    document.getElementById("topsTicks").innerHTML=ticks.map(t=>`<span style="left:${t===0?0:pos(t)}%">${t.toLocaleString("es-AR")}</span>`).join("");
+  }
+  function tdp(){
+    const max=450, p=v=>v/max*100;
+    document.getElementById("tdpBars").innerHTML=P2.tdp.map(([l,n,a,b,c,txt])=>`<div class="hb"><span class="lb"><i style="background:var(--${c})"></i>${l}</span><span class="tr" role="img" aria-label="${l}: ${txt}"><span class="f" style="left:${p(a)}%;width:${Math.max(1.2,p(b)-p(a))}%;background:var(--${c});opacity:.3"></span><span class="dt" style="left:${Math.max(1.5,p(n))}%;background:var(--${c})"></span></span><span class="v">${txt}</span></div>`).join("");
+    document.getElementById("tdpTicks").innerHTML=[0,150,300,450].map(t=>`<span style="left:${p(t)}%">${t} W</span>`).join("");
+  }
+  document.querySelectorAll("#topsScale button").forEach(b=>b.addEventListener("click",()=>{st.scale=b.dataset.s;document.querySelectorAll("#topsScale button").forEach(x=>x.setAttribute("aria-pressed",x===b));tops();}));
+  const sb=document.getElementById("topsSparse");
+  sb.addEventListener("click",()=>{st.sparse=!st.sparse;sb.setAttribute("aria-pressed",st.sparse);sb.textContent="RTX 4090: "+(st.sparse?"con sparsity":"sin sparsity");tops();});
+  tops(); tdp();
+})();
+
+/* núcleos */
+(function(){
+  const st={v:"intel",g:"P"};
+  function render(){
+    const d=P2.cores[st.v];
+    document.getElementById("dieSum").textContent=d.sum;
+    document.getElementById("die").innerHTML=d.groups.map(g=>`<button type="button" class="cgrp ${g.cls}" data-g="${g.id}" aria-pressed="${g.id===st.g}" style="--gc:${g.col}"><span><span class="gt">${g.label}</span><br><span class="gs">${g.n} × ${g.arch}</span></span><span class="tiles" aria-hidden="true">${Array.from({length:g.n},()=>`<span class="tile">${g.tile}</span>`).join("")}</span></button>`).join("");
+    const g=d.groups.find(x=>x.id===st.g);
+    document.getElementById("coreInfo").innerHTML=`<span class="cat">${st.v==="intel"?"Intel Core Ultra 7 258V":"AMD Ryzen AI 9 HX 370"}</span><h3>${g.label}</h3><p>${g.text}</p><div class="facts">${g.facts.map(f=>`<span>${f}</span>`).join("")}</div><p class="diff-call">${d.note}</p>`;
+    document.querySelectorAll("#die .cgrp").forEach(b=>b.addEventListener("click",()=>{st.g=b.dataset.g;render();document.querySelector(`#die .cgrp[data-g="${st.g}"]`).focus();}));
+  }
+  document.querySelectorAll("#coreVendor button").forEach(b=>b.addEventListener("click",()=>{st.v=b.dataset.v;st.g=P2.cores[st.v].groups[0].id;document.querySelectorAll("#coreVendor button").forEach(x=>x.setAttribute("aria-pressed",x===b));render();}));
+  render();
+})();
+
+/* inferencia autorregresiva (ilustrativa) */
+(function(){
+  const N=48, words=["La","memoria","rápida","evita","que","el","procesador","se","quede","esperando."];
+  const cells=document.getElementById("arCells"); cells.innerHTML="<i></i>".repeat(N);
+  const cs=[...cells.children], out=document.getElementById("arText"), go=document.getElementById("arGo"), cpu=document.getElementById("arCpu"), state=document.getElementById("arState"), count=document.getElementById("arCount");
+  let n=0, busy=false;
+  const draw=()=>{out.innerHTML=words.slice(0,n).map((w,i)=>i===n-1?`<span>${w}</span>`:w).join(" ")+'<i class="cur" aria-hidden="true"></i>'; count.textContent=`Palabras: ${n} · lecturas completas del modelo: ${n}`; go.disabled=n>=words.length||busy; if(n>=words.length) state.textContent="Frase completa";};
+  go.addEventListener("click",async()=>{
+    if(busy||n>=words.length) return; busy=true; go.disabled=true; cpu.classList.add("busy"); state.textContent="Leyendo pesos…";
+    if(!RM){ for(let i=0;i<N;i++){cs[i].classList.add("on"); await new Promise(r=>setTimeout(r,14));} state.textContent="Calculando…"; await new Promise(r=>setTimeout(r,260)); }
+    cs.forEach(c=>c.classList.remove("on")); cpu.classList.remove("busy"); n++; busy=false; state.textContent="Esperando"; draw();
+  });
+  document.getElementById("arReset").addEventListener("click",()=>{n=0;busy=false;state.textContent="Esperando";cs.forEach(c=>c.classList.remove("on"));draw();});
+  draw();
+})();
+
+/* memoria en el paquete: tradicional vs Lunar Lake (esquema) */
+(function(){
+  const svg=document.getElementById("llSvg"), cap=document.getElementById("llCap");
+  const T=(x,y,s,c="#9AA6B4",sz=12,a="middle")=>`<text x="${x}" y="${y}" text-anchor="${a}" font-family="IBM Plex Mono,monospace" font-size="${sz}" fill="${c}">${s}</text>`;
+  const V={
+    trad:{cap:"Placa madre tradicional: los módulos de RAM están en ranuras separadas y los datos recorren las pistas de cobre de la placa hasta el procesador. Mover datos a través de la placa consume mucha energía, que se disipa como calor.",
+      g:`<rect x="10" y="10" width="400" height="200" rx="8" fill="#121820" stroke="#3A4552"/>${T(24,30,"PLACA MADRE","#9AA6B4",11,"start")}
+        <rect x="50" y="70" width="110" height="110" rx="6" fill="#171C23" stroke="#38B6F0" stroke-width="2"/>${T(105,130,"CPU","#E9EDF1",14)}
+        <rect x="320" y="40" width="22" height="150" rx="3" fill="#171C23" stroke="#B39BFF" stroke-width="2"/><rect x="356" y="40" width="22" height="150" rx="3" fill="#171C23" stroke="#B39BFF" stroke-width="2"/>${T(349,204,"RAM","#B39BFF",11)}
+        <path class="trace" d="M160 100 H320" stroke="#38B6F0" stroke-width="2.5" stroke-dasharray="6 6" fill="none"/><path class="trace" d="M160 125 H330 V190" stroke="#38B6F0" stroke-width="2.5" stroke-dasharray="6 6" fill="none" opacity=".6"/><path class="trace" d="M160 150 H356" stroke="#38B6F0" stroke-width="2.5" stroke-dasharray="6 6" fill="none"/>
+        ${T(240,90,"recorrido largo por la placa","#F0A93B",11)}`},
+    ll:{cap:"Lunar Lake: la LPDDR5X está montada en el mismo paquete que el procesador. La distancia física se reduce drásticamente, los datos llegan casi al instante y baja la energía por gigabyte transferido. Así una notebook mantiene un rendimiento de IA alto sin agotar la batería ni llevar los ventiladores al máximo.",
+      g:`<rect x="10" y="10" width="400" height="200" rx="8" fill="#121820" stroke="#3A4552"/>${T(24,30,"PLACA MADRE","#9AA6B4",11,"start")}
+        <rect x="110" y="40" width="200" height="160" rx="10" fill="#1B232C" stroke="#5D6B7A" stroke-dasharray="4 4"/>${T(210,56,"PAQUETE LUNAR LAKE","#9AA6B4",10)}
+        <rect x="130" y="66" width="160" height="64" rx="5" fill="#171C23" stroke="#38B6F0" stroke-width="2"/>${T(210,103,"Procesador","#E9EDF1",13)}
+        <rect x="132" y="150" width="74" height="38" rx="4" fill="#171C23" stroke="#B39BFF" stroke-width="2"/><rect x="214" y="150" width="74" height="38" rx="4" fill="#171C23" stroke="#B39BFF" stroke-width="2"/>${T(169,173,"LPDDR5X","#B39BFF",10)}${T(251,173,"LPDDR5X","#B39BFF",10)}
+        <path class="trace" d="M169 150 V132" stroke="#38B6F0" stroke-width="2.5" stroke-dasharray="4 4" fill="none"/><path class="trace" d="M251 150 V132" stroke="#38B6F0" stroke-width="2.5" stroke-dasharray="4 4" fill="none"/>
+        ${T(360,110,"recorrido","#F0A93B",11)}${T(360,126,"muy corto","#F0A93B",11)}`}
+  };
+  const set=m=>{svg.innerHTML=`<title id="llT">${m==="ll"?"Memoria dentro del paquete del procesador":"Memoria en ranuras separadas de la placa madre"}</title>`+V[m].g; cap.textContent=V[m].cap; document.querySelectorAll("#llMode button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===m));};
+  document.querySelectorAll("#llMode button").forEach(b=>b.addEventListener("click",()=>set(b.dataset.m)));
+  set("ll");
+})();
+
+/* GPU vs NPU */
+(function(){
+  let i=0; const tabs=document.getElementById("duelTabs"), body=document.getElementById("duelBody");
+  const nv=chipOf("nvidia"), it=chipOf("intel"), am=chipOf("amd");
+  tabs.innerHTML=P2.duel.map((d,k)=>`<button type="button" role="tab" id="dt-${k}" aria-controls="duelBody" aria-selected="${k===0}" tabindex="${k===0?0:-1}">${d.k}</button>`).join("");
+  function render(){
+    const d=P2.duel[i];
+    [...tabs.children].forEach((b,k)=>{b.setAttribute("aria-selected",k===i);b.tabIndex=k===i?0:-1;});
+    body.setAttribute("aria-labelledby","dt-"+i);
+    const side=(w,html)=>`<div class="side${d.win===w?" win":""}">${html}${d.win===w?'<span class="win-tag">Ventaja</span>':""}<p>${d[w]}</p></div>`;
+    body.innerHTML=side("gpu",`<div class="who"><img src="${IMG+nv.img}" alt=""><div><b class="c-nvidia-t">GPU</b><small>Ej.: NVIDIA GeForce RTX 4090</small></div></div>`)
+      +`<div class="vs" aria-hidden="true">VS</div>`
+      +side("npu",`<div class="who"><span class="pair"><img src="${IMG+it.img}" alt=""><img src="${IMG+am.img}" alt=""></span><div><b style="color:var(--npu)">NPU</b><small>Ej.: Intel AI Boost / AMD XDNA 2</small></div></div>`);
+    document.getElementById("duelCount").textContent=`${i+1} / ${P2.duel.length}`;
+  }
+  tabs.addEventListener("click",e=>{const b=e.target.closest("button"); if(b){i=+b.id.slice(3);render();b.focus();}});
+  tabs.addEventListener("keydown",e=>{let n=null; if(e.key==="ArrowRight") n=(i+1)%P2.duel.length; if(e.key==="ArrowLeft") n=(i-1+P2.duel.length)%P2.duel.length; if(n!==null){e.preventDefault();i=n;render();tabs.children[i].focus();}});
+  document.getElementById("duelPrev").addEventListener("click",()=>{i=(i-1+P2.duel.length)%P2.duel.length;render();});
+  document.getElementById("duelNext").addEventListener("click",()=>{i=(i+1)%P2.duel.length;render();});
+  document.getElementById("duelScore").innerHTML=`<span>Ventaja <b class="c-nvidia-t">GPU</b>: potencia de cálculo y entrenamiento.</span><span>Ventaja <b style="color:var(--npu)">NPU</b>: consumo e inferencia eficiente.</span><span>No compiten: se complementan según la tarea.</span>`;
+  document.getElementById("duelTable").insertAdjacentHTML("beforeend",`<thead><tr><th scope="col">Criterio</th><th scope="col">GPU (Ej.: NVIDIA GeForce RTX 4090)</th><th scope="col">NPU (Ej.: Intel AI Boost / AMD XDNA 2)</th></tr></thead><tbody>${P2.duel.map(d=>`<tr><th scope="row">${d.k}</th><td>${d.gpu}</td><td>${d.npu}</td></tr>`).join("")}</tbody>`);
+  render();
+})();
+
+/* galería de aplicaciones */
+(function(){
+  const box=document.getElementById("apps");
+  box.innerHTML=P2.apps.map((a,k)=>{const c=chipOf(a.chip); return `<article class="app reveal">
+    <div class="ph${c.photo?" photo":""}"><img src="${IMG+c.img}" alt="${esc(c.alt)}" loading="lazy"><span class="uses" style="color:${a.uses==="NPU"?"#B39BFF":"#9BD14B"}">Usa: ${a.uses}</span></div>
+    <div class="bd"><span class="vd c-${c.id}-t">${c.vendor}</span><h3>${c.name}</h3><div class="sw" aria-label="Software">${a.sw.map(s=>`<span>${s}</span>`).join("")}</div>
+      <p>${a.short}</p><p class="more" id="am-${k}" hidden>${a.more}</p>
+      <button type="button" class="btn btn-sm btn-line tg" aria-expanded="false" aria-controls="am-${k}">Leer más</button></div></article>`;}).join("");
+  box.addEventListener("click",e=>{const b=e.target.closest(".tg"); if(!b) return; const m=document.getElementById(b.getAttribute("aria-controls")); const o=m.hidden; m.hidden=!o; b.setAttribute("aria-expanded",o); b.textContent=o?"Leer menos":"Leer más";});
+})();
+
 /* ---------- bibliografía ---------- */
 const BIB = [
+ ["@Parte 2 · El corazón inteligente de la máquina"],
+ ["Fuentes del material de la Parte 2 (sin fecha de consulta en el original)",[
+  ["p2-eyb","EatYourBytes. (s. f.). <i>Intel Core Ultra 7 258V</i> [Ficha técnica de CPU].","https://www.eatyourbytes.com/cpu-detail/intel-ultra-7-258v/","Respalda núcleos e hilos, frecuencias, caché, proceso de 3 nm y TOPS de CPU, GPU y NPU."],
+  ["p2-nbc-258v","Notebookcheck. (s. f.-a). <i>Intel Core Ultra 7 258V processor: Benchmarks and specs</i>.","https://www.notebookcheck.net/Intel-Core-Ultra-7-258V-Processor-Benchmarks-and-Specs.892883.0.html","Respalda los 47 TOPS de la NPU y los 115 TOPS de la plataforma."],
+  ["p2-nbc-cmp","Notebookcheck. (s. f.-b). <i>Intel Core Ultra 7 258V vs Intel Core Ultra 7 255H</i>.","https://www.notebookcheck.net/Core-Ultra-7-258V-vs-Ultra-7-255H_17995_18903.247596.0.html","Respalda el L2 de 14 MB, el TDP de 17 W (hasta 37 W) y los 4 P-Cores y 4 E-Cores."],
+  ["p2-nbc-hx370","Notebookcheck. (s. f.-c). <i>AMD Ryzen AI 9 HX 370 processor: Benchmarks and specs</i>.","https://www.notebookcheck.net/AMD-Ryzen-AI-9-HX-370-Processor-Benchmarks-and-Specs.836729.0.html","Respalda núcleos e hilos, frecuencias, caché y los 50 TOPS de la NPU."],
+  ["p2-vast","Vast.ai. (s. f.). <i>RTX 4090 GPU pricing</i>.","https://vast.ai/pricing/gpu/RTX-4090","Respalda los 512 Tensor Cores y que los 1.321 TOPS son con sparsity (660,6 sin sparsity)."],
+  ["p2-simplepod","SimplePod. (s. f.). <i>RTX 4090 GPU pricing</i>.","https://simplepod.ai/pricing/gpu/RTX-4090","Respalda los 1.008 GB/s de ancho de banda y los 450 W de TDP."]
+ ]],
+ ["@Parte 3 · El Diseño Maestro"],
  ["1. Listados y precios en Argentina (consultados el 27/10/2026)",[
   ["venex-r5","Venex. (2026). <i>Procesador AMD Ryzen 5 5500 6/12 4.2GHz AM4 Sin Video</i>.",DATA.budget[0].url],
   ["venex-mb","Venex. (2026). <i>Motherboard MSI B550M-A PRO AM4 DDR4</i>.",DATA.budget[1].url],
@@ -1488,8 +2052,6 @@ const BIB = [
   ["ambito","Ámbito. (2026, 27 de octubre). <i>Real blue: a cuánto operó este martes 27 de octubre</i>.","https://ambito.com/finanzas/real-blue-cuanto-opero-este-martes-27-octubre-n6338582"]
  ]]
 ];
-document.getElementById("bib").innerHTML = BIB.map(([h,items])=>`<div><h3>${h}</h3><ol>${items.map(([id,t,u])=>`<li id="ref-${id}">${t} <a href="${u}" target="_blank" rel="noopener">${u}</a></li>`).join("")}</ol></div>`).join("");
+document.getElementById("bib").innerHTML = BIB.map(([h,items])=>h.startsWith("@") ? `<h3 class="part-h">${h.slice(1)}</h3>` : `<div><h3>${h}</h3><ol>${items.map(([id,t,u,note])=>`<li id="ref-${id}">${t} <a href="${u}" target="_blank" rel="noopener">${u}</a>${note?`<span class="note">${note}</span>`:""}</li>`).join("")}</ol></div>`).join("");
 initReveal();
 </script>
-
-</body></html>
