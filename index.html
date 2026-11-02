@@ -1078,14 +1078,6 @@ a.pcard:hover .imgs img{transform:translateY(-4px)}
       <p class="lead">Formato APA, ordenado por parte. Los listados de productos son páginas dinámicas: el precio citado es el que mostraban el día de consulta.</p></div>
     <div class="bib" id="bib"></div>
     <div class="method">
-      <h3>Método y límites · Parte 3</h3>
-      <ul>
-        <li>Precios: precio especial (efectivo o transferencia) de cada página de producto, consultado el 27/10/2026. No incluyen cuotas ni descuentos temporales.</li>
-        <li>Dólar: oficial Banco Nación, venta, $1.560 el 27/10/2026. Ese día el MEP cerró en $1.559,24 y el blue en $1.575 <a class="cite" href="#ref-ambito">(Ámbito, 2026)</a>, así que el resultado no cambia con otra referencia razonable.</li>
-        <li>GPU usada: precio estimado a partir de publicaciones de Mercado Libre entre $350.000 y $390.000. Falta elegir una publicación concreta. Si cuesta más de <span data-bind="gpuMax"></span>, la torre supera USD 800.</li>
-        <li>Placas de video premium: precio por transferencia y stock leídos en Compra Gamer (modelo VCNRTXPRO4000B-PB, 241 mm, una ranura). La ficha de la tienda menciona por error "RTX PRO 4500" en un campo; usamos los datos del título y de PNY. RAM premium: precio leído en Hardcore Computación (SKU CMK64GX5M2B5600Z40).</li>
-        <li>Imágenes: fotos de producto tomadas de las páginas de Venex, Compra Gamer y Hardcore Computación, usadas solo para identificar cada pieza. Se les quitó el fondo blanco. La foto de la RTX 3060 es representativa (Gigabyte Windforce OC 12 GB): la placa usada puede ser de otro fabricante. Ubuntu no tiene foto de producto y se muestra con una ilustración.</li>
-      </ul>
     </div>
   </div>
 </section>
@@ -1996,7 +1988,7 @@ document.getElementById("p2Chips").innerHTML = P2.chips.map(c=>`<button type="bu
 /* ---------- bibliografía ---------- */
 const BIB = [
  ["@Parte 2 · El corazón inteligente de la máquina"],
- ["Fuentes del material de la Parte 2 (sin fecha de consulta en el original)",[
+ ["Fuentes del material de la Parte 2",[
   ["p2-eyb","EatYourBytes. (s. f.). <i>Intel Core Ultra 7 258V</i> [Ficha técnica de CPU].","https://www.eatyourbytes.com/cpu-detail/intel-ultra-7-258v/","Respalda núcleos e hilos, frecuencias, caché, proceso de 3 nm y TOPS de CPU, GPU y NPU."],
   ["p2-nbc-258v","Notebookcheck. (s. f.-a). <i>Intel Core Ultra 7 258V processor: Benchmarks and specs</i>.","https://www.notebookcheck.net/Intel-Core-Ultra-7-258V-Processor-Benchmarks-and-Specs.892883.0.html","Respalda los 47 TOPS de la NPU y los 115 TOPS de la plataforma."],
   ["p2-nbc-cmp","Notebookcheck. (s. f.-b). <i>Intel Core Ultra 7 258V vs Intel Core Ultra 7 255H</i>.","https://www.notebookcheck.net/Core-Ultra-7-258V-vs-Ultra-7-255H_17995_18903.247596.0.html","Respalda el L2 de 14 MB, el TDP de 17 W (hasta 37 W) y los 4 P-Cores y 4 E-Cores."],
