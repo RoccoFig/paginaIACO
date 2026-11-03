@@ -506,7 +506,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* portada */
 .cover{padding-block:64px 36px}
 .cover .h1{max-width:18ch}
-.cover-grid{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:16px;margin-top:40px}
+.cover-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
 .pcard{position:relative;border:1px solid var(--band-line);border-radius:10px;background:rgba(23,28,35,.9);padding:22px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--band-ink)!important;min-height:330px;overflow:hidden;transition:border-color .2s,transform .2s}
 a.pcard:hover{border-color:var(--band-data);transform:translateY(-3px)}
 .pcard .n{font:800 3.2rem/1 var(--f-display);font-stretch:80%;color:#2E3742}
@@ -700,12 +700,181 @@ a.pcard:hover .imgs img{transform:translateY(-4px)}
 .p2-next b{color:var(--ink);font-family:var(--f-display);font-size:1.15rem;display:block;margin-bottom:2px}
 .bib .part-h{font:800 1.4rem var(--f-display);font-stretch:88%;text-transform:none;letter-spacing:0;color:var(--ink);border:0;padding:0;margin-top:12px}
 .bib .note{display:block;font-size:.82rem;color:var(--ink-2);margin-top:2px;text-indent:0}
+
+/* ===== PARTE 1 =====
+   Reutiliza el sistema de las Partes 2 y 3 (bandas, .seg, .chipc, .hb, .app, .step).
+   Agrega: diagramas lógicos, explorador de SM, calculadoras y panel de benchmarks. */
+.method:empty{display:none}
+.p1-hero{position:relative;overflow:hidden;background:radial-gradient(50% 60% at 15% 15%,rgba(56,182,240,.16),transparent 70%),radial-gradient(40% 50% at 90% 90%,rgba(155,209,75,.10),transparent 70%),var(--band)}
+.evo{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.evo span{font:400 .76rem var(--f-mono);color:var(--band-ink-2);border:1px solid var(--band-line);border-radius:20px;padding:4px 11px}
+.evo b{color:var(--band-ink);font-weight:500}
+.chipc .ph.art{background:radial-gradient(60% 60% at 50% 50%,rgba(255,255,255,.05),transparent 70%),var(--band)}
+.chipc .ph.art svg{width:86%;height:auto;max-height:176px}
+.ill-tag{font:400 .64rem var(--f-mono);color:var(--band-ink-2);letter-spacing:.04em}
+.chipc .met2{font:400 .78rem var(--f-mono);color:var(--band-ink-2)}
+
+/* tabla CPU */
+.cpu-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.spec1 td,.spec1 th{font-size:.9rem}
+.spec1 td:last-child .cite{white-space:normal;display:inline-block;margin:0 4px 2px 0}
+.spec1 td:last-child{min-width:150px}
+.spec1 sup{color:var(--warn);font:600 .72rem var(--f-mono);margin-left:2px;cursor:help}
+.disc{margin-top:14px;display:grid;gap:6px;font-size:.84rem;color:var(--ink-2)}
+.disc b{color:var(--warn);font-family:var(--f-mono)}
+.threads{background:var(--band);border:1px solid var(--band-line);border-radius:10px;padding:18px;color:var(--band-ink);display:grid;gap:12px}
+.threads h3{font-size:1.05rem}
+.trow{display:grid;gap:6px}
+.trow .tl{font:500 .74rem var(--f-mono);color:var(--band-ink-2);display:flex;justify-content:space-between;gap:8px}
+.tcores{display:flex;flex-wrap:wrap;gap:4px}
+.tc{display:inline-flex;gap:2px;align-items:center;justify-content:center;border-radius:3px;border:1px solid var(--band-line);background:#1A2129;padding:3px}
+.tc.big{width:30px;height:30px}.tc.sm{width:22px;height:22px}.tc.lp{width:22px;height:22px;border-style:dashed}
+.tc i{width:6px;height:6px;border-radius:50%;background:var(--band-data)}
+.tlegend{font:400 .72rem var(--f-mono);color:var(--band-ink-2);display:flex;gap:12px;flex-wrap:wrap}
+.tlegend i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--band-data);margin-right:5px}
+.pros{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.pro{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:16px;display:grid;gap:8px;align-content:start}
+.pro h4{margin:0;font:700 1rem var(--f-display);font-stretch:95%}
+.pro ul{margin:0;padding-left:18px;font-size:.88rem;color:var(--ink-2);display:grid;gap:3px}
+.pro .k{font:500 .68rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+@media (max-width:900px){.cpu-grid{grid-template-columns:minmax(0,1fr)}.pros{grid-template-columns:minmax(0,1fr)}}
+
+/* diagramas lógicos */
+.arch{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.arch-svg{background:var(--band);border:1px solid var(--band-line);border-radius:10px;padding:10px;overflow-x:auto}
+.arch-svg svg{display:block;width:100%;min-width:640px;height:auto}
+.blk{cursor:pointer}
+.blk rect.b{transition:stroke .15s,stroke-width .15s}
+.blk:hover rect.b,.blk:focus rect.b,.blk.on rect.b{stroke:#E9EDF1;stroke-width:2.4}
+.blk:focus{outline:none}
+.arch-note{font:400 .72rem var(--f-mono);color:var(--ink-2);margin-top:8px}
+.ladder{display:grid;gap:6px;margin-top:6px}
+.lad{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px;align-items:center;font-size:.84rem}
+.lad b{font:600 .74rem var(--f-mono)}
+.lad span{border-radius:4px;padding:5px 8px;background:color-mix(in srgb,var(--data) 12%,transparent);border:1px solid color-mix(in srgb,var(--data) 35%,transparent)}
+.lad.ram span{background:color-mix(in srgb,var(--npu) 10%,transparent);border-color:color-mix(in srgb,var(--npu) 35%,transparent)}
+.lad .na{font-style:italic}
+@media (max-width:960px){.arch{grid-template-columns:minmax(0,1fr)}}
+
+/* GPU */
+.gpu-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.sm-panel{background:var(--band-2);border:1px solid var(--band-line);border-radius:10px;padding:16px;display:grid;gap:12px}
+.sms{display:grid;grid-template-columns:repeat(17,1fr);gap:3px}
+.sms button{aspect-ratio:1/1;border:0;border-radius:2px;background:#24303B;cursor:pointer;padding:0}
+.sms button:hover{background:#38B6F0}
+.sms button[aria-pressed="true"]{background:#9BD14B;box-shadow:0 0 0 2px #9BD14B}
+.sm-zoom{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.part4{border:1px solid var(--band-line);border-radius:6px;padding:8px;display:grid;gap:6px;background:var(--band)}
+.part4 .cu{display:grid;grid-template-columns:repeat(8,1fr);gap:2px}
+.part4 .cu i{aspect-ratio:1/1;background:#38B6F0;border-radius:1px;opacity:.85}
+.part4 .tens{border-radius:3px;background:#9BD14B;color:#0B1015;font:600 .62rem var(--f-mono);text-align:center;padding:3px}
+.rt{grid-column:1/-1;border-radius:4px;background:#F0A93B;color:#0B1015;font:600 .66rem var(--f-mono);text-align:center;padding:4px}
+.sm-legend{display:flex;gap:12px;flex-wrap:wrap;font:400 .72rem var(--f-mono);color:var(--band-ink-2)}
+.sm-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.prec{background:var(--band-2);border:1px solid var(--band-line);border-radius:10px;padding:16px;display:grid;gap:12px}
+.prec .hb .tr{background:var(--band);border-color:var(--band-line)}
+.prec .hb{grid-template-columns:150px minmax(0,1fr) 110px}
+.prec .hb .lb small{display:block;color:var(--band-ink-2);font:400 .68rem var(--f-mono)}
+.par{background:var(--band-2);border:1px solid var(--band-line);border-radius:10px;padding:16px;display:grid;gap:12px;margin-top:20px}
+.par-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.par-grid .mx{display:grid;grid-template-columns:repeat(16,1fr);gap:2px;max-width:300px}
+.par-grid .mx i{aspect-ratio:1/1;border-radius:1px;background:#232B35;transition:background .12s}
+.par-grid .mx i.on{background:#38B6F0}
+.par-grid .mx.g i.on{background:#9BD14B}
+.par-grid h4{margin:0 0 6px;font:600 .9rem var(--f-body);display:flex;justify-content:space-between;gap:8px}
+.par-grid h4 span{font:400 .74rem var(--f-mono);color:var(--band-ink-2)}
+@media (max-width:900px){.gpu-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.par-grid{grid-template-columns:minmax(0,1fr)}.prec .hb{grid-template-columns:96px minmax(0,1fr) 86px}}
+
+/* NPU */
+.units{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.unit{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:16px;display:grid;gap:8px;align-content:start}
+.unit .ic{width:44px;height:44px}
+.unit h4{margin:0;font:700 1.05rem var(--f-display)}
+.unit dl{margin:0;display:grid;gap:6px;font-size:.86rem}
+.unit dt{font:500 .66rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.unit dd{margin:0}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.calc label{font-weight:600;font-size:.9rem;display:flex;justify-content:space-between;gap:8px}
+.calc label output{font:500 .84rem var(--f-mono);color:var(--data)}
+.calc input[type=range]{width:100%;accent-color:var(--data)}
+.calc .res{text-align:center;display:grid;gap:4px}
+.calc .res b{font:800 3rem/1 var(--f-display);font-stretch:85%;color:var(--npu)}
+.calc .res code{font:400 .8rem var(--f-mono);color:var(--ink-2)}
+.calc .note{grid-column:1/-1}
+.stack{display:grid;gap:12px}
+.st-row{display:grid;grid-template-columns:120px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:.86rem}
+.st-bar{display:flex;height:26px;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.st-bar span{display:flex;align-items:center;justify-content:center;font:600 .7rem var(--f-mono);color:#0B1015;white-space:nowrap;overflow:hidden;transition:flex-grow .4s}
+.st-row .v{font:600 .82rem var(--f-mono);text-align:right}
+.flow{background:var(--band);border:1px solid var(--band-line);border-radius:10px;padding:18px;color:var(--band-ink);display:grid;gap:14px}
+.flow-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;align-items:stretch}
+.fs{border:1px solid var(--band-line);border-radius:8px;padding:10px;background:var(--band-2);display:grid;gap:4px;align-content:start;transition:border-color .2s,box-shadow .2s,opacity .2s;opacity:.55}
+.fs.on{opacity:1;border-color:var(--band-data);box-shadow:0 0 0 1px var(--band-data)}
+.fs.done{opacity:1}
+.fs b{font:600 .82rem var(--f-body)}
+.fs small{font:400 .72rem var(--f-mono);color:var(--band-ink-2)}
+.fs .n{font:700 .7rem var(--f-mono);color:var(--band-data)}
+.flow-log{font:400 .88rem var(--f-body);color:var(--band-ink-2);min-height:44px}
+@media (max-width:900px){.units{grid-template-columns:minmax(0,1fr)}.calc{grid-template-columns:minmax(0,1fr)}.flow-steps{grid-template-columns:minmax(0,1fr)}}
+
+/* benchmarks */
+.bench{background:var(--band-2);border:1px solid var(--band-line);border-radius:10px;padding:18px;display:grid;gap:14px}
+.bench .hb .tr{background:var(--band);border-color:var(--band-line)}
+.bench .grp{display:grid;gap:6px;margin-bottom:6px}
+.bench .grp>b{font:600 .8rem var(--f-mono);color:var(--band-ink-2)}
+.bench .hb{grid-template-columns:110px minmax(0,1fr) 80px}
+.cfg{font-size:.84rem;color:var(--band-ink-2);border-left:3px solid var(--band-line);padding-left:12px;display:block;line-height:1.6}
+.cfg code{font:400 .78rem var(--f-mono);color:var(--band-ink)}
+.cfg b{color:var(--band-ink);font-weight:600}
+.qa{display:grid;gap:10px;margin-top:24px}
+.qa .step{background:var(--band-2);border-color:var(--band-line);color:var(--band-ink)}
+.qa .step.open{border-color:var(--band-data)}
+.qa .step-btn{color:var(--band-ink)}
+.qa .step-btn b{border-color:var(--band-data);color:var(--band-data)}
+.qa .step.open .step-btn b{background:var(--band-data);color:var(--band)}
+.qa .step-body{grid-template-columns:minmax(0,1fr);padding-bottom:18px}
+.qa .step-body p{color:var(--band-ink-2)}
+.qa .ev{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.qa .ev a{font:500 .72rem var(--f-mono);border:1px solid var(--band-line);border-radius:20px;padding:3px 9px;text-decoration:none}
+.vram{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px;margin-top:24px;color:var(--ink)}
+.vram .ctl{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.vram label{font-weight:600;font-size:.9rem}
+.vram input[type=range]{width:min(320px,100%);accent-color:var(--data)}
+.vram .w{font:800 1.8rem var(--f-display);font-stretch:88%}
+.vrows{display:grid;gap:8px}
+.vr{display:grid;grid-template-columns:120px minmax(0,1fr) 200px;gap:10px;align-items:center;font-size:.86rem}
+.vr .tr{height:16px;border-radius:3px;background:var(--paper);border:1px solid var(--line);position:relative;overflow:hidden}
+.vr .tr i{position:absolute;inset:0 auto 0 0;border-radius:2px;transition:width .35s}
+.vr .vst{font:600 .78rem var(--f-mono)}
+@media (max-width:640px){.vr{grid-template-columns:90px minmax(0,1fr);}.vr .vst{grid-column:1/-1}.bench .hb{grid-template-columns:80px minmax(0,1fr) 64px}}
+
+/* aplicaciones y conclusiones */
+.p1-apps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.p1-apps .app{flex-direction:column}
+.p1-apps .app .ph{width:auto;height:170px;min-height:0}
+.p1-apps .app .ph.cover img{width:100%;height:100%;max-height:none;object-fit:cover;object-position:top left}
+.p1-apps .app .ph svg{width:62%;height:auto}
+.p1-apps .app .ph .src{position:absolute;right:8px;bottom:6px;font:400 .6rem var(--f-mono);color:#9AA6B4;background:rgba(15,19,24,.8);padding:2px 6px;border-radius:3px}
+.p1-apps .app[hidden]{display:none}
+.hwtag{display:inline-block;font:600 .66rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-right:4px;border:1px solid currentColor}
+.hwtag.gpu{color:var(--nvidia)}.hwtag.npu{color:var(--npu)}.hwtag.cpu{color:var(--ink-2)}
+.p1-apps .app .why{font-size:.84rem}
+@media (max-width:1100px){.p1-apps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.p1-apps{grid-template-columns:minmax(0,1fr)}}
+.concl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:8px}
+.cc{border:1px solid var(--band-line);border-radius:10px;padding:16px;background:var(--band-2);display:grid;gap:8px;align-content:start;color:var(--band-ink)}
+.cc .n{font:800 1.6rem/1 var(--f-display);color:var(--band-data)}
+.cc h4{margin:0;font:700 1rem var(--f-display);font-stretch:95%}
+.cc p{font-size:.86rem;color:var(--band-ink-2)}
+@media (max-width:1000px){.concl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.concl{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 <header class="top">
   <div class="wrap main-row">
     <a class="brand" href="#inicio"><i aria-hidden="true"></i>IACO 2026 <span>HARDWARE PARA IA</span></a>
-    <!-- Navegación: las partes y sus secciones se definen en GROUPS (script). Para sumar la Parte 1, agregar su grupo y cambiar su estado en PARTS. -->
+    <!-- Navegación: las partes y sus secciones se definen en GROUPS (script); la portada, en PARTS. -->
     <nav class="nav" id="nav" aria-label="Secciones"></nav>
     <div class="tools">
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Cambiar tema">Tema: auto</button>
@@ -723,7 +892,158 @@ a.pcard:hover .imgs img{transform:translateY(-4px)}
     <h1 class="h1">Hardware para <em>inteligencia artificial</em></h1>
     <p class="lead">Cómo calculan IA los chips de hoy y cómo se arma una computadora para usarla. Un trabajo en partes, con datos verificables y sus fuentes.</p>
     <div class="cover-grid" id="partsGrid"></div>
-    <a class="scroll-cue" href="#parte-2">Empezar por la Parte 2<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a class="scroll-cue" href="#parte-1">Empezar por la Parte 1<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+  </div>
+</section>
+
+<!-- ================= PARTE 1 ================= -->
+<section class="band p1-hero" id="parte-1">
+  <div class="wrap">
+    <p class="eyebrow">Parte 1 · El rendimiento de la IA empieza en el silicio</p>
+    <h2 class="h1" style="font-size:clamp(2.1rem,4.4vw,3.4rem);font-weight:800;font-stretch:80%">El corazón inteligente <span style="color:var(--band-data)">de la máquina</span></h2>
+    <p class="lead">La generación 2026: dos procesadores de notebook rivales con NPU y la GPU de consumo más potente de NVIDIA. Qué hace cada unidad de cálculo, cuánto rinde y para qué tarea de IA conviene.</p>
+    <div class="chips3" id="p1Chips"></div>
+    <div class="evo" aria-label="Evolución respecto de la Parte 2"><span>Parte 2 → Parte 1:</span><span><b>Core Ultra 7 258V</b> → Core Ultra X9 388H</span><span><b>Ryzen AI 9 HX 370</b> → Ryzen AI 9 HX 470</span><span><b>RTX 4090</b> → RTX 5090</span></div>
+  </div>
+</section>
+
+<section id="p1-cpus">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · CPUs</p><h2>Dos CPUs rivales, el mismo mes</h2>
+      <p class="lead">Elegimos los modelos tope de Intel y AMD para notebooks de alto rendimiento con NPU. Los dos se presentaron en enero de 2026 y compiten por el mismo tipo de equipo, así que la comparación es directa.</p></div>
+    <div class="cpu-grid">
+      <div class="reveal">
+        <div class="table-scroll"><table class="spec1" id="cpuTable"><caption class="sr-only">Especificaciones del Intel Core Ultra X9 388H y del AMD Ryzen AI 9 HX 470</caption></table></div>
+        <div class="disc" id="cpuDisc"></div>
+      </div>
+      <div class="threads reveal" id="threads"></div>
+    </div>
+    <div class="pros reveal" id="cpuPros"></div>
+  </div>
+</section>
+
+<section id="p1-arquitectura" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · Análisis arquitectónico</p><h2>Cómo están organizados por dentro</h2>
+      <p class="lead">Diagramas lógicos de los tres chips: qué bloques tienen y cómo se conectan con la memoria. Tocá un bloque para ver qué hace.</p></div>
+    <div class="p2-tools"><span class="lbl">Chip</span><div class="seg" id="archSel" role="group" aria-label="Elegir chip"><button type="button" data-a="intel" aria-pressed="true">Intel 388H</button><button type="button" data-a="amd" aria-pressed="false">AMD HX 470</button><button type="button" data-a="nvidia" aria-pressed="false">NVIDIA RTX 5090</button></div></div>
+    <div class="arch reveal">
+      <div><div class="arch-svg"><svg id="archSvg" viewBox="0 0 760 400" role="img" aria-labelledby="archT"><title id="archT">Diagrama lógico</title></svg></div>
+        <p class="arch-note">Diagrama lógico, no es el plano físico del chip. Las ubicaciones relativas de los bloques no están a escala.</p></div>
+      <aside class="core-info" id="archInfo" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="p1-gpu">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · GPU</p><h2>NVIDIA GeForce RTX 5090: paralelismo masivo</h2>
+      <p class="lead">Blackwell, 21.760 núcleos CUDA, 680 Tensor Cores de quinta generación y 32 GB de GDDR7 a 1.792 GB/s. Es la GPU de consumo con más memoria y ancho de banda, y usa CUDA, el entorno de casi todo el software de IA <a class="cite" href="#ref-p1-nv-wp">(NVIDIA, s. f.-a)</a>.</p></div>
+    <div class="gpu-grid">
+      <div class="sm-panel reveal">
+        <h3 style="font-size:1.05rem">170 multiprocesadores (SM). Tocá uno.</h3>
+        <div class="sms" id="sms" role="group" aria-label="Multiprocesadores de la RTX 5090"></div>
+        <div class="sm-zoom" id="smZoom" aria-live="polite"></div>
+        <div class="sm-legend"><span><i style="background:#38B6F0"></i>128 núcleos CUDA</span><span><i style="background:#9BD14B"></i>4 Tensor Cores</span><span><i style="background:#F0A93B"></i>1 RT Core</span></div>
+        <p class="ill-tag">Cada SM se representa dividido en 4 bloques iguales. 21.760 ÷ 170 = 128 núcleos CUDA; 680 ÷ 170 = 4 Tensor Cores por SM.</p>
+      </div>
+      <div class="prec reveal">
+        <h3 style="font-size:1.05rem">Rendimiento pico por formato de precisión</h3>
+        <div class="ctl" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn btn-sm btn-ghost" id="precSparse" aria-pressed="false">Mostrar con sparsity</button></div>
+        <div class="hbars" id="precBars"></div>
+        <p class="cnote" style="color:var(--band-ink-2)">Menos bits por número = más operaciones por segundo y menos memoria, con algo de pérdida de exactitud. La cifra publicitada de 3.352 "AI TOPS" es FP4 con sparsity: el caso más favorable. La sparsity solo duplica el pico si la mitad de los pesos de cada grupo son ceros.</p>
+      </div>
+    </div>
+    <div class="par reveal">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center"><h3 style="font-size:1.05rem">Por qué el paralelismo importa: calcular una matriz de 256 resultados</h3><div style="display:flex;gap:8px"><button class="btn btn-sm btn-main" type="button" id="parGo">Calcular</button><button class="btn btn-sm btn-ghost" type="button" id="parReset">Reiniciar</button></div></div>
+      <div class="par-grid">
+        <div><h4>CPU · 16 núcleos <span id="parCpu">0 pasos</span></h4><div class="mx" id="mxCpu" aria-hidden="true"></div></div>
+        <div><h4>GPU · miles de núcleos <span id="parGpu">0 pasos</span></h4><div class="mx g" id="mxGpu" aria-hidden="true"></div></div>
+      </div>
+      <p style="font-size:.88rem;color:var(--band-ink-2)">Una red neuronal es, sobre todo, multiplicación de matrices: muchas operaciones independientes entre sí. La CPU calcula de a 16 resultados por paso; la GPU calcula todos a la vez. <b style="color:var(--band-ink)">Ilustración conceptual</b>: no representa tiempos reales.</p>
+    </div>
+  </div>
+</section>
+
+<section id="p1-npu">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · Análisis profundo de la NPU</p><h2>NPU: el acelerador de la eficiencia</h2>
+      <p class="lead">Microsoft define la NPU como un chip especializado para procesos intensivos de IA, que usa la energía de forma más eficiente que una CPU o una GPU. No reemplaza a la GPU: la complementa en tareas continuas y livianas <a class="cite" href="#ref-p1-ms-copilot">(Microsoft, 2025)</a>.</p></div>
+    <div class="units reveal" id="units"></div>
+
+    <div class="p2-block reveal">
+      <h3>Qué mide realmente un TOPS</h3>
+      <p class="lead">TOPS son billones de operaciones por segundo. Se calcula como 2 × unidades MAC × frecuencia ÷ 10¹²: el 2 cuenta la multiplicación y la suma de cada MAC. La industria lo expresa en INT8 <a class="cite" href="#ref-p1-qualcomm">(Burns, 2024)</a>.</p>
+      <div class="calc">
+        <div style="display:grid;gap:14px">
+          <label for="macIn">Unidades MAC <output id="macOut"></output></label><input type="range" id="macIn" min="1024" max="16384" step="512" value="8192">
+          <label for="frIn">Frecuencia <output id="frOut"></output></label><input type="range" id="frIn" min="0.5" max="2.5" step="0.1" value="1.8">
+        </div>
+        <div class="res"><b id="topsOut"></b><span>TOPS (INT8)</span><code id="topsF"></code></div>
+        <p class="cnote note">Calculadora ilustrativa: Intel y AMD no publican la cantidad de MAC ni la frecuencia de sus NPU, así que estos valores no reproducen ningún chip real. Un TOPS es un pico teórico: no mide latencia, ancho de banda ni calidad del software.</p>
+      </div>
+    </div>
+
+    <div class="p2-block reveal">
+      <h3>TOPS de la NPU ≠ TOPS de la plataforma</h3>
+      <p class="lead">Los fabricantes suman CPU, GPU y NPU en una cifra de "plataforma". Según Club386, la NPU y la GPU no pueden trabajar juntas sobre una misma tarea de IA, así que esa suma no se puede usar en un solo trabajo <a class="cite" href="#ref-p1-club386">(Hardwidge, 2026)</a>.</p>
+      <div class="p2-chart"><div class="stack" id="stack"></div>
+        <p class="cnote">Intel: NPU 50 y GPU 122 TOPS según su ficha; la CPU se estima como la diferencia hasta los 180 TOPS de plataforma (dato derivado). AMD: NPU 55 de un total de 86 TOPS; AMD no desglosa el resto entre GPU y CPU.</p></div>
+    </div>
+
+    <div class="p2-block reveal">
+      <h3>Intel NPU 5 frente a AMD XDNA 2</h3>
+      <div class="table-scroll"><table id="npuTable"><caption class="sr-only">Comparación de las NPU de Intel y AMD</caption></table></div>
+      <p class="cnote" style="margin-top:10px">Eficiencia: AMD afirma que XDNA 2 es hasta 35 veces más eficiente que la CPU para ejecutar un modelo, e Intel, un 40 % más de TOPS por área. Son afirmaciones de los fabricantes: no encontramos mediciones independientes de consumo de estas NPU con la misma carga.</p>
+    </div>
+
+    <div class="p2-block reveal">
+      <h3>Cómo usa Windows la NPU</h3>
+      <p class="lead">Windows ML detecta el hardware, elige el proveedor de ejecución más rápido y vuelve a la GPU o a la CPU si falla <a class="cite" href="#ref-p1-ms-copilot">(Microsoft, 2025)</a>.</p>
+      <div class="flow" id="flow">
+        <div class="flow-steps" id="flowSteps"></div>
+        <p class="flow-log" id="flowLog" aria-live="polite"></p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sm btn-main" type="button" id="flowNext">Siguiente paso</button><button class="btn btn-sm btn-ghost" type="button" id="flowFail">Simular que el proveedor falla</button><button class="btn btn-sm btn-ghost" type="button" id="flowReset">Reiniciar</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="p1-rendimiento">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · Rendimiento real</p><h2>Qué dicen las mediciones</h2>
+      <p class="lead">Solo comparamos resultados de una misma prueba, con el mismo software y configuración. Cuando no hay datos equivalentes, lo decimos.</p></div>
+    <div class="bench reveal">
+      <div class="duel-tabs" id="benchTabs" role="tablist" aria-label="Benchmarks"></div>
+      <div id="benchBody" role="tabpanel"></div>
+    </div>
+    <div class="qa" id="qa"></div>
+    <div class="vram reveal" id="vramCalc">
+      <h3 style="font-size:1.1rem">¿Entra el modelo en la VRAM?</h3>
+      <div class="ctl"><label for="vParams">Parámetros: <span class="mono" id="vParamsOut"></span></label><input type="range" id="vParams" min="1" max="70" step="1" value="8">
+        <div class="seg" id="vPrec" role="group" aria-label="Precisión"><button type="button" data-b="2" aria-pressed="false">FP16</button><button type="button" data-b="1" aria-pressed="false">INT8</button><button type="button" data-b="0.5" aria-pressed="true">4 bits</button></div></div>
+      <div><span class="w" id="vW"></span> <span style="color:var(--ink-2);font-size:.9rem">solo de pesos</span></div>
+      <div class="vrows" id="vRows"></div>
+      <p class="cnote">Estimación: parámetros × bytes por parámetro (FP16 = 2, INT8 = 1, 4 bits ≈ 0,5). No incluye la caché del contexto ni la memoria del programa, que suman más. Si el modelo no entra, llama.cpp reparte capas entre GPU y CPU, y desde el driver 536.40 NVIDIA puede usar memoria del sistema: funciona, pero más lento <a class="cite" href="#ref-p1-nv-fallback">(NVIDIA, 2023)</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="p1-apps">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · Galería de aplicaciones</p><h2>Software real y qué hardware lo acelera</h2>
+      <p class="lead">Cada aplicación figura con el componente que su documentación declara usar. No afirmamos uso de NPU sin respaldo.</p></div>
+    <div class="p2-tools"><span class="lbl">Filtrar</span><div class="seg" id="appFilter" role="group" aria-label="Filtrar por hardware"><button type="button" data-f="all" aria-pressed="true">Todas</button><button type="button" data-f="gpu" aria-pressed="false">GPU</button><button type="button" data-f="npu" aria-pressed="false">NPU</button><button type="button" data-f="cpu" aria-pressed="false">CPU</button></div></div>
+    <div class="p1-apps" id="p1Apps"></div>
+  </div>
+</section>
+
+<section class="band" id="p1-conclusiones">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Parte 1 · Conclusiones</p><h2>No hay un "mejor chip para IA"</h2>
+      <p class="lead">Cada unidad resuelve una parte del problema.</p></div>
+    <div class="concl" id="concl"></div>
+    <div class="p2-next reveal" style="background:var(--band-2);border-color:var(--band-line)"><p style="color:var(--band-ink-2)"><b style="color:var(--band-ink)">Siguiente: Parte 2</b>La generación anterior (Core Ultra 7 258V, Ryzen AI 9 HX 370 y RTX 4090) y la comparación GPU contra NPU.</p><a class="btn btn-main" href="#parte-2">Ir a la Parte 2</a></div>
   </div>
 </section>
 
@@ -1075,7 +1395,7 @@ a.pcard:hover .imgs img{transform:translateY(-4px)}
 <section id="bibliografia">
   <div class="wrap">
     <div class="sec-head"><p class="eyebrow">Transparencia académica</p><h2>Bibliografía y Recursos</h2>
-      <p class="lead">Formato APA, ordenado por parte. Los listados de productos son páginas dinámicas: el precio citado es el que mostraban el día de consulta.</p></div>
+      <p class="lead">Formato APA, ordenado por parte (1, 2 y 3). Los listados de productos son páginas dinámicas: el precio citado es el que mostraban el día de consulta.</p></div>
     <div class="bib" id="bib"></div>
     <div class="method">
     </div>
@@ -1083,7 +1403,7 @@ a.pcard:hover .imgs img{transform:translateY(-4px)}
 </section>
 </main>
 
-<footer><div class="wrap"><span>IACO 2026 · Hardware para inteligencia artificial · Partes 2 y 3</span><span>Datos de referencia al <span data-bind="date"></span></span></div></footer>
+<footer><div class="wrap"><span>IACO 2026 · Hardware para inteligencia artificial · Partes 1, 2 y 3</span><span>Datos de referencia al <span data-bind="date"></span></span></div></footer>
 <button class="to-top" id="toTop" type="button" aria-label="Volver arriba"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
 <div class="tip" id="tip" role="tooltip"></div>
 
@@ -1265,7 +1585,8 @@ const esc = s => String(s).replace(/"/g,"&quot;");
 
 /* ---------- partes del trabajo (portada, extensible) ---------- */
 const PARTS = [
-  { n:1, status:"pending", title:"Parte 1" },
+  { n:1, status:"live", title:"El corazón inteligente de la máquina (2026)", href:"#parte-1", text:"Intel Core Ultra X9 388H, AMD Ryzen AI 9 HX 470 y NVIDIA RTX 5090: arquitectura, NPU, benchmarks reales y aplicaciones.",
+    imgs:[["p1-app-sd-webui.webp","left:0;bottom:6px;width:58%;border-radius:6px;object-fit:cover;height:120px;object-position:top left"],["p1-app-lemonade.webp","right:0;bottom:0;width:38%;border-radius:6px"]] },
   { n:2, status:"live", title:"El corazón inteligente de la máquina", href:"#parte-2", text:"Intel Core Ultra 7 258V, AMD Ryzen AI 9 HX 370 y NVIDIA RTX 4090: núcleos, memoria, NPU contra GPU y aplicaciones reales.",
     imgs:[["p2-amd-ryzen-ai-300.webp","left:0;bottom:8px;width:52%;border-radius:6px"],["p2-rtx-4090-gigabyte.webp","right:-6px;bottom:0;width:56%"]] },
   { n:3, status:"live", title:"El Diseño Maestro: tu workstation de IA", href:"#parte-3", text:"Dos configuraciones con precios reales en Argentina, diagrama de bloques, simulador de presupuesto e infografía.",
@@ -1277,6 +1598,7 @@ document.getElementById("partsGrid").innerHTML = PARTS.map(p => p.status==="live
 
 /* ---------- navegación por partes ---------- */
 const GROUPS = [
+  { id:"p1", label:"Parte 1", href:"#parte-1", items:[["#parte-1","Inicio"],["#p1-cpus","CPUs"],["#p1-arquitectura","Arquitectura"],["#p1-gpu","GPU"],["#p1-npu","NPU"],["#p1-rendimiento","Rendimiento"],["#p1-apps","Aplicaciones"],["#p1-conclusiones","Conclusiones"]] },
   { id:"p2", label:"Parte 2", href:"#parte-2", items:[["#parte-2","Inicio"],["#p2-tabla","Tabla técnica"],["#p2-arquitectura","Arquitectura"],["#p2-gpu-npu","GPU vs NPU"],["#p2-apps","Aplicaciones"]] },
   { id:"p3", label:"Parte 3", href:"#parte-3", items:[["#parte-3","Inicio"],["#perfil","Perfil"],["#explorador","Componentes"],["#presupuesto","Presupuesto"],["#mejoras","Mejoras"],["#diagrama","Diagrama"],["#premium","Premium"],["#comparar","Comparar"],["#infografia","Infografía"]] },
   { id:"bib", label:"Bibliografía", href:"#bibliografia", items:[] }
@@ -1787,6 +2109,347 @@ document.getElementById("infographic").innerHTML = buildInfographic();
 })();
 
 
+
+/* =========================================================
+   PARTE 1 · fuente única de datos. Cada cifra sale de las
+   fuentes de la bibliografía (ref-p1-*). No agregar datos
+   sin fuente; lo derivado se rotula como derivado.
+   ========================================================= */
+const P1 = {
+  cite:{ intel:["p1-intel-388h","Intel, s. f."], amd:["p1-amd-470","AMD, s. f.-a"], nbci:["p1-nbc-388h","Notebookcheck, s. f.-d"], nbca:["p1-nbc-470","Notebookcheck, s. f.-e"],
+    hh:["p1-hh","Chiappetta, 2025"], pcg:["p1-pcg","Evanson, 2025"], toms:["p1-toms","Alcorn, 2024"], wp:["p1-nv-wp","NVIDIA, s. f.-a"], club:["p1-club386","Hardwidge, 2026"],
+    bench:["p1-bench","llama.cpp, 2025"], ms:["p1-ms-copilot","Microsoft, 2025"], wse:["p1-ms-wse","Microsoft, 2026"], rai:["p1-ryzenai","AMD, s. f.-b"] },
+  chips:[
+    { id:"intel", vendor:"Intel", name:"Core Ultra X9 388H", type:"CPU de notebook con NPU · Panther Lake", metric:"50 TOPS", sub:"NPU 5 (INT8)", met2:"180 TOPS de plataforma · 25–80 W" },
+    { id:"amd", vendor:"AMD", name:"Ryzen AI 9 HX 470", type:"CPU de notebook con NPU · Gorgon Point", metric:"55 TOPS", sub:"NPU XDNA 2 (INT8)", met2:"86 TOPS de plataforma · 28 W (15–54 W)" },
+    { id:"nvidia", vendor:"NVIDIA", name:"GeForce RTX 5090", type:"GPU de escritorio · Blackwell", metric:"838 TOPS", sub:"INT8 sin sparsity (3.352 FP4 con sparsity)", met2:"32 GB GDDR7 · 1.792 GB/s · 575 W" }
+  ],
+  cpuRows:[
+    ["Lanzamiento","1.er trimestre de 2026","5 de enero de 2026",["intel","amd"]],
+    ["Proceso","Intel 18A (núcleos); GPU en TSMC N3E","TSMC 4 nm (N4P)",["intel","nbca"]],
+    ["Núcleos / hilos","16 / 16 (4 P + 8 E + 4 LP E)","12 / 24 (4 Zen 5 + 8 Zen 5c)",["intel","amd"]],
+    ["Arquitecturas de núcleo","Cougar Cove (P) y Darkmont (E y LP E)","Zen 5 y Zen 5c",["pcg","amd"]],
+    ["Frecuencia base","2,1 GHz (P) · 1,6 GHz (E y LP E)","2,0 GHz",["intel","amd"]],
+    ["Frecuencia máxima","5,1 GHz (P) · 3,8 GHz (E)<sup title='Notebookcheck informa 4,0 GHz'>†1</sup> · 3,7 GHz (LP E)","5,2 GHz (Zen 5) · 3,3 GHz (Zen 5c)",["intel","amd"]],
+    ["Caché","L2 12,5 MB · L3 18 MB · 8 MB del lado de la memoria","L1 960 KB · L2 12 MB · L3 24 MB",["nbci","pcg","amd","nbca"]],
+    ["GPU integrada","Arc B390: 12 núcleos Xe3, hasta 2,5 GHz, 122 TOPS INT8","Radeon 890M: 16 núcleos gráficos, hasta 3,1 GHz",["intel","amd"]],
+    ["NPU","NPU 5: 50 TOPS INT8","XDNA 2: hasta 55 TOPS<sup title='Algunas notas citan 60 TOPS, cifra del HX 475'>†2</sup>",["intel","amd"]],
+    ["IA de toda la plataforma","180 TOPS<sup title='Club386 suma 172 TOPS (NPU + GPU)'>†3</sup>","86 TOPS",["hh","amd"]],
+    ["Potencia","25 W base · 80 W turbo · 15 W mínima garantizada","28 W por defecto · configurable 15–54 W",["intel","amd"]],
+    ["Memoria","LPDDR5X-9600, hasta 96 GB","LPDDR5X-8533 o DDR5-5600, hasta 256 GB",["intel","amd"]],
+    ["Software de IA (NPU)","OpenVINO, Windows ML, WebNN, ONNX Runtime","Ryzen AI Software (ONNX Runtime, Vitis AI EP)",["intel","rai"]]
+  ],
+  disc:[
+    "†1 Frecuencia de los E-cores de Intel: la ficha oficial dice 3,8 GHz y Notebookcheck, 4,0 GHz. Usamos la oficial.",
+    "†2 NPU de AMD: la ficha oficial dice hasta 55 TOPS; algunas notas de prensa citan 60 TOPS, que corresponde al HX 475. Usamos la oficial.",
+    "†3 IA de plataforma de Intel: HotHardware y PC Gamer citan 180 TOPS; Club386 suma 172 (NPU 50 + GPU 122), sin la CPU. La ficha oficial solo detalla NPU y GPU."
+  ],
+  pros:{
+    intel:{ s:["GPU integrada potente para IA: 122 TOPS INT8, con OpenVINO","RAM muy rápida (9.600 MT/s)","NPU rediseñada con FP8 nativo"], l:["Sin multihilo: 16 núcleos, 16 hilos","Máximo 96 GB de RAM"] },
+    amd:{ s:["NPU con más TOPS (55)","24 hilos para preparar datos","Hasta 256 GB de RAM"], l:["Misma arquitectura de CPU (Zen 5) que la serie 300","Menos TOPS publicados en la GPU integrada"] }
+  },
+  arch:{
+    intel:{ title:"Intel Core Ultra X9 388H (Panther Lake)", blocks:{
+      P:["Núcleos de rendimiento","4 P-cores Cougar Cove","Hasta 5,1 GHz. Son los más grandes y rápidos: TLB 50 % más grande y mejor predicción de saltos que la generación anterior.",["pcg","intel"]],
+      E:["Núcleos eficientes","8 E-cores Darkmont","Hasta 3,8 GHz. Ocupan menos silicio y consumen menos; suman rendimiento en tareas paralelas.",["pcg","intel"]],
+      LP:["Isla de bajo consumo","4 LP E-cores Darkmont","Separados del resto para tareas livianas con el resto del chip en reposo.",["pcg"]],
+      L3:["Caché compartida","L3 de 18 MB","Última parada antes de la RAM para los núcleos de CPU. Notebookcheck informa además 12,5 MB de L2.",["intel","nbci"]],
+      MSC:["Caché del lado de la memoria","8 MB","Accesible por todos los núcleos; Intel la describe como un búfer rápido entre la RAM y los núcleos.",["pcg"]],
+      NPU:["NPU","NPU 5 · 50 TOPS INT8","Matriz MAC del doble de tamaño por segmento, FP8 nativo y 40 % más de TOPS por área según Intel.",["hh","intel"]],
+      GPU:["GPU integrada","Arc B390 · 12 núcleos Xe3","Fabricada en TSMC N3E. 122 TOPS INT8: en Panther Lake es la unidad de IA más rápida del chip.",["intel","pcg"]],
+      MC:["Memoria","LPDDR5X-9600 · hasta 96 GB","En Panther Lake la RAM ya no está dentro del paquete, a diferencia de Lunar Lake (Parte 2).",["intel","pcg"]],
+      TD:["Planificador","Thread Director","Decide en qué tipo de núcleo corre cada hilo. Intel lo rediseñó en esta generación.",["pcg"]]
+    }},
+    amd:{ title:"AMD Ryzen AI 9 HX 470 (Gorgon Point)", blocks:{
+      Z5:["Núcleos de rendimiento","4 núcleos Zen 5","Hasta 5,2 GHz, con multihilo: 2 hilos por núcleo.",["amd"]],
+      Z5C:["Núcleos compactos","8 núcleos Zen 5c","Hasta 3,3 GHz. Misma arquitectura que Zen 5 con un diseño físico más denso; también con 2 hilos por núcleo.",["amd"]],
+      L3:["Caché compartida","L3 de 24 MB en total","AMD publica el total; además 12 MB de L2 y 960 KB de L1 según Notebookcheck.",["amd","nbca"]],
+      NPU:["NPU","XDNA 2 · hasta 55 TOPS","Matriz espacial de 32 tiles con interconexión programable, sin caché, con Block FP16. Es la misma NPU de la serie 300.",["toms","amd"]],
+      GPU:["GPU integrada","Radeon 890M · 16 núcleos gráficos","Hasta 3,1 GHz. AMD no publica sus TOPS por separado: el total de la plataforma es 86.",["amd"]],
+      MC:["Memoria","LPDDR5X-8533 o DDR5-5600 · hasta 256 GB","Dos canales. Admite mucha más RAM que el chip de Intel.",["amd"]],
+      FAB:["Fabricación","TSMC N4P (4 nm)","CPU, GPU y NPU comparten la interconexión y la memoria del sistema.",["nbca","amd"]]
+    }},
+    nvidia:{ title:"NVIDIA GeForce RTX 5090 (GB202)", blocks:{
+      GPC:["Cómputo","11 GPC · 170 SM","Cada SM tiene 128 núcleos CUDA, 4 Tensor Cores de 5.ª generación y 1 RT Core de 4.ª generación.",["wp"]],
+      TC:["Aceleración de IA","680 Tensor Cores","Resuelven multiplicaciones de bloques de matrices en una instrucción. Suman FP4 y FP6 en esta generación.",["wp"]],
+      L2:["Caché","L2 de 96 MB","Compartida por todos los SM (72 MB en la RTX 4090).",["wp"]],
+      MC:["Memoria","32 GB GDDR7 · bus de 512 bits","28 Gbps por pin: 1.792 GB/s, un 78 % más que la RTX 4090. Para generar texto, el ancho de banda marca la velocidad.",["wp"]],
+      PWR:["Energía","575 W de TGP","NVIDIA recomienda un equipo con fuente de 1.000 W.",["wp"]],
+      HOST:["Conexión","Bus PCIe hacia la CPU","Los datos y el modelo llegan desde la RAM y el disco del sistema por PCIe.",["wp"]]
+    }}
+  },
+  prec:[ ["FP32","Cálculo general · sin Tensor Cores",104.8,null],["TF32","Entrenamiento",104.8,209.5],["FP16 / BF16","Entrenamiento e inferencia",209.5,419],["FP8","Transformer Engine",838,1676],["INT8","Inferencia cuantizada",838,1676],["FP4","Inferencia generativa",1676,3352] ],
+  units:[
+    { k:"CPU", c:"var(--ink-2)", d:"Pocos núcleos complejos", f:"Lógica, control y tareas secuenciales", p:"FP32 / FP64", u:"Preparar datos y correr modelos chicos" },
+    { k:"GPU", c:"var(--nvidia)", d:"Miles de núcleos simples", f:"Cálculo masivo en paralelo; entrenar", p:"FP32 a FP4", u:"Entrenamiento y modelos generativos grandes" },
+    { k:"NPU", c:"var(--npu)", d:"Matrices de unidades MAC fijas", f:"Inferencia continua con muy poca energía", p:"INT8, FP16 y variantes de bloque", u:"Efectos de cámara y audio, asistentes, modelos chicos" }
+  ],
+  npuRows:[
+    ["TOPS de la NPU (INT8)","50","Hasta 55"],["TOPS de la plataforma","180","86"],
+    ["Arquitectura","Matrices MAC por motor de cómputo","Matriz espacial de 32 tiles, sin caché"],
+    ["Formatos destacados","INT8, FP16, FP8 nativo","INT8, Block FP16"],
+    ["Ruta de software","OpenVINO, Windows ML, ONNX Runtime","Ryzen AI Software (ONNX Runtime, Vitis AI EP), Windows ML"],
+    ["Novedad de la generación","NPU rediseñada (40 % más TOPS por área, según Intel)","Misma NPU que la serie 300"],
+    ["Fuentes",'<a class="cite" href="#ref-p1-hh">(Chiappetta, 2025)</a> <a class="cite" href="#ref-p1-intel-388h">(Intel, s. f.)</a>','<a class="cite" href="#ref-p1-toms">(Alcorn, 2024)</a> <a class="cite" href="#ref-p1-amd-470">(AMD, s. f.-a)</a>']
+  ],
+  flow:[
+    ["App","Pide una inferencia con un modelo ONNX","Una aplicación (por ejemplo, de videollamadas) le pide a Windows que ejecute un modelo."],
+    ["Windows ML","Detecta el hardware","Windows ML revisa qué CPU, GPU y NPU tiene el equipo."],
+    ["Proveedor","Elige el execution provider","Carga el proveedor más rápido: OpenVINO en Intel, o el de AMD. Llegan con Windows o por Windows Update."],
+    ["NPU","Ejecuta el modelo","La NPU corre la inferencia con poco consumo y deja libres la CPU y la GPU."],
+    ["Respaldo","GPU o CPU si algo falla","Si el proveedor falla, Windows ML vuelve a la GPU o a la CPU, y la app sigue funcionando."]
+  ],
+  bench:[
+    { k:"Geekbench AI · un mismo chip", groups:[["FP32",4805,18895,4686],["FP16",4258,48360,36601],["INT8",9492,56880,54004]],
+      cfg:`<b>Equipo:</b> Asus Zenbook 14 Duo (UX8407) con Core Ultra X9 388H y 32 GB de LPDDR5X-9600. <b>Prueba:</b> Geekbench AI; la reseña no informa la versión. <b>Fuente:</b> <a class="cite" href="#ref-p1-club386">(Hardwidge, 2026)</a>. Puntajes: más es mejor.`,
+      read:"En FP32 la NPU rinde como la CPU porque no está diseñada para esa precisión. En INT8 se acerca a la GPU integrada." },
+    { k:"Generación de texto · GPU vs NPU", pair:[["GPU Arc B390",1727,"var(--data)"],["NPU 5",648,"var(--npu)"]],
+      cfg:`<b>Equipo:</b> el mismo Core Ultra X9 388H. <b>Prueba:</b> UL Procyon AI Text Generation con Llama 3.1. <b>Fuente:</b> <a class="cite" href="#ref-p1-club386">(Hardwidge, 2026)</a>. No hay una medición equivalente publicada para la NPU del Ryzen AI 9 HX 470.`,
+      read:"La GPU integrada casi triplica a la NPU. La ventaja de la NPU es el consumo, no la velocidad." },
+    { k:"llama.cpp · GPUs dedicadas", gpus:[["RTX 5090",14970.15,300.4,"1.792 GB/s","8cf6b42"],["RTX 4090",14770.63,188.96,"1.008 GB/s","2241453"],["RTX 3060 12 GB",2407.67,76.92,"no publicado","baa9255"]],
+      cfg:`<b>Modelo:</b> Llama 2 7B, Q4_0. <b>Comando:</b> <code>llama-bench -m llama-2-7b.Q4_0.gguf -ngl 99 -fa 1</code>. <b>Versiones:</b> commits distintos por GPU (indicados). <b>Fuente:</b> resultados de la comunidad <a class="cite" href="#ref-p1-bench">(llama.cpp, 2025)</a>; anchos de banda de <a class="cite" href="#ref-p1-nv-wp">NVIDIA (s. f.-a)</a>.`,
+      read:"La RTX 5090 genera texto un 59 % más rápido que la 4090 con un 78 % más de ancho de banda: la generación depende sobre todo de la memoria." }
+  ],
+  qa:[
+    ["¿Una GPU es mejor que una CPU para entrenar modelos?","Sí. Entrenar es repetir multiplicaciones de matrices en paralelo, justo lo que hacen los 21.760 núcleos CUDA y los Tensor Cores de la RTX 5090 (209,5 TFLOPS en FP16 sin sparsity). Incluso la GPU integrada del 388H cuadruplica a su CPU en Geekbench AI FP32 (18.895 contra 4.805). No encontramos un benchmark de entrenamiento con estos chips exactos.",["wp","club"]],
+    ["¿Cuándo conviene la NPU sobre la GPU?","En tareas continuas, livianas y con batería: efectos de cámara y audio, asistentes en segundo plano, transcripción. No por velocidad: la GPU integrada es casi 3 veces más rápida generando texto. La ventaja es el consumo y que deja libres la CPU y la GPU.",["club","wse"]],
+    ["¿La NPU acelera la inferencia en tiempo real de forma más eficiente?","Para modelos chicos y siempre activos, sí, según Microsoft, Intel y AMD; por eso Windows Studio Effects corre en la NPU. Las cifras de eficiencia publicadas son de los fabricantes: no encontramos mediciones independientes de consumo.",["ms","wse","toms"]],
+    ["¿Qué hardware es mejor para IA generativa local?","Una GPU dedicada con mucha VRAM. La RTX 5090 genera unos 300 tokens/s con Llama 2 7B y sus 32 GB alojan modelos más grandes. Las NPU sirven para modelos chicos y cuantizados (por ejemplo, con Lemonade en AMD).",["bench","wp"]],
+    ["¿Qué pasa si el modelo no entra en la VRAM?","Con llama.cpp u Ollama se cargan en la GPU solo algunas capas y el resto corre en la CPU, mucho más lento. Desde el driver 536.40, NVIDIA puede usar memoria del sistema al agotarse la VRAM: la aplicación sigue, pero más lenta; si se desactiva, puede fallar por falta de memoria. Probalo con la calculadora de abajo.",["fall"]],
+    ["¿Cómo influyen la memoria, el ancho de banda y el software?","La capacidad decide qué modelo entra; el ancho de banda, la velocidad de generación (ver llama.cpp). El software decide si el hardware se aprovecha: la RTX 5090 necesitó PyTorch 2.7 para tener soporte, y la NPU de AMD manda a la CPU las operaciones que no soporta.",["bench","pyt","rai"]]
+  ],
+  apps:[
+    { n:"Stable Diffusion WebUI", by:"AUTOMATIC1111", hw:["gpu"], img:"p1-app-sd-webui.webp", cover:true, src:"Captura del repositorio (AGPL-3.0)",
+      what:"Genera imágenes con modelos de difusión.", why:"La difusión repite miles de operaciones de matrices y necesita el modelo en VRAM. El proyecto recomienda GPU NVIDIA y también admite AMD e Intel.", ref:["p1-a1111","AUTOMATIC1111, s. f."] },
+    { n:"Ollama", by:"Ollama", hw:["gpu","cpu"], img:"p1-app-ollama.webp", src:"Imagen oficial del repositorio (MIT)",
+      what:"Corre modelos de lenguaje locales con un comando.", why:"Soporta GPUs NVIDIA desde capacidad de cómputo 5.0; la RTX 5090 (12.0) figura en su lista. Generar texto depende del ancho de banda de la VRAM.", ref:["p1-ollama","Ollama, s. f."] },
+    { n:"llama.cpp", by:"ggml-org", hw:["gpu","cpu"], img:"p1-app-llamacpp-matmul.webp", cover:false, light:true, src:"Figura del repositorio (MIT)",
+      what:"Motor de inferencia de modelos de lenguaje, base de muchas apps locales.", why:"Usa CUDA en la GPU y puede repartir capas con la CPU cuando el modelo no entra en la VRAM. La figura muestra cómo organiza la multiplicación de matrices.", ref:["p1-llamacpp","ggml-org, s. f."] },
+    { n:"Lemonade", by:"AMD y comunidad", hw:["npu","gpu","cpu"], img:"p1-app-lemonade.webp", cover:true, src:"Captura del repositorio (Apache-2.0)",
+      what:"Servidor local de IA: chat, voz e imágenes.", why:"Sus backends ryzenai-llm, FLM y whisper.cpp corren en la NPU XDNA 2; también usa GPU y CPU. La NPU ejecuta modelos chicos con poco consumo.", ref:["p1-lemonade","Lemonade SDK, s. f."] },
+    { n:"Windows Studio Effects", by:"Microsoft", hw:["npu"], art:"cam", src:"Ilustración",
+      what:"Desenfoque de fondo, contacto visual, encuadre automático y enfoque de voz.", why:"Microsoft indica que estos efectos corren en equipos con NPU: procesan la cámara durante toda una llamada sin gastar batería.", ref:["p1-ms-wse","Microsoft, 2026"] },
+    { n:"OpenVINO · ONNX Runtime · Windows ML", by:"Intel · Microsoft", hw:["npu","gpu","cpu"], art:"route", src:"Ilustración",
+      what:"Ejecutan modelos ONNX en el mejor procesador disponible.", why:"Intel lista OpenVINO, Windows ML y ONNX Runtime para la CPU, la GPU y la NPU del 388H. En AMD, ONNX Runtime usa el Vitis AI EP y pasa a la CPU lo que la NPU no soporta.", ref:["p1-intel-388h","Intel, s. f."] },
+    { n:"PyTorch", by:"PyTorch Foundation", hw:["gpu"], art:"code", src:"Ilustración con el comando oficial",
+      what:"Framework para entrenar y ajustar redes neuronales.", why:"Entrenar exige cálculo masivo en FP16/BF16. PyTorch 2.7 sumó soporte para Blackwell con binarios para CUDA 12.8, como función en etapa de prototipo.", ref:["p1-pytorch","PyTorch, 2025"] },
+    { n:"DaVinci Resolve", by:"Blackmagic Design", hw:["gpu"], art:"video", src:"Ilustración",
+      what:"Edición de video con IA: reducción de ruido UltraNR y seguimiento IntelliTrack.", why:"NVIDIA indica que esas funciones aprovechan las GPU RTX con TensorRT. No encontramos documentación oficial de uso de la NPU de estos procesadores.", ref:["p1-80lv","80.lv, 2024"] }
+  ],
+  concl:[
+    ["La GPU dedicada es la base","680 Tensor Cores, 32 GB de VRAM y 1.792 GB/s: genera texto unas 4 veces más rápido que la RTX 3060 en la misma prueba. Su costo: 575 W."],
+    ["La NPU aporta eficiencia","Con 50–55 TOPS INT8 es mucho más lenta que una GPU, pero mantiene funciones de IA siempre activas con poca energía."],
+    ["La CPU coordina","Los núcleos híbridos reparten el trabajo entre potencia y eficiencia: Intel con dos arquitecturas, AMD con una en dos tamaños."],
+    ["Los TOPS no alcanzan","Hay que mirar la precisión, si la cifra es de la NPU o de la plataforma, el ancho de banda y el software."],
+    ["La memoria es el límite","La capacidad decide qué modelo entra y el ancho de banda, a qué velocidad responde. Por eso la VRAM guía el armado de la Parte 3."]
+  ]
+};
+const p1c = keys => keys.map(k=>{ const m={fall:["p1-nv-fallback","NVIDIA, 2023"],pyt:["p1-pytorch","PyTorch, 2025"]}; const c=P1.cite[k]||m[k]; return c?`<a class="cite" href="#ref-${c[0]}">(${c[1]})</a>`:""; }).join(" ");
+
+/* ilustraciones esquemáticas de los chips (no son fotos) */
+function chipArt(id){
+  const col={intel:"#6EA8FF",amd:"#FF8A5C",nvidia:"#9BD14B"}[id];
+  if(id==="nvidia") return `<svg viewBox="0 0 320 170" aria-hidden="true"><rect x="10" y="20" width="300" height="120" rx="10" fill="#141A21" stroke="#3A4552" stroke-width="2"/><rect x="40" y="140" width="150" height="10" fill="#C9A227"/><rect x="118" y="44" width="84" height="72" rx="4" fill="#1C252E" stroke="${col}" stroke-width="2.5"/><text x="160" y="85" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#E9EDF1">GB202</text>${[0,1,2,3].map(i=>`<rect x="${78}" y="${42+i*20}" width="26" height="12" rx="2" fill="#2A3440" stroke="${col}" stroke-opacity=".5"/><rect x="${216}" y="${42+i*20}" width="26" height="12" rx="2" fill="#2A3440" stroke="${col}" stroke-opacity=".5"/>`).join("")}<text x="160" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#9AA6B4">PCIe</text><text x="91" y="36" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#9AA6B4">GDDR7</text></svg>`;
+  const blocks = id==="intel"
+    ? `<rect x="70" y="40" width="112" height="56" rx="3" fill="#1C252E" stroke="${col}" stroke-width="2"/><text x="126" y="72" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#E9EDF1">Núcleos · 18A</text><rect x="190" y="40" width="62" height="56" rx="3" fill="#1C252E" stroke="#7FB3FF" stroke-width="1.5"/><text x="221" y="72" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#E9EDF1">GPU · N3E</text><rect x="70" y="104" width="182" height="22" rx="3" fill="#1C252E" stroke="#5D6B7A"/><text x="161" y="119" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#9AA6B4">E/S · TSMC N6</text>`
+    : `<rect x="70" y="40" width="182" height="86" rx="4" fill="#1C252E" stroke="${col}" stroke-width="2"/><text x="161" y="80" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#E9EDF1">CPU · GPU · NPU</text><text x="161" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#9AA6B4">TSMC N4P</text>`;
+  return `<svg viewBox="0 0 320 170" aria-hidden="true"><rect x="50" y="20" width="222" height="126" rx="8" fill="#0F1318" stroke="#3A4552" stroke-width="2"/>${blocks}${Array.from({length:14},(_,i)=>`<rect x="${58+i*15}" y="150" width="8" height="8" fill="#C9A227" opacity=".7"/>`).join("")}</svg>`;
+}
+
+/* apertura */
+document.getElementById("p1Chips").innerHTML = P1.chips.map(c=>`<button type="button" class="chipc reveal" data-v="${c.id}" aria-label="Ver la arquitectura de ${c.vendor} ${c.name}">
+  <span class="ph art">${chipArt(c.id)}</span>
+  <span class="bd"><span class="vd c-${c.id}-t">${c.vendor} · ${c.type}</span><h3>${c.name}</h3>
+  <span class="met c-${c.id}-t">${c.metric}<small>${c.sub}</small></span><span class="met2">${c.met2}</span><span class="ill-tag">Ilustración esquemática, no es una foto del producto</span><span class="go">Ver su arquitectura →</span></span></button>`).join("");
+
+/* tabla CPU + hilos + fortalezas */
+document.getElementById("cpuTable").innerHTML = `<thead><tr><th scope="col"><span class="sr-only">Característica</span></th><th scope="col"><span class="c-intel-t">Intel</span> Core Ultra X9 388H</th><th scope="col"><span class="c-amd-t">AMD</span> Ryzen AI 9 HX 470</th><th scope="col">Fuente</th></tr></thead><tbody>${P1.cpuRows.map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td><td>${p1c(r[3])}</td></tr>`).join("")}</tbody>`;
+document.getElementById("cpuDisc").innerHTML = "<span><b>Discrepancias entre fuentes</b></span>"+P1.disc.map(d=>`<span>${d.replace(/^(†\d)/,"<b>$1</b>")}</span>`).join("");
+(function(){
+  const core=(cls,n,t)=>Array.from({length:n},()=>`<span class="tc ${cls}">${"<i></i>".repeat(t)}</span>`).join("");
+  document.getElementById("threads").innerHTML=`<h3>Núcleos e hilos</h3><p style="font-size:.88rem;color:var(--band-ink-2)">Cada cuadrado es un núcleo; cada punto, un hilo que el núcleo atiende a la vez. Con multihilo (SMT), un núcleo atiende dos.</p>
+    <div class="trow"><span class="tl"><span class="c-intel-t">Intel 388H</span><span>16 núcleos · 16 hilos</span></span><div class="tcores">${core("big",4,1)}${core("sm",8,1)}${core("lp",4,1)}</div><span class="tl"><span>4 P · 8 E · 4 LP E (borde punteado)</span><span>sin SMT</span></span></div>
+    <div class="trow"><span class="tl"><span class="c-amd-t">AMD HX 470</span><span>12 núcleos · 24 hilos</span></span><div class="tcores">${core("big",4,2)}${core("sm",8,2)}</div><span class="tl"><span>4 Zen 5 · 8 Zen 5c</span><span>con SMT</span></span></div>
+    <span class="tlegend"><span><i></i>1 hilo</span><span>Tamaño del cuadrado = tamaño relativo del núcleo (ilustrativo)</span></span>`;
+  const pro=(k,name)=>`<div class="pro"><h4 class="c-${k}-t">${name}</h4><span class="k" style="color:var(--ok)">Fortalezas para IA</span><ul>${P1.pros[k].s.map(x=>`<li>${x}</li>`).join("")}</ul><span class="k" style="color:var(--warn)">Limitaciones</span><ul>${P1.pros[k].l.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+  document.getElementById("cpuPros").innerHTML=pro("intel","Intel Core Ultra X9 388H")+pro("amd","AMD Ryzen AI 9 HX 470");
+})();
+
+/* diagramas lógicos interactivos */
+(function(){
+  const svg=document.getElementById("archSvg"), info=document.getElementById("archInfo");
+  const K={ink:"#E9EDF1",ink2:"#9AA6B4",line:"#3A4552",box:"#171C23",data:"#38B6F0",npu:"#B39BFF"};
+  const B=(id,x,y,w,h,t,s,c)=>`<g class="blk" data-b="${id}" tabindex="0" role="button" aria-label="${t}"><rect class="b" x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${K.box}" stroke="${c||K.line}" stroke-width="1.6"/><text x="${x+10}" y="${y+20}" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="13.5" fill="${K.ink}">${t}</text>${s?`<text x="${x+10}" y="${y+37}" font-family="IBM Plex Mono,monospace" font-size="11" fill="${K.ink2}">${s}</text>`:""}</g>`;
+  const tiles=(x,y,n,cols,w,c,lab)=>Array.from({length:n},(_,i)=>`<rect x="${x+(i%cols)*(w+5)}" y="${y+Math.floor(i/cols)*(w+5)}" width="${w}" height="${w}" rx="2" fill="${c}" fill-opacity=".22" stroke="${c}"/>${lab?`<text x="${x+(i%cols)*(w+5)+w/2}" y="${y+Math.floor(i/cols)*(w+5)+w/2+4}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="${K.ink}">${lab}</text>`:""}`).join("");
+  const L=(d,c)=>`<path d="${d}" stroke="${c||K.data}" stroke-width="2.4" fill="none"/>`;
+  const fab=(y)=>`<rect x="30" y="${y}" width="700" height="14" rx="7" fill="#232B35"/><text x="380" y="${y+11}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="${K.ink2}">interconexión del chip</text>`;
+  const DRAW={
+    intel:()=>`${B("P",30,20,190,120,"P-cores","4 × Cougar Cove","#6EA8FF")}${tiles(42,66,4,4,36,"#6EA8FF","P")}
+      ${B("E",230,20,190,120,"E-cores","8 × Darkmont","#7FB3FF")}${tiles(242,66,8,4,24,"#7FB3FF","E")}
+      ${B("LP",430,20,140,120,"Isla LP E","4 × Darkmont LP","#5D6B7A")}${tiles(442,66,4,4,20,"#9AA6B4","LP")}
+      ${B("TD",580,20,150,56,"Thread Director","reparte hilos")}
+      ${B("L3",30,148,390,46,"L3 18 MB","compartida por los núcleos","#6EA8FF")}
+      ${B("MSC",430,148,300,46,"Caché del lado de la memoria","8 MB")}
+      ${fab(206)}
+      ${B("NPU",30,236,230,70,"NPU 5","50 TOPS INT8 · FP8 nativo",K.npu)}
+      ${B("GPU",270,236,240,70,"GPU Arc B390","12 Xe3 · 122 TOPS INT8","#9BD14B")}
+      ${B("MC",520,236,210,70,"Controlador de memoria","LPDDR5X-9600")}
+      ${L("M625 306 V340")}<rect x="520" y="340" width="210" height="44" rx="6" fill="#0F1318" stroke="${K.npu}" stroke-dasharray="5 4"/><text x="625" y="367" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="${K.ink}">RAM del sistema · hasta 96 GB</text>
+      <text x="30" y="372" font-family="IBM Plex Mono,monospace" font-size="11" fill="${K.ink2}">Núcleos: Intel 18A · GPU: TSMC N3E</text>`,
+    amd:()=>`${B("Z5",30,20,250,120,"Zen 5","4 núcleos · 2 hilos c/u","#FF8A5C")}${tiles(42,66,4,4,40,"#FF8A5C","Z5")}
+      ${B("Z5C",290,20,300,120,"Zen 5c","8 núcleos compactos · 2 hilos c/u","#FFB08F")}${tiles(302,66,8,8,28,"#FFB08F","5c")}
+      ${B("FAB",600,20,130,120,"Proceso","TSMC N4P")}
+      ${B("L3",30,148,560,46,"L3 24 MB en total","compartida por los núcleos","#FF8A5C")}
+      ${fab(206)}
+      ${B("NPU",30,236,230,70,"NPU XDNA 2","32 tiles · hasta 55 TOPS",K.npu)}
+      ${B("GPU",270,236,240,70,"GPU Radeon 890M","16 núcleos gráficos","#9BD14B")}
+      ${B("MC",520,236,210,70,"Controlador de memoria","LPDDR5X-8533 / DDR5-5600")}
+      ${L("M625 306 V340")}<rect x="520" y="340" width="210" height="44" rx="6" fill="#0F1318" stroke="${K.npu}" stroke-dasharray="5 4"/><text x="625" y="367" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="${K.ink}">RAM del sistema · hasta 256 GB</text>`,
+    nvidia:()=>`${B("GPC",30,20,470,190,"11 GPC · 170 SM","cada SM: 128 CUDA · 4 Tensor · 1 RT","#9BD14B")}${Array.from({length:11},(_,g)=>`<rect x="${44+(g%6)*76}" y="${66+Math.floor(g/6)*68}" width="68" height="58" rx="4" fill="#9BD14B" fill-opacity=".12" stroke="#9BD14B" stroke-opacity=".6"/><text x="${78+(g%6)*76}" y="${99+Math.floor(g/6)*68}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="${K.ink}">GPC ${g+1}</text>`).join("")}
+      ${B("TC",510,20,220,90,"680 Tensor Cores","5.ª gen · FP4 a FP16","#9BD14B")}
+      ${B("PWR",510,120,220,90,"575 W","TGP · fuente de 1.000 W")}
+      ${B("L2",30,216,700,46,"Caché L2 de 96 MB","compartida por todos los SM","#38B6F0")}
+      ${B("MC",30,276,470,56,"32 GB GDDR7 · bus de 512 bits","28 Gbps · 1.792 GB/s",K.npu)}
+      ${B("HOST",510,276,220,56,"PCIe","hacia la CPU del equipo")}
+      ${L("M265 262 V276")}${L("M620 262 V276","#5D6B7A")}
+      <text x="30" y="372" font-family="IBM Plex Mono,monospace" font-size="11" fill="${K.ink2}">TSMC 4N · 92.200 millones de transistores · 750 mm²</text>`
+  };
+  const LAD={
+    intel:[["L1","no publicado en las fuentes consultadas",true],["L2","12,5 MB"],["L3","18 MB, compartida"],["Lado mem.","8 MB, para todos los núcleos"],["RAM","LPDDR5X-9600 · hasta 96 GB",false,true]],
+    amd:[["L1","960 KB en total"],["L2","12 MB"],["L3","24 MB, compartida"],["RAM","LPDDR5X-8533 o DDR5-5600 · hasta 256 GB",false,true]]
+  };
+  let cur="intel";
+  function show(b){
+    const d=P1.arch[cur].blocks[b]; if(!d) return;
+    svg.querySelectorAll(".blk").forEach(g=>g.classList.toggle("on",g.dataset.b===b));
+    const lad = LAD[cur] ? `<span class="cat" style="margin-top:6px">Jerarquía de memoria</span><div class="ladder">${LAD[cur].map(([k,v,na,ram])=>`<div class="lad${ram?" ram":""}"><b>${k}</b><span${na?' class="na"':""}>${v}</span></div>`).join("")}</div><p style="font-size:.8rem">Cuanto más arriba, más rápida y más chica. Los pesos de un modelo de lenguaje ocupan varios GB: no entran en ninguna caché, así que manda el ancho de banda de la RAM.</p>` : "";
+    info.innerHTML=`<span class="cat">${P1.arch[cur].title}</span><span class="cat" style="color:var(--data)">${d[0]}</span><h3>${d[1]}</h3><p>${d[2]}</p><p style="font-size:.82rem">${p1c(d[3])}</p>${lad}`;
+  }
+  function draw(a){
+    cur=a; svg.innerHTML=`<title id="archT">Diagrama lógico de ${P1.arch[a].title}</title>`+DRAW[a]();
+    svg.querySelectorAll(".blk").forEach(g=>{ g.addEventListener("click",()=>show(g.dataset.b)); g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(g.dataset.b);}}); });
+    document.querySelectorAll("#archSel button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.a===a));
+    show(a==="nvidia"?"GPC":a==="amd"?"NPU":"NPU");
+  }
+  window.p1Arch=draw;
+  document.querySelectorAll("#archSel button").forEach(b=>b.addEventListener("click",()=>draw(b.dataset.a)));
+  document.querySelectorAll("#p1Chips .chipc").forEach(b=>b.addEventListener("click",()=>{draw(b.dataset.v); document.getElementById("p1-arquitectura").scrollIntoView({behavior:RM?"auto":"smooth"});}));
+  draw("intel");
+})();
+
+/* GPU: explorador de SM, precisiones y paralelismo */
+(function(){
+  const sms=document.getElementById("sms"), zoom=document.getElementById("smZoom");
+  sms.innerHTML=Array.from({length:170},(_,i)=>`<button type="button" aria-label="SM ${i+1}" aria-pressed="${i===0}"></button>`).join("");
+  const z=i=>{ zoom.innerHTML=Array.from({length:4},()=>`<div class="part4"><div class="cu">${"<i></i>".repeat(32)}</div><div class="tens">Tensor</div></div>`).join("")+`<div class="rt">RT Core · SM ${i+1} de 170</div>`; };
+  sms.addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; sms.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); z([...sms.children].indexOf(b));});
+  z(0);
+  const st={sp:false}, max=3352, bars=document.getElementById("precBars"), sb=document.getElementById("precSparse");
+  const fmt=v=>v.toLocaleString("es-AR",{maximumFractionDigits:1});
+  const draw=()=>{ bars.innerHTML=P1.prec.map(([f,u,d,s])=>{ const v=st.sp&&s?s:d; const unit=f==="INT8"?"TOPS":"TFLOPS"; return `<div class="hb"><span class="lb">${f}<small>${u}</small></span><span class="tr" role="img" aria-label="${f}: ${fmt(v)} ${unit}"><span class="f" style="width:${v/max*100}%;background:${f==="FP4"?"#9BD14B":"#38B6F0"}"></span></span><span class="v">${fmt(v)} ${unit}</span></div>`;}).join("")+`<p class="ill-tag">${st.sp?"Con sparsity (FP32 no tiene valor con sparsity)":"Sin sparsity: el rendimiento habitual"} · <a class="cite" href="#ref-p1-nv-wp">(NVIDIA, s. f.-a)</a></p>`; };
+  sb.addEventListener("click",()=>{st.sp=!st.sp; sb.setAttribute("aria-pressed",st.sp); sb.textContent=st.sp?"Mostrar sin sparsity":"Mostrar con sparsity"; draw();});
+  draw();
+  const mc=document.getElementById("mxCpu"), mg=document.getElementById("mxGpu");
+  mc.innerHTML="<i></i>".repeat(256); mg.innerHTML="<i></i>".repeat(256);
+  let timer=null;
+  const reset=()=>{ clearInterval(timer); timer=null; [...mc.children,...mg.children].forEach(c=>c.classList.remove("on")); document.getElementById("parCpu").textContent="0 pasos"; document.getElementById("parGpu").textContent="0 pasos"; };
+  document.getElementById("parReset").addEventListener("click",reset);
+  document.getElementById("parGo").addEventListener("click",()=>{
+    reset();
+    [...mg.children].forEach(c=>c.classList.add("on")); document.getElementById("parGpu").textContent="1 paso";
+    if(RM){ [...mc.children].forEach(c=>c.classList.add("on")); document.getElementById("parCpu").textContent="16 pasos"; return; }
+    let s=0; timer=setInterval(()=>{ for(let i=s*16;i<s*16+16;i++) mc.children[i].classList.add("on"); s++; document.getElementById("parCpu").textContent=s+(s===1?" paso":" pasos"); if(s>=16){clearInterval(timer);timer=null;} },160);
+  });
+})();
+
+/* NPU: unidades, calculadora TOPS, apilado, tabla, flujo Windows ML */
+(function(){
+  const ic={CPU:`<svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><rect x="10" y="10" width="24" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="16" y="16" width="12" height="12" fill="currentColor" opacity=".5"/>${[14,22,30].map(p=>`<path d="M${p} 4v6M${p} 34v6M4 ${p}h6M34 ${p}h6" stroke="currentColor" stroke-width="2"/>`).join("")}</svg>`,
+    GPU:`<svg class="ic" viewBox="0 0 44 44" aria-hidden="true">${Array.from({length:36},(_,i)=>`<rect x="${6+(i%6)*5.5}" y="${6+Math.floor(i/6)*5.5}" width="4" height="4" fill="currentColor"/>`).join("")}</svg>`,
+    NPU:`<svg class="ic" viewBox="0 0 44 44" aria-hidden="true">${Array.from({length:16},(_,i)=>`<rect x="${7+(i%4)*8}" y="${7+Math.floor(i/4)*8}" width="6" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.5"/>`).join("")}<path d="M10 10l24 24" stroke="currentColor" stroke-width="1.5" opacity=".5"/></svg>`};
+  document.getElementById("units").innerHTML=P1.units.map(u=>`<div class="unit" style="color:${u.c}">${ic[u.k]}<h4>${u.k}</h4><dl style="color:var(--ink)"><div><dt>Diseño</dt><dd>${u.d}</dd></div><div><dt>Punto fuerte</dt><dd>${u.f}</dd></div><div><dt>Precisión típica</dt><dd>${u.p}</dd></div><div><dt>Uso en IA</dt><dd>${u.u}</dd></div></dl></div>`).join("");
+  const mi=document.getElementById("macIn"), fi=document.getElementById("frIn");
+  const calc=()=>{ const m=+mi.value, f=+fi.value, t=2*m*f*1e9/1e12;
+    document.getElementById("macOut").textContent=m.toLocaleString("es-AR"); document.getElementById("frOut").textContent=f.toLocaleString("es-AR",{minimumFractionDigits:1})+" GHz";
+    document.getElementById("topsOut").textContent=t.toLocaleString("es-AR",{maximumFractionDigits:1});
+    document.getElementById("topsF").textContent=`2 × ${m.toLocaleString("es-AR")} × ${f.toLocaleString("es-AR",{minimumFractionDigits:1})} × 10⁹ ÷ 10¹²`; };
+  mi.addEventListener("input",calc); fi.addEventListener("input",calc); calc();
+  const max=180, seg=(v,c,l)=>`<span style="flex:${v} 0 0;background:${c}" title="${l}: ${v} TOPS">${v>=20?l+" "+v:v}</span>`;
+  document.getElementById("stack").innerHTML=`<div class="st-row"><span class="c-intel-t" style="font-weight:600">Intel 388H</span><span class="st-bar" style="width:100%">${seg(50,"var(--npu)","NPU")}${seg(122,"#9BD14B","GPU")}${seg(8,"#9AA6B4","CPU*")}</span><span class="v">180</span></div>
+    <div class="st-row"><span class="c-amd-t" style="font-weight:600">AMD HX 470</span><span class="st-bar" style="width:${86/max*100}%">${seg(55,"var(--npu)","NPU")}${seg(31,"#C9D2DC","GPU + CPU")}</span><span class="v">86</span></div>
+    <div class="tlegend" style="color:var(--ink-2)"><span><i style="background:var(--npu)"></i>NPU</span><span><i style="background:#9BD14B"></i>GPU</span><span><i style="background:#9AA6B4"></i>CPU · *derivado</span><span>Fuentes: ${p1c(["intel","hh","amd"])}</span></div>`;
+  document.getElementById("npuTable").innerHTML=`<thead><tr><th scope="col"><span class="sr-only">Aspecto</span></th><th scope="col"><span class="c-intel-t">Intel</span> NPU 5</th><th scope="col"><span class="c-amd-t">AMD</span> XDNA 2</th></tr></thead><tbody>${P1.npuRows.map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody>`;
+  const steps=document.getElementById("flowSteps"), log=document.getElementById("flowLog");
+  steps.innerHTML=P1.flow.map((f,i)=>`<div class="fs" data-i="${i}"><span class="n">${i+1}</span><b>${f[0]}</b><small>${f[1]}</small></div>`).join("");
+  let k=-1, failed=false;
+  const paint=()=>{ [...steps.children].forEach((s,i)=>{ s.classList.toggle("on",i===k); s.classList.toggle("done",i<k); });
+    log.textContent = k<0 ? "Tocá «Siguiente paso» para seguir una inferencia de punta a punta." : (failed&&k===4 ? "El proveedor falló: Windows ML vuelve a la GPU o a la CPU y la aplicación sigue funcionando, aunque con más consumo." : P1.flow[k][2]); };
+  document.getElementById("flowNext").addEventListener("click",()=>{ if(failed&&k===4){return;} k=Math.min(k+1, failed?4:3); paint(); });
+  document.getElementById("flowFail").addEventListener("click",()=>{ failed=true; k=4; paint(); });
+  document.getElementById("flowReset").addEventListener("click",()=>{ failed=false; k=-1; paint(); });
+  paint();
+})();
+
+/* benchmarks, preguntas y calculadora de VRAM */
+(function(){
+  const tabs=document.getElementById("benchTabs"), body=document.getElementById("benchBody");
+  const fmt=v=>v.toLocaleString("es-AR",{maximumFractionDigits:2});
+  let i=0, metric="tg";
+  tabs.innerHTML=P1.bench.map((b,k)=>`<button type="button" role="tab" id="bt-${k}" aria-controls="benchBody" aria-selected="${k===0}" tabindex="${k===0?0:-1}">${b.k}</button>`).join("");
+  function render(){
+    const b=P1.bench[i]; [...tabs.children].forEach((t,k)=>{t.setAttribute("aria-selected",k===i);t.tabIndex=k===i?0:-1;}); body.setAttribute("aria-labelledby","bt-"+i);
+    let h="";
+    if(b.groups){ const mx=56880; const col={CPU:"#9AA6B4",GPU:"#38B6F0",NPU:"#B39BFF"};
+      h=b.groups.map(([p,c,g,n])=>`<div class="grp"><b>${p}</b>${[["CPU",c],["GPU",g],["NPU",n]].map(([u,v])=>`<div class="hb"><span class="lb"><i style="background:${col[u]}"></i>${u}</span><span class="tr" role="img" aria-label="${p} ${u}: ${fmt(v)}"><span class="f" style="width:${v/mx*100}%;background:${col[u]}"></span></span><span class="v">${fmt(v)}</span></div>`).join("")}</div>`).join(""); }
+    if(b.pair){ const mx=1727; h=b.pair.map(([l,v,c])=>`<div class="hb"><span class="lb"><i style="background:${c}"></i>${l}</span><span class="tr" role="img" aria-label="${l}: ${fmt(v)} puntos"><span class="f" style="width:${v/mx*100}%;background:${c}"></span></span><span class="v">${fmt(v)}</span></div>`).join(""); }
+    if(b.gpus){ const idx=metric==="tg"?2:1, mx=Math.max(...b.gpus.map(g=>g[idx]));
+      h=`<div class="seg" id="benchMetric" role="group" aria-label="Métrica" style="justify-self:start;margin-bottom:6px"><button type="button" data-m="tg" aria-pressed="${metric==="tg"}">Generar texto (tg128)</button><button type="button" data-m="pp" aria-pressed="${metric==="pp"}">Procesar el prompt (pp512)</button></div>`
+       + b.gpus.map(g=>`<div class="hb"><span class="lb"><i style="background:#9BD14B"></i>${g[0]}</span><span class="tr" role="img" aria-label="${g[0]}: ${fmt(g[idx])} tokens por segundo"><span class="f" style="width:${g[idx]/mx*100}%;background:#9BD14B"></span></span><span class="v">${fmt(g[idx])} t/s</span></div>`).join("")
+       + `<p class="ill-tag">Ancho de banda: ${b.gpus.map(g=>`${g[0]} ${g[3]}`).join(" · ")}. Commits: ${b.gpus.map(g=>`${g[0]} ${g[4]}`).join(" · ")}.</p>`; }
+    body.innerHTML=`<div class="hbars">${h}</div><p style="font-size:.95rem;margin-top:12px">${b.read}</p><div class="cfg" style="margin-top:10px">${b.cfg}</div>`;
+    const bm=document.getElementById("benchMetric"); if(bm) bm.addEventListener("click",e=>{const x=e.target.closest("button"); if(x){metric=x.dataset.m; render();}});
+  }
+  tabs.addEventListener("click",e=>{const t=e.target.closest("button"); if(t){i=+t.id.slice(3); render(); t.focus();}});
+  tabs.addEventListener("keydown",e=>{let n=null; if(e.key==="ArrowRight") n=(i+1)%P1.bench.length; if(e.key==="ArrowLeft") n=(i-1+P1.bench.length)%P1.bench.length; if(n!==null){e.preventDefault(); i=n; render(); tabs.children[i].focus();}});
+  render();
+
+  const qa=document.getElementById("qa");
+  qa.innerHTML=P1.qa.map((q,k)=>`<div class="step reveal${k===0?" open":""}"><button class="step-btn" type="button" aria-expanded="${k===0}" aria-controls="qa-${k}"><b>${k+1}</b><h3>${q[0]}</h3><span class="cost"></span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="step-body" id="qa-${k}"${k===0?"":" hidden"}><div><p>${q[1]}</p><div class="ev">Evidencia: ${p1c(q[2])}</div></div></div></div>`).join("");
+  qa.addEventListener("click",e=>{const b=e.target.closest(".step-btn"); if(!b) return; const s=b.parentElement, o=!s.classList.contains("open"); s.classList.toggle("open",o); b.setAttribute("aria-expanded",o); s.querySelector(".step-body").hidden=!o;});
+
+  const GP=[["RTX 5090",32],["RTX 4090",24],["RTX 3060",12]];
+  const pIn=document.getElementById("vParams"); let bpp=0.5;
+  const vram=()=>{ const p=+pIn.value, w=p*bpp;
+    document.getElementById("vParamsOut").textContent=p+" mil millones";
+    document.getElementById("vW").textContent="≈ "+w.toLocaleString("es-AR",{maximumFractionDigits:1})+" GB";
+    document.getElementById("vRows").innerHTML=GP.map(([n,g])=>{ const r=w/g; const [st,c]= r<=0.85?["Entra con margen","var(--ok)"]: r<=1?["Entra justo: poco lugar para el contexto","var(--warn)"]:["No entra: reparto GPU + CPU, más lento","#C2410C"];
+      return `<div class="vr"><span><b>${n}</b> · ${g} GB</span><span class="tr" role="img" aria-label="${n}: ${Math.round(Math.min(r,1)*100)} % de la VRAM"><i style="width:${Math.min(100,r*100)}%;background:${c}"></i></span><span class="vst" style="color:${c}">${st}</span></div>`; }).join("");
+  };
+  pIn.addEventListener("input",vram);
+  document.querySelectorAll("#vPrec button").forEach(b=>b.addEventListener("click",()=>{bpp=+b.dataset.b; document.querySelectorAll("#vPrec button").forEach(x=>x.setAttribute("aria-pressed",x===b)); vram();}));
+  vram();
+})();
+
+/* galería y conclusiones */
+(function(){
+  const art={
+    cam:`<svg viewBox="0 0 200 130" aria-hidden="true"><rect x="10" y="10" width="180" height="110" rx="8" fill="#1A2129" stroke="#3A4552"/><rect x="10" y="10" width="180" height="110" rx="8" fill="url(#blurg)" opacity=".7"/><defs><radialGradient id="blurg"><stop offset="0" stop-color="#B39BFF" stop-opacity=".0"/><stop offset="1" stop-color="#B39BFF" stop-opacity=".35"/></radialGradient></defs><circle cx="100" cy="56" r="20" fill="#9AA6B4"/><path d="M62 120c4-26 22-38 38-38s34 12 38 38" fill="#9AA6B4"/><rect x="62" y="22" width="76" height="98" rx="4" fill="none" stroke="#B39BFF" stroke-dasharray="5 4"/><text x="100" y="18" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#B39BFF">encuadre automático</text></svg>`,
+    route:`<svg viewBox="0 0 200 130" aria-hidden="true"><rect x="70" y="10" width="60" height="26" rx="5" fill="#1A2129" stroke="#38B6F0"/><text x="100" y="27" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#E9EDF1">modelo ONNX</text>${[["NPU",30,"#B39BFF"],["GPU",100,"#9BD14B"],["CPU",170,"#9AA6B4"]].map(([l,x,c])=>`<path d="M100 36 L${x} 86" stroke="${c}" stroke-width="2" fill="none"/><rect x="${x-24}" y="86" width="48" height="26" rx="5" fill="#1A2129" stroke="${c}"/><text x="${x}" y="103" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#E9EDF1">${l}</text>`).join("")}</svg>`,
+    code:`<svg viewBox="0 0 200 130" aria-hidden="true"><rect x="8" y="14" width="184" height="102" rx="6" fill="#0B0F13" stroke="#3A4552"/><circle cx="20" cy="26" r="3" fill="#F08A4B"/><circle cx="30" cy="26" r="3" fill="#F0A93B"/><circle cx="40" cy="26" r="3" fill="#6FD39A"/><text x="16" y="52" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#38B6F0">$ pip install torch==2.7.0</text><text x="16" y="66" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#9AA6B4">  --index-url …/whl/cu128</text><text x="16" y="88" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#E9EDF1">&gt;&gt;&gt; torch.cuda.is_available()</text><text x="16" y="102" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#9BD14B">True</text></svg>`,
+    video:`<svg viewBox="0 0 200 130" aria-hidden="true"><rect x="10" y="12" width="180" height="70" rx="6" fill="#1A2129" stroke="#3A4552"/><path d="M20 70 L60 40 L90 60 L120 30 L180 70 Z" fill="#9BD14B" opacity=".25"/><circle cx="120" cy="30" r="9" fill="none" stroke="#F0A93B" stroke-width="2"/><text x="132" y="27" font-family="IBM Plex Mono,monospace" font-size="8" fill="#F0A93B">IntelliTrack</text>${[0,1,2].map(i=>`<rect x="10" y="${90+i*12}" width="${180-i*40}" height="8" rx="2" fill="${["#38B6F0","#B39BFF","#9BD14B"][i]}" opacity=".6"/>`).join("")}</svg>`
+  };
+  const box=document.getElementById("p1Apps");
+  box.innerHTML=P1.apps.map(a=>`<article class="app reveal" data-hw="${a.hw.join(" ")}">
+    <div class="ph${a.cover?" cover":""}"${a.light?' style="background:#fff"':""}>${a.img?`<img src="${IMG+a.img}" alt="${esc(a.n)}: ${a.cover?"captura de pantalla":"imagen"} del repositorio oficial" loading="lazy">`:art[a.art]}<span class="src">${a.src}</span></div>
+    <div class="bd"><span class="vd" style="color:var(--ink-2)">${a.by}</span><h3>${a.n}</h3><div>${a.hw.map(h=>`<span class="hwtag ${h}">${h.toUpperCase()}</span>`).join("")}</div>
+      <p>${a.what}</p><p class="why">${a.why}</p><a class="cite" href="#ref-${a.ref[0]}">(${a.ref[1]})</a></div></article>`).join("");
+  document.querySelectorAll("#appFilter button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#appFilter button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+    box.querySelectorAll(".app").forEach(a=>{ a.hidden = b.dataset.f!=="all" && !a.dataset.hw.split(" ").includes(b.dataset.f); if(!a.hidden) a.classList.add("in"); });
+  }));
+  document.getElementById("concl").innerHTML=P1.concl.map((c,k)=>`<div class="cc reveal"><span class="n">0${k+1}</span><h4>${c[0]}</h4><p>${c[1]}</p></div>`).join("");
+})();
+
 /* =========================================================
    PARTE 2 · fuente única de datos (contenido del documento
    "TP 2 Arquitectura de Computación"). No agregar cifras que
@@ -1987,6 +2650,35 @@ document.getElementById("p2Chips").innerHTML = P2.chips.map(c=>`<button type="bu
 
 /* ---------- bibliografía ---------- */
 const BIB = [
+ ["@Parte 1 · El corazón inteligente de la máquina (generación 2026)"],
+ ["Documentación oficial de fabricantes (consultada el 2 y 3 de noviembre de 2026)",[
+  ["p1-intel-388h","Intel. (s. f.). <i>Intel Core Ultra X9 Processor 388H: Specifications</i>.","https://www.intel.com/content/www/us/en/products/sku/245526/intel-core-ultra-x9-processor-388h-18m-cache-up-to-5-10-ghz/specifications.html"],
+  ["p1-amd-470","AMD. (s. f.-a). <i>AMD Ryzen AI 9 HX 470</i>.","https://www.amd.com/en/products/processors/laptop/ryzen/ai-400-series/amd-ryzen-ai-9-hx-470.html"],
+  ["p1-ryzenai","AMD. (s. f.-b). <i>Model compatibility</i> (Ryzen AI Software).","https://ryzenai.docs.amd.com/en/latest/modelcompat.html"],
+  ["p1-nv-wp","NVIDIA. (s. f.-a). <i>NVIDIA RTX Blackwell GPU architecture</i> [Documento técnico].","https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf"],
+  ["p1-nv-5090","NVIDIA. (s. f.-b). <i>GeForce RTX 5090</i>.","https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5090/"],
+  ["p1-nv-fallback","NVIDIA. (2023, 31 de octubre). <i>System memory fallback for Stable Diffusion</i>.","https://nvidia.custhelp.com/app/answers/detail/a_id/5490"]
+ ]],
+ ["Documentación de software",[
+  ["p1-ms-copilot","Microsoft. (2025, 17 de noviembre). <i>Copilot+ PCs developer guide</i>. Microsoft Learn.","https://learn.microsoft.com/en-us/windows/ai/npu-devices/"],
+  ["p1-ms-wse","Microsoft. (2026, 15 de junio). <i>What is Windows Studio Effects?</i> Microsoft Learn.","https://learn.microsoft.com/en-us/training/modules/windows-studio-effects/2-definition"],
+  ["p1-pytorch","PyTorch. (2025, 23 de abril). <i>PyTorch 2.7 release</i>.","https://pytorch.org/blog/pytorch-2-7/"],
+  ["p1-ollama","Ollama. (s. f.). <i>GPU</i> [Documentación]. GitHub.","https://github.com/ollama/ollama/blob/main/docs/gpu.mdx","También fuente de la imagen de Ollama (licencia MIT)."],
+  ["p1-lemonade","Lemonade SDK. (s. f.). <i>Lemonade</i> [Repositorio]. GitHub.","https://github.com/lemonade-sdk/lemonade","Captura de pantalla tomada de github.com/lemonade-sdk/assets (licencia Apache-2.0)."],
+  ["p1-a1111","AUTOMATIC1111. (s. f.). <i>Stable Diffusion web UI</i> [Repositorio]. GitHub.","https://github.com/AUTOMATIC1111/stable-diffusion-webui","También fuente de la captura de pantalla (licencia AGPL-3.0)."],
+  ["p1-llamacpp","ggml-org. (s. f.). <i>llama.cpp</i> [Repositorio]. GitHub.","https://github.com/ggml-org/llama.cpp","También fuente de la figura de multiplicación de matrices (licencia MIT)."]
+ ]],
+ ["Reseñas, prensa especializada y benchmarks",[
+  ["p1-club386","Hardwidge, B. (2026, 26 de enero). <i>Intel Core Ultra Series 3 review: outstanding battery life and a great iGPU</i>. Club386.","https://www.club386.com/intel-core-ultra-series-3-panther-lake-review/","Medición independiente: Geekbench AI y Procyon AI (CPU, GPU y NPU del 388H)."],
+  ["p1-bench","llama.cpp. (2025). <i>Performance of llama.cpp on Nvidia CUDA</i> (Discusión n.º 15013) [Resultados comunitarios]. GitHub.","https://github.com/ggml-org/llama.cpp/discussions/15013"],
+  ["p1-hh","Chiappetta, M. (2025, 9 de octubre). <i>Inside Intel Tech Tour 2025: Panther Lake and Clearwater Forest built on 18A</i>. HotHardware.","https://hothardware.com/reviews/what-we-learned-at-intel-tech-tour-2025-panther-lake-and-18a?page=2","Datos presentados por Intel (afirmaciones del fabricante)."],
+  ["p1-pcg","Evanson, N. (2025, 9 de octubre). <i>Panther Lake revealed</i>. PC Gamer.","https://www.pcgamer.com/hardware/processors/panther-lake-revealed-intels-pocket-powerhouse-is-a-big-step-up-from-lunar-lake-with-performance-and-efficiency-gains-all-around"],
+  ["p1-toms","Alcorn, P. (2024, 15 de julio). <i>AMD deep-dives Zen 5 architecture: Ryzen 9000 and AI 300 benchmarks, RDNA 3.5 GPU, XDNA 2, and more</i>. Tom's Hardware.","https://www.tomshardware.com/pc-components/cpus/amd-deep-dives-zen-5-ryzen-9000-and-strix-point-cpu-rdna-35-gpu-and-xdna-2-architectures/5","Datos presentados por AMD (afirmaciones del fabricante)."],
+  ["p1-nbc-388h","Notebookcheck. (s. f.-d). <i>Intel Core Ultra X9 388H processor: Benchmarks and specs</i>.","https://www.notebookcheck.net/Intel-Core-Ultra-X9-388H-Processor-Benchmarks-and-Specs.1148259.0.html"],
+  ["p1-nbc-470","Notebookcheck. (s. f.-e). <i>AMD Ryzen AI 9 HX 470: Prozessor-Benchmarks und Specs</i>.","https://www.notebookcheck.com/AMD-Ryzen-AI-9-HX-470-Prozessor-Benchmarks-und-Specs.1197752.0.html"],
+  ["p1-80lv","80.lv. (2024, 8 de mayo). <i>Here's how NVIDIA's RTX-powered AI solutions boost DaVinci Resolve's workflows</i>.","https://80.lv/articles/here-s-how-nvidia-s-rtx-powered-ai-solutions-boost-davinci-resolve-s-workflows","Basado en el blog AI Decoded de NVIDIA."],
+  ["p1-qualcomm","Burns, P. (2024, 6 de junio). <i>A guide to AI TOPS and NPU performance metrics</i> (publicado originalmente por Qualcomm). Edge AI and Vision Alliance.","https://www.edge-ai-vision.com/2024/06/a-guide-to-ai-tops-and-npu-performance-metrics/"]
+ ]],
  ["@Parte 2 · El corazón inteligente de la máquina"],
  ["Fuentes del material de la Parte 2",[
   ["p2-eyb","EatYourBytes. (s. f.). <i>Intel Core Ultra 7 258V</i> [Ficha técnica de CPU].","https://www.eatyourbytes.com/cpu-detail/intel-ultra-7-258v/","Respalda núcleos e hilos, frecuencias, caché, proceso de 3 nm y TOPS de CPU, GPU y NPU."],
